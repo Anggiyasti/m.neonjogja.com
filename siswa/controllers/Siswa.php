@@ -34,19 +34,22 @@ class Siswa extends MX_Controller {
 
         $data['files'] = array( 
 
-            APPPATH.'modules/homepage/views/v-header-login.php',
+            // APPPATH.'modules/homepage/views/v-header-login.php',
 
-            APPPATH.'modules/siswa/views/headersiswa.php',
+            // APPPATH.'modules/siswa/views/headersiswa.php',
 
-            APPPATH.'modules/siswa/views/vPengaturanProfile.php',
+            // APPPATH.'modules/siswa/views/vPengaturanProfile.php',
             // $this->load->view('vPengaturanProfile', $data);
 
-            APPPATH.'modules/testimoni/views/v-footer.php',
+            // APPPATH.'modules/testimoni/views/v-footer.php',
+            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/siswa/views/mobile/v-pengaturan-profile.php',
+            APPPATH.'modules/templating/views/layouts/v-footer.php',
 
         );
 
         $data['siswa'] = $this->msiswa->get_datsiswa();
-        $this->parser->parse( 'templating/index', $data );
+        $this->parser->parse( 'templating/layouts/index', $data );
     }
 
     public function index() {
@@ -509,6 +512,103 @@ class Siswa extends MX_Controller {
         $data['token'] = $this->session->userdata('token');
         var_dump($data['token']);
         $this->parser->parse( 'templating/index', $data );
+    }
+
+    public function emailsetting() {
+         $data = array(
+
+            'judul_halaman' => 'Neon - Pengaturan Akun',
+
+            'judul_header' =>'Pengaturan Akun',
+
+            'judul_header2' =>'Pengaturan Akun'
+
+
+
+        );
+
+        $data['files'] = array( 
+
+            // APPPATH.'modules/homepage/views/v-header-login.php',
+
+            // APPPATH.'modules/siswa/views/headersiswa.php',
+
+            // APPPATH.'modules/siswa/views/vPengaturanProfile.php',
+            // $this->load->view('vPengaturanProfile', $data);
+
+            // APPPATH.'modules/testimoni/views/v-footer.php',
+            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/siswa/views/mobile/vm-f-ubahemail.php',
+            APPPATH.'modules/templating/views/layouts/v-footer.php',
+
+        );
+
+        $data['siswa'] = $this->msiswa->get_datsiswa();
+        $this->parser->parse( 'templating/layouts/index', $data );
+    }
+
+    public function passwordsetting() {
+         $data = array(
+
+            'judul_halaman' => 'Neon - Pengaturan Akun',
+
+            'judul_header' =>'Pengaturan Akun',
+
+            'judul_header2' =>'Pengaturan Akun'
+
+
+
+        );
+
+        $data['files'] = array( 
+
+            // APPPATH.'modules/homepage/views/v-header-login.php',
+
+            // APPPATH.'modules/siswa/views/headersiswa.php',
+
+            // APPPATH.'modules/siswa/views/vPengaturanProfile.php',
+            // $this->load->view('vPengaturanProfile', $data);
+
+            // APPPATH.'modules/testimoni/views/v-footer.php',
+            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/siswa/views/mobile/vm-f-ubahpassword.php',
+            APPPATH.'modules/templating/views/layouts/v-footer.php',
+        );
+
+        $data['siswa'] = $this->msiswa->get_datsiswa();
+        $this->parser->parse( 'templating/layouts/index', $data );
+    }
+
+    public function photosetting() {
+         $data = array(
+
+            'judul_halaman' => 'Neon - Pengaturan Akun',
+
+            'judul_header' =>'Pengaturan Akun',
+
+            'judul_header2' =>'Pengaturan Akun'
+
+
+
+        );
+
+        $data['files'] = array( 
+
+            // APPPATH.'modules/homepage/views/v-header-login.php',
+
+            // APPPATH.'modules/siswa/views/headersiswa.php',
+
+            // APPPATH.'modules/siswa/views/vPengaturanProfile.php',
+            // $this->load->view('vPengaturanProfile', $data);
+
+            // APPPATH.'modules/testimoni/views/v-footer.php',
+            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
+            APPPATH.'modules/templating/views/layouts/v-footer.php',
+        );
+
+        $data['siswa'] = $this->msiswa->get_datsiswa();
+        $this->parser->parse( 'templating/layouts/index', $data );
     }
 
 

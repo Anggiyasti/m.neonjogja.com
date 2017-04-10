@@ -94,8 +94,11 @@ class Welcome extends MX_Controller {
         $data['files'] = array( 
 
             // APPPATH.'modules/homepage/views/v-header-login.php',
-
+            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
             APPPATH.'modules/welcome/views/v-welcome.php',
+            APPPATH.'modules/templating/views/layouts/v-footer.php',
+
+            
 
             // APPPATH.'modules/welcome/views/v-tampil-tes.php',
 

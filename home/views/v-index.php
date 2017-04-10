@@ -18,7 +18,7 @@
                   <div class="valign center-align width-100 p-b-5em">
                     <h2 class="uppercase">Hello</h2>
                     <p>Selamat Datang di NEON! Tempatnya para pemenang belajar Online</p>
-                    <button class='btn btn-primary'>Masuk</button>
+                    <a href="<?= base_url('login');?>" class='btn btn-primary'>Masuk</a>
                   </div>
                 </div>
               </div>
@@ -27,7 +27,7 @@
                   <div class="valign left-align width-100 p-b-5em">
                     <h2 class="uppercase">Tryout dan Latihan</h2>
                     <p>Untuk melatih pemahaman kita, yuk kita latihan online !</p>
-                    <button class='btn btn-primary'>Mulai Latihan</button>
+                     <a href="<?= base_url('login');?>" class='btn btn-primary'>Mulai Latihan</a>
                   </div>
                 </div>
               </div>
@@ -36,7 +36,7 @@
                   <div class="valign right-align width-100 p-b-5em">
                     <h2 class="uppercase">Konsultasi</h2>
                     <p>Mata pelajaran susah dipahami? Yuk konsultasi dengan tutor NEON, Tutor nya baik baik loh.</p>
-                    <button class='btn btn-primary'>Konsultasi</button>
+                     <a href="<?= base_url('login');?>" class='btn btn-primary'>Konsultasi</a>
                   </div>
                 </div>
               </div>

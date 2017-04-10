@@ -939,7 +939,14 @@ $data['mataPelajaran'] = $this->mregister->get_matapelajaran();
 
 
             $data['files'] = array(
+
+                APPPATH . 'modules/templating/views/v-navbarlogin.php',
+                // APPPATH . 'modules/homepage/views/v-header.php',
+
                 APPPATH . 'modules/register/views/vResetPassword.php',
+
+                APPPATH . 'modules/homepage/views/v-footer.php',
+
             );
 
 
