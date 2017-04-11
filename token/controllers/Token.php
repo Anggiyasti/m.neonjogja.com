@@ -521,7 +521,8 @@ class Token extends MX_Controller {
 	
 
 
-
+		$penggunaID = $this->session->userdata['id'];
+  		$data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
 		$this->parser->parse( 'templating/index', $data );
 
 	}

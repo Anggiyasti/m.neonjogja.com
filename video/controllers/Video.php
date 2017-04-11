@@ -13,6 +13,7 @@ class Video extends MX_Controller {
         $this->load->library('sessionchecker');
         $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
+        $this->load->model( 'siswa/msiswa' );
 
     // 
     }
@@ -58,6 +59,8 @@ class Video extends MX_Controller {
 
             //get subab bab
             //$data['materisubab'] = $this->load->Mvideos->get_sub_by_babid( $babId );
+            $penggunaID = $this->session->userdata['id'];
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
             $data['semuavideo'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header.php',         
@@ -86,6 +89,8 @@ $this->sessionchecker->cek_token();
             'alias_pelajaran' => $data['meta']['aliasMataPelajaran']
         );
         //
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['bab_video'] = $this->load->Mvideos->get_video_as_bab($tingpelID);
         $data['files'] = array(
             APPPATH . 'modules/homepage/views/v-header-login.php',
@@ -113,6 +118,8 @@ $this->sessionchecker->cek_token();
         );
 
         //
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['bab_video'] = $this->load->Mvideos->get_video_as_sub($tingpelID);
         $data['files'] = array(
             // APPPATH . 'modules/homepage/views/v-header-login.php',
@@ -173,6 +180,8 @@ $this->sessionchecker->cek_token();
             $data['video_by_bab'] = $this->Mvideos->get_all_video_by_bab($idbab);
 
             $data['comments'] = $this->mkomen->get_komen_byvideo($idvideo);
+            $penggunaID = $this->session->userdata['id'];
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
 
             $data['files'] = array(
                 // APPPATH . 'modules/homepage/views/v-header-login.php',
@@ -279,6 +288,8 @@ $this->sessionchecker->cek_token();
 
             //get subab bab
             //$data['materisubab'] = $this->load->Mvideos->get_sub_by_babid( $babId );
+            $penggunaID = $this->session->userdata['id'];
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
             $data['semuavideo'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header.php',        
@@ -324,6 +335,8 @@ $this->sessionchecker->cek_token();
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
 
         // print_r($data['tingkat']);
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
         $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
@@ -351,6 +364,8 @@ $this->sessionchecker->cek_token();
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
 
         // print_r($data['tingkat']);
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
         $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
@@ -375,6 +390,8 @@ $this->sessionchecker->cek_token();
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
 
         // print_r($data['tingkat']);
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
         $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
@@ -399,6 +416,8 @@ $this->sessionchecker->cek_token();
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
 
         // print_r($data['tingkat']);
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
         $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
@@ -423,6 +442,8 @@ $this->sessionchecker->cek_token();
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
 
         // print_r($data['tingkat']);
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
         $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
