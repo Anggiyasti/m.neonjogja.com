@@ -572,13 +572,17 @@ class Siswa extends MX_Controller {
 
         $data['files'] = array( 
 
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            // APPPATH.'modules/templating/views/layouts/v-sidebar.php',
             APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
+            // APPPATH.'modules/templating/views/layouts/v-footer.php',
         );
 
         $data['siswa'] = $this->msiswa->get_datsiswa();
-        $this->parser->parse( 'templating/layouts/index', $data );
+        // $this->parser->parse( 'templating/layouts/index', $data );
+        $this->load->view('templating/layouts/v-header');
+        $this->load->view('templating/layouts/v-sidebar',$data);
+        $this->load->view('mobile/vm-f-ubahphoto', $data);
+        $this->load->view('templating/layouts/v-footer'); 
         } else {
             redirect('login');
         }
