@@ -24,10 +24,13 @@
 
           <!-- Project Author -->
           <div class="project-info">
-            <h2 class="uppercase">A single stroke</h2>
+            <h2 class="uppercase">A single stroke </h2>
             <span class="small">Drawing / Illustration / Painting</span>
             <p class="m-t-10 m-b-30">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+           
           </div>
+          
+          
           <div class="post-author m-20 animated fadeinright delay-2">
             <img src="img/user2.jpg" alt="" class="avatar circle">
             <span>Lora Bell</span>
