@@ -90,7 +90,7 @@ class Welcome extends MX_Controller {
         );
 
 
-        if ($this->session->userdata('penggunaID')) {
+        if ($this->session->userdata('NAMASISWA')) {
           
 
         $data['files'] = array( 
@@ -108,10 +108,10 @@ class Welcome extends MX_Controller {
         );
 
 
-        }
-        else{
-            redirect('login');
-        }
+            }
+            else{
+                redirect('login');
+            }
 
 
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
