@@ -67,8 +67,11 @@
           </div>  
         </li>
         <li><a href="contact.html" class="no-child"><i class="ion-chatbubbles"></i> Konsultasi</a></li>
+<<<<<<< HEAD
         
 
+=======
+>>>>>>> 447a082e7a438802d7629b3b09d8e67f5787538f
       </ul>
       <!-- End of Sidebars -->
 

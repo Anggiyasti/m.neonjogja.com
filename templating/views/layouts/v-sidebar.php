@@ -82,6 +82,9 @@
           </div>  
         </li>
         <li><a href="<?= base_url("konsultasi")?>" class="no-child"><i class="ion-chatbubbles"></i> Konsultasi</a></li>
+<<<<<<< HEAD
         <li><a href="<?php echo base_url('index.php/logout')?>" class="no-child"><i class="ion-android-exit"></i> Logout</a></li>
+=======
+>>>>>>> 447a082e7a438802d7629b3b09d8e67f5787538f
       </ul>
       <!-- End of Sidebars -->

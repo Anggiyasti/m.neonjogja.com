@@ -89,8 +89,13 @@ class Welcome extends MX_Controller {
 
         );
 
+<<<<<<< HEAD
         if ($this->session->userdata('penggunaID')) {
           
+=======
+
+
+>>>>>>> 447a082e7a438802d7629b3b09d8e67f5787538f
         $data['files'] = array( 
 
             // APPPATH.'modules/homepage/views/v-header-login.php',
@@ -98,6 +103,10 @@ class Welcome extends MX_Controller {
             APPPATH.'modules/welcome/views/v-welcome.php',
             APPPATH.'modules/templating/views/layouts/v-footer.php',
 
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 447a082e7a438802d7629b3b09d8e67f5787538f
 
             // APPPATH.'modules/welcome/views/v-tampil-tes.php',
 
@@ -105,11 +114,14 @@ class Welcome extends MX_Controller {
 
         );
 
+<<<<<<< HEAD
         }
         else{
             redirect('login');
         }
 
+=======
+>>>>>>> 447a082e7a438802d7629b3b09d8e67f5787538f
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
 
         // print_r($data['tingkat']);
