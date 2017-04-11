@@ -1,6 +1,6 @@
        <?php 
 
-        foreach ($siswa as $row) {
+        foreach ($sis as $row) {
 
             $namaDepan = $row['namaDepan'];
 
