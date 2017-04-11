@@ -1,3 +1,5 @@
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?= base_url('assetsnew/js/preview.js') ?>"></script>
        <?php 
 
         foreach ($sis as $row) {
@@ -16,7 +18,7 @@
 
             $alamatSekolah  = $row['alamatSekolah']; 
 
-            $photo=base_url().'assets/image/photo/siswa/'.$row['photo'];
+            $photo=base_url().'assetsnew/image/photo/siswa/'.$row['photo'];
 
             $oldphoto=$row['photo'];
 
@@ -40,33 +42,33 @@
           </div>
             <div class="banner-title"><?=$namaDepan;?> <?=$namaBelakang;?></div>
           </div>
-         </div>
 
          <!-- Profile Content -->
         <div class=" delay-1">
           <div class="card  delay-2">
-            <h5 class="uppercase">Photo</h5>
             <form class="col s12" name="form-account" action="<?=base_url()?>index.php/siswa/upload/<?=$oldphoto; ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
-            <div class="row">
-              <div class="file-field input-field">
-              <div class="btn">
-                <span>File</span>
-                <input type="file" multiple>
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Tidak ada file yang dipilih" id="file" name="photo" required="true">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12">
-              <button type="reset" class="col s12 btn accent-color waves-effect waves-light right" style="margin-bottom: 10px;">Reset</button>
-              <button type="submit" class="col s12 btn accent-color waves-effect waves-light right">Simpan Perubahan</button>
-              </div>
+            <div class="input-field">
+            <img id="preview" class="img-circle circle avatar" src="<?=$photo;?>" alt="" style="width: 150px; height: 150px;" />
+            <br><br>  
+            </div>  
+                  
+            <label for="file" class="btn primary-color" >
+            Pilih Gambar
+            </label>
+            
+            <input style="display:none;" type="file" id="file" name="photo" class="btn btn-default" required="true" onchange="ValidateSingleInput(this);" />
+            
+             <label class="btn primary-color"  onclick="restImgSoal()">Reset</label>
+            <?php echo form_error('password'); ?>
+            
+            <br><br> 
+                                                       <!--  <input type="hidden" name="id_siswa" value="<?=$id_siswa;?>"> -->
+            <div class="input-field">
+            <button type="submit" class="btn-large primary-color width-100">Simpan</button>
             </div>
 
             </form>
           </div>
-                      
         </div>
         
         </div> <!-- End of Main Contents -->
@@ -75,3 +77,42 @@
       </div> <!-- End of Page Content -->
 
     </div> <!-- End of Page Container -->
+
+<!-- start script js validation extension -->
+<script type="text/javascript">
+ var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+
+function ValidateSingleInput(oInput) {
+    if (oInput.type == "file") {
+        var sFileName = oInput.value;
+        console.log(sFileName);
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+             $('#notif').show();
+                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                // oInput.value = "";
+                return false;
+            }
+
+            file = oInput.files[0];
+            if (file.size > 508000 ) {
+               $('#size').show();
+               return false;
+            } 
+            
+        }
+    }
+    return true;
+}
+
+</script>
+<!-- END -->

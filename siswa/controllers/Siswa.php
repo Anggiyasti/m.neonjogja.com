@@ -20,6 +20,7 @@ class Siswa extends MX_Controller {
     //
 
     public function profilesetting() {
+        if ($this->session->userdata('NAMASISWA')) {
          $data = array(
 
             'judul_halaman' => 'Neon - Pengaturan Akun',
@@ -44,6 +45,9 @@ class Siswa extends MX_Controller {
         $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['sis'] = $this->msiswa->get_datsiswa();
         $this->parser->parse( 'templating/layouts/index', $data );
+        } else {
+            redirect('login');
+        }
     }
 
     public function index() {
@@ -197,30 +201,29 @@ class Siswa extends MX_Controller {
     }
 
     public function upload($oldphoto) {
-        var_dump($oldphoto);
-        // unlink(FCPATH . "./assetsnew/image/photo/siswa/" . $oldphoto);
-        // $config['upload_path'] = './assetsnew/image/photo/siswa';
-        // $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
-        // $config['max_size'] = 100;
-        // $config['max_width'] = 1024;
-        // $config['max_height'] = 768;
-        // $this->load->library('upload', $config);
+        unlink(FCPATH . "./assetsnew/image/photo/siswa/" . $oldphoto);
+        $config['upload_path'] = './assetsnew/image/photo/siswa';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
+        $config['max_size'] = 580;
+        $config['max_width'] = 2500;
+        $config['max_height'] = 1500;
+        $this->load->library('upload', $config);
 
-        // if (!$this->upload->do_upload('photo')) {
+        if (!$this->upload->do_upload('photo')) {
 
 
-        //     $data['error'] = array('error' => $this->upload->display_errors());
-        //     redirect('siswa/profilesetting');
+            $data['error'] = array('error' => $this->upload->display_errors());
+            // redirect('siswa/profilesetting');
 
-        // } else {
-        //     $file_data = $this->upload->data();
-        //     $photo = $file_data['file_name'];
-        //     $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
-        //     $this->msiswa->update_photo($photo);
-        //     // echo "berhasil upload"; //for testing
-        //     // $data['img'] = base_url().'/images/'.$file_data['file_name'];
-        //     // $this->load->view('beranda/success_msg',$data);
-        // }
+        } else {
+            $file_data = $this->upload->data();
+            $photo = $file_data['file_name'];
+            $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
+            $this->msiswa->update_photo($photo);
+            // echo "berhasil upload"; //for testing
+            // $data['img'] = base_url().'/images/'.$file_data['file_name'];
+            // $this->load->view('beranda/success_msg',$data);
+        }
     }
 
     ##menampilkan daftar siswa ajax
@@ -567,31 +570,39 @@ class Siswa extends MX_Controller {
     }
 
     public function photosetting() {
-         $data = array(
+        if ($this->session->userdata('NAMASISWA')) {
+             $data = array(
 
-            'judul_halaman' => 'Neon - Pengaturan Akun',
+                'judul_halaman' => 'Neon - Pengaturan Akun',
 
-            'judul_header' =>'Pengaturan Akun',
+                'judul_header' =>'Pengaturan Akun',
 
-            'judul_header2' =>'Pengaturan Akun'
+                'judul_header2' =>'Pengaturan Akun'
 
 
 
-        );
+            );
 
-        $data['files'] = array( 
+            $data['files'] = array( 
 
-            // APPPATH.'modules/testimoni/views/v-footer.php',
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
-            APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
-        );
+                APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+                APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
+                APPPATH.'modules/templating/views/layouts/v-footer.php',
+            );
 
-        $penggunaID = $this->session->userdata['id'];
-        
-        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
-        $data['sis'] = $this->msiswa->get_datsiswa();
-        $this->parser->parse( 'templating/layouts/index', $data );
+            $penggunaID = $this->session->userdata['id'];
+            
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+            $data['sis'] = $this->msiswa->get_datsiswa();
+            $this->parser->parse( 'templating/layouts/index', $data );
+            // $this->load->view('templating/layouts/v-header');
+            // $this->load->view('templating/layouts/v-sidebar', $data);
+            // $this->load->view('mobile/vm-f-ubahphoto', $data);
+            // $this->load->view('templating/layouts/v-footer');
+
+        } else {
+            redirect('login');
+        }
     }
 
 
