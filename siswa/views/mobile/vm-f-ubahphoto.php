@@ -46,6 +46,12 @@
         <div class=" delay-1">
           <div class="card  delay-2">
             <h5 class="uppercase">Photo</h5>
+            <div class="notification notification-danger" id="notif" hidden="true">
+            <a class="close-notification no-smoothState"><i class="ion-android-close"></i></a>
+            <h4>Silahkan cek type extension gambar!</h4>
+            <p>Type yang bisa di upload hanya .jpeg|.gif|.jpg|.png|.bmp</p>
+          </div>
+
             <form class="col s12" name="form-account" action="<?=base_url()?>index.php/siswa/upload/<?=$oldphoto; ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
             <div class="row">
               <div class="file-field input-field">
@@ -54,12 +60,12 @@
                 <input type="file" multiple>
               </div>
               <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Tidak ada file yang dipilih" id="file" name="photo" required="true">
+                <input class="file-path validate" type="text" placeholder="Tidak ada file yang dipilih" id="file" name="photo" required="true" onchange="ValidateSingleInput(this);">
               </div>
             </div>
             <div class="row">
               <div class="col s12">
-              <button type="reset" class="col s12 btn accent-color waves-effect waves-light right" style="margin-bottom: 10px;">Reset</button>
+              <button type="reset" class="col s12 btn accent-color waves-effect waves-light right" style="margin-bottom: 10px;" onclick="restImg()">Reset</button>
               <button type="submit" class="col s12 btn accent-color waves-effect waves-light right">Simpan Perubahan</button>
               </div>
             </div>
@@ -75,3 +81,46 @@
       </div> <!-- End of Page Content -->
 
     </div> <!-- End of Page Container -->
+
+<script type="text/javascript">
+  function restImg() {
+      $("input[name=photo]").val("");
+    }
+</script>
+<script type="text/javascript">
+ var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+
+function ValidateSingleInput(oInput) {
+    if (oInput.type == "file") {
+        var sFileName = oInput.value;
+        console.log(sFileName);
+         if (sFileName.length > 0) {
+            var blnValid = false;
+            for (var j = 0; j < _validFileExtensions.length; j++) {
+                var sCurExtension = _validFileExtensions[j];
+                if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                    blnValid = true;
+                    break;
+                }
+            }
+             
+            if (!blnValid) {
+             $('#notif').show();
+                // alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                // oInput.value = "";
+                return false;
+            }
+
+            file = oInput.files[0];
+            if (file.size > 508000 ) {
+               $('#size').show();
+               return false;
+            } 
+            
+        }
+    }
+    return true;
+}
+
+</script>
+<!-- END -->
