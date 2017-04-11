@@ -15,6 +15,7 @@ class Modulonline extends MX_Controller {
         $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
         $this->load->library('parser');
+        $this->load->model( 'siswa/msiswa' );
 
     }
 
@@ -900,6 +901,8 @@ class Modulonline extends MX_Controller {
             APPPATH.'modules/templating/views/layouts/v-footer.php',
         );
 
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['modul'] = $this->Mmodulonline->get_allsoal();
         $data['downloads'] = $this->Mmodulonline->get_modulteratas();
 
@@ -952,6 +955,8 @@ class Modulonline extends MX_Controller {
 
         );
 
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['modul'] = $this->Mmodulonline->modulsd();
         $data['downloads'] = $this->Mmodulonline->get_modulteratas();
 
@@ -1006,7 +1011,8 @@ class Modulonline extends MX_Controller {
             APPPATH.'modules/templating/views/layouts/v-footer.php',
 
         );
-
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['modul'] = $this->Mmodulonline->modulsmp();
         $data['downloads'] = $this->Mmodulonline->get_modulteratas();
 
@@ -1060,7 +1066,8 @@ class Modulonline extends MX_Controller {
             APPPATH.'modules/templating/views/layouts/v-footer.php',
 
         );
-
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['modul'] = $this->Mmodulonline->modulsma();
         $data['downloads'] = $this->Mmodulonline->get_modulteratas();
 
@@ -1114,7 +1121,8 @@ class Modulonline extends MX_Controller {
             APPPATH.'modules/templating/views/layouts/v-footer.php',
 
         );
-
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['modul'] = $this->Mmodulonline->modulsmaipa();
         $data['downloads'] = $this->Mmodulonline->get_modulteratas();
 
@@ -1168,7 +1176,8 @@ class Modulonline extends MX_Controller {
             APPPATH.'modules/templating/views/layouts/v-footer.php',
 
         );
-
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['modul'] = $this->Mmodulonline->modulsmaips();
         $data['downloads'] = $this->Mmodulonline->get_modulteratas();
 

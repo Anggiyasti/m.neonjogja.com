@@ -8,6 +8,7 @@ class Konsultasi extends MX_Controller{
     $this->load->model('tryout/mtryout');
     $this->load->model('tingkat/mtingkat');
     $this->load->model('matapelajaran/mmatapelajaran');
+    $this->load->model( 'siswa/msiswa' );
 
 
     parent::__construct();
@@ -38,6 +39,9 @@ class Konsultasi extends MX_Controller{
     APPPATH.'modules/konsultasi/views/mobile/vm-daftar-konsultasi.php',
     APPPATH.'modules/templating/views/layouts/v-footer.php',
     );
+
+  $penggunaID = $this->session->userdata['id'];
+  $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
   $data['mapel'] = $this->mmatapelajaran->get_mapel_by_tingkatID($this->get_tingkat_siswa());
   $data['questions']=$this->mkonsultasi->get_all_questions();
   $data['my_questions']=$this->mkonsultasi->get_my_questions($this->get_id_siswa());
@@ -85,6 +89,8 @@ public function bertanya($idsub){
     APPPATH.'modules/konsultasi/views/v-create-konsultasi.php',
     APPPATH.'modules/homepage/views/v-footer.php'
     );
+  $penggunaID = $this->session->userdata['id'];
+  $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
   $this->parser->parse( 'templating/index', $data );
 }
 
@@ -123,7 +129,8 @@ public function singlekonsultasi($id_pertanyaan){
     );
 
 
-
+  $penggunaID = $this->session->userdata['id'];
+  $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
   $this->parser->parse( 'templating/layouts/index', $data );
 }
 
