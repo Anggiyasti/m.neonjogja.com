@@ -421,15 +421,7 @@ class Mmatapelajaran extends CI_Model {
 
 
 
-     public function get_datsiswa($penggunaID) {
-        // $penggunaID = $this->session->userdata['id'];
-       
-        $this->db->select('namaDepan,namaBelakang,alamat,noKontak,namaSekolah,alamatSekolah,biografi,photo');
-        $this->db->from('tb_siswa');
-        $this->db->where('penggunaID',$penggunaID);
-        $query = $this->db->get();
-        return $query->result();
-    }
+    
 
 }
 

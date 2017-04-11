@@ -49,7 +49,7 @@ class Welcome extends MX_Controller {
         $this->load->model( 'matapelajaran/mmatapelajaran' );
 
         $this->load->model( 'tingkat/MTingkat' );
-        // $this->load->model( 'Siswa/Msiswa' );
+        $this->load->model( 'siswa/Msiswa' );
 
 
 
@@ -120,7 +120,7 @@ class Welcome extends MX_Controller {
         
 
         // print_r($data['tingkat']);
-        $data['siswa'] = $this->load->mmatapelajaran->get_datsiswa($penggunaID);
+        $data['siswa'] = $this->load->Msiswa->get_siswapoto($penggunaID);
         $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
         $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
