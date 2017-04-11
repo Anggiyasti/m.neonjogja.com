@@ -4,18 +4,21 @@
       <ul id="slide-out-left" class="side-nav collapsible">
         <li>
           <div class="sidenav-header primary-color">
+          <?php foreach ($siswa as $s): ?>
             <div class="nav-social">
               <i class="ion-social-facebook"></i>
               <i class="ion-social-twitter"></i>
               <i class="ion-social-tumblr"></i>
             </div>
             <div class="nav-avatar">
-              <img class="circle avatar" src="http://placehold.it/70x70" alt="">
+
+              <img class="circle avatar" src="<?= base_url('./assetsnew/img/profile/'. $s->photo) ?>" alt="">
               <div class="avatar-body">
                 <h3>Halo</h3>
                 <p style="font-size:15px"><?= $this->session->userdata['NAMASISWA']?></p>
               </div>
             </div>
+            <?php endforeach ?> 
           </div>
         </li>
          <li><a href="<?=base_url('index.php/welcome')?>" class="no-child"><i class="ion-android-home"></i>Home</a></li>
