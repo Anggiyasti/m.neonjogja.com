@@ -938,7 +938,7 @@ class Modulonline extends MX_Controller {
 
         );
 
-
+        if ($this->session->userdata('NAMASISWA')) {
 
         $data['files'] = array( 
 
@@ -977,6 +977,9 @@ class Modulonline extends MX_Controller {
         $data['posts'] = $this->Mmodulonline->getRowssd(array('limit'=>$this->perPage));
   
         $this->parser->parse( 'templating/layouts/index', $data );
+    }else{
+        redirect('login');
+    }
 
     }
 
@@ -994,7 +997,7 @@ class Modulonline extends MX_Controller {
 
         );
 
-
+         if ($this->session->userdata('NAMASISWA')) {
 
         $data['files'] = array( 
 
@@ -1033,6 +1036,9 @@ class Modulonline extends MX_Controller {
         $data['posts'] = $this->Mmodulonline->getRowssmp(array('limit'=>$this->perPage));
   
         $this->parser->parse( 'templating/layouts/index', $data );
+    }else{
+        redirect('login');
+    }
 
     }
 
@@ -1051,7 +1057,7 @@ class Modulonline extends MX_Controller {
         );
 
 
-
+         if ($this->session->userdata('NAMASISWA')) {
         $data['files'] = array( 
 
             // APPPATH.'modules/homepage/views/v-header-login.php',
@@ -1088,6 +1094,9 @@ class Modulonline extends MX_Controller {
         $data['posts'] = $this->Mmodulonline->getRowssma(array('limit'=>$this->perPage));
   
         $this->parser->parse( 'templating/layouts/index', $data );
+    }else{
+        redirect('login');
+    }
 
     }
 
@@ -1106,7 +1115,7 @@ class Modulonline extends MX_Controller {
         );
 
 
-
+         if ($this->session->userdata('NAMASISWA')) {
         $data['files'] = array( 
 
             // APPPATH.'modules/homepage/views/v-header-login.php',
@@ -1143,6 +1152,9 @@ class Modulonline extends MX_Controller {
         $data['posts'] = $this->Mmodulonline->getRowssmaipa(array('limit'=>$this->perPage));
   
         $this->parser->parse( 'templating/layouts/index', $data );
+    }else{
+        redirect('login');
+    }
 
     }
 
@@ -1161,7 +1173,7 @@ class Modulonline extends MX_Controller {
         );
 
 
-
+        if ($this->session->userdata('NAMASISWA')) {
         $data['files'] = array( 
 
             // APPPATH.'modules/homepage/views/v-header-login.php',
@@ -1198,6 +1210,9 @@ class Modulonline extends MX_Controller {
         $data['posts'] = $this->Mmodulonline->getRowssmaips(array('limit'=>$this->perPage));
   
         $this->parser->parse( 'templating/layouts/index', $data );
+    }else{
+        redirect('login');
+    }
 
     }
 

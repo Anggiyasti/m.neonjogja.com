@@ -37,12 +37,12 @@
                   <div class="collection collapsible-body">
 
                     <?php if ($bab_video_items->jenis_video == 1): ?>
-                      <a href="<?=base_url('video/videosub/');?><?=$bab_video_items->subbabID;?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(S)</a>
+                       <div class="collection-item collapsible-body"><h6><a href="<?=base_url('video/videosub/');?><?=$bab_video_items->subbabID;?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(S)</a></h6></div>
                     <?php endif ?>
 
                     <?php }else{ ?>
                     <?php if ($bab_video_items->jenis_video == 1): ?>
-                    <a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(S)</a>
+                    <div class="collection-item collapsible-body"><h6><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(S)</a></h6></div>
                     <?php endif ?>
 
                     <?php } ?>
@@ -73,12 +73,12 @@
 
                   <div class="collection collapsible-body">
                     <?php if ($bab_video_items->jenis_video != 1): ?>
-                      <a href="<?=base_url('video/videosub/');?><?=$bab_video_items->subbabID;?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(R)</a>
+                       <div class="collection-item collapsible-body"><h6><a href="<?=base_url('video/videosub/');?><?=$bab_video_items->subbabID;?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(R)</a></h6></div>
                     <?php endif ?>
 
                     <?php }else{ ?>
                     <?php if ($bab_video_items->jenis_video != 1): ?>
-                    <a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(R)</a>
+                    <div class="collection-item collapsible-body"><h6><a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(R)</a></h6></div>
                     <?php endif ?>
                     <?php } ?>
                     <?php   $cekjudulbab=$judulbab;

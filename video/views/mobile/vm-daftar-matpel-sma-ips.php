@@ -1,5 +1,5 @@
 <!-- Page Content -->
-      <div id="content" class="page" style="min-height: 320px">
+      <div id="content" class="page" style="min-height: 425px;">
 
         <!-- Toolbar -->
         <div id="toolbar" class="primary-color">

@@ -1,6 +1,8 @@
-
 <!-- Page Content -->
-      <div id="content" class="page" style="min-height: 320px">
+      <div class="m-scene" id="main"> <!-- Main Container -->
+
+      <div id="content" class="page" style="min-height: 425px;">
+
 
         <!-- Toolbar -->
         <div id="toolbar" class="primary-color">
@@ -25,8 +27,10 @@
               </div>
             </li>
           </ul>
-          
         </div> <!-- End of Main Contents -->
       
          
-    
+      </div> <!-- End of Page Content -->
+
+
+
