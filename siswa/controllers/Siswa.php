@@ -201,7 +201,7 @@ class Siswa extends MX_Controller {
     }
 
     public function upload($oldphoto) {
-        unlink(FCPATH . "./assetsnew/image/photo/siswa/" . $oldphoto);
+        // unlink(FCPATH . "./assetsnew/image/photo/siswa/" . $oldphoto);
         $config['upload_path'] = './assetsnew/image/photo/siswa';
         $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
         $config['max_size'] = 580;

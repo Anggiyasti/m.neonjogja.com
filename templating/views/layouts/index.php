@@ -25,6 +25,7 @@
     <link href="<?= base_url('assetsnew/css/swipebox.min.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assetsnew/css/style.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assetsnew/css/stylenew.css') ?>" rel="stylesheet" type="text/css">
+
     <!-- style -->
     <link rel="stylesheet" href="<?= base_url('assetsnew/css/sweetalert.css');?>"> 
 
@@ -47,6 +48,8 @@
         </div> <!-- End of Main Contents -->  
     </div> <!-- End of Page Content -->
 </div> <!-- End of Page Container -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?= base_url('assetsnew/js/preview.js') ?>"></script> -->
     <script src="<?= base_url('assetsnew/js/jquery-2.1.0.min.js') ?>"></script>
     <script src="<?= base_url('assetsnew/js/jquery.swipebox.min.js') ?>"></script>   
     <script src="<?= base_url('assetsnew/js/materialize.min.js') ?>"></script> 
