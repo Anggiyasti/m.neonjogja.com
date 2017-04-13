@@ -35,7 +35,6 @@ class Msiswa extends CI_Model {
         $penggunaID = $this->session->userdata['id'];
         $this->db->where('penggunaID', $penggunaID);
         $this->db->update('tb_siswa', $data);
-        redirect(site_url('login'));
     }
 
     public function get_siswa() {

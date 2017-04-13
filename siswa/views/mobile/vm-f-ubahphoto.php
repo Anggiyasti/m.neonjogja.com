@@ -1,3 +1,5 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?= base_url('assetsnew/js/preview.js') ?>"></script> 
        <?php 
 
         foreach ($sis as $row) {
@@ -16,14 +18,16 @@
 
             $alamatSekolah  = $row['alamatSekolah']; 
 
-            $photo=base_url().'assets/image/photo/siswa/'.$row['photo'];
+            $photo=base_url().'assetsnew/image/photo/siswa/'.$row['photo'];
 
             $oldphoto=$row['photo'];
 
         } ;
 
      ?>  
-       <!-- Page Content -->
+
+
+      <!-- Page Content -->
       <div id="content" class="page">
 
         <!-- Toolbar -->
@@ -40,58 +44,51 @@
           </div>
             <div class="banner-title"><?=$namaDepan;?> <?=$namaBelakang;?></div>
           </div>
-         </div>
 
-         <!-- Profile Content -->
-        <div class=" delay-1">
+        <!-- Article Content -->
+       <div class=" delay-1">
           <div class="card  delay-2">
-            <h5 class="uppercase">Photo</h5>
-            <div class="notification notification-danger" id="notif" hidden="true">
-              <a class="close-notification no-smoothState"><i class="ion-android-close"></i></a>
-              <h4>Silahkan cek type extension gambar!</h4>
-              <p>Type yang bisa di upload hanya .jpeg|.gif|.jpg|.png|.bmp</p>
-            </div>
-            <div class="notification notification-danger" id="size" hidden="true">
-              <a class="close-notification no-smoothState"><i class="ion-android-close"></i></a>
-              <h4>Silahkan cek ukuran gambar!</h4>
-              <p>Ukuran yang bisa di upload maksimal 500Kb! </p>
-            </div>
+          <div class="form-inputs">
+          <div class="notification notification-danger" id="notif" hidden="true">
+            <a class="close-notification no-smoothState"><i class="ion-android-close"></i></a>
+            <h4>Silahkan cek type extension gambar!</h4>
+            <p>Type yang bisa di upload hanya .jpeg|.gif|.jpg|.png|.bmp</p>
+          </div>
 
+          <div class="notification notification-danger" id="size" hidden="true">
+            <a class="close-notification no-smoothState"><i class="ion-android-close"></i></a>
+            <h4>Silahkan cek ukuran gambar!</h4>
+            <p>Ukuran yang bisa di upload maksimal 500Kb! </p>
+          </div>
+          <?php echo $this->session->flashdata('updsiswa'); ?>
             <form class="col s12" name="form-account" action="<?=base_url()?>index.php/siswa/upload/<?=$oldphoto; ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
-            <div class="row">
-              <div class="file-field input-field">
-              <div class="btn">
-                <span>File <?=$oldphoto;?></span>
-                <input type="file" multiple>
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Tidak ada file yang dipilih" id="file" name="photo" required="true" onchange="ValidateSingleInput(this);">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12">
-              <button type="reset" class="col s12 btn accent-color waves-effect waves-light right" style="margin-bottom: 10px;" onclick="restImg()">Reset</button>
-              <button type="submit" class="col s12 btn accent-color waves-effect waves-light right">Simpan Perubahan</button>
-              </div>
+            <div class="input-field">
+            ` <img id="preview" class="img-circle circle avatar" src="<?=$photo;?>" alt="" style="width: 150px; height: 150px;" />
+              <br><br>  
+            </div>  
+                  
+            <label for="file" class="btn">
+            File
+            </label>
+            
+            <input style="display:none;" type="file" id="file" name="photo" class="btn btn-default" required="true" onchange="ValidateSingleInput(this);" />
+            
+            <br><br>
+            <div>
+              <label class="btn-large primary-color width-100" onclick="restImg()">Reset</label>
+            </div> 
+            <div class="input-field">
+            <button type="submit" class="btn-large primary-color width-100">Simpan</button>
             </div>
 
             </form>
           </div>
-                      
-        </div>
-        
-        </div> <!-- End of Main Contents -->
-      
-         
-      </div> <!-- End of Page Content -->
+            
+          </div>
 
-    </div> <!-- End of Page Container -->
-
-<script type="text/javascript">
-  function restImg() {
-      $("input[name=photo]").val("");
-    }
-</script>
+          
+        </div> 
+<!-- start script js validation extension -->
 <script type="text/javascript">
  var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
 
@@ -127,5 +124,15 @@ function ValidateSingleInput(oInput) {
     return true;
 }
 
+function restImg() {
+      $("input[name=photo]").val("");
+      $('#preview').attr('src', "");
+      $('#file').text("");
+      $('#filetypeSoal').text("");
+      $('#filesizeSoal').text("");
+    }
 </script>
 <!-- END -->
+
+
+    

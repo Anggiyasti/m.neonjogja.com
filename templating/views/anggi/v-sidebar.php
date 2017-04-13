@@ -1,35 +1,8 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <title>Halo - Mobile Template</title>
-    <meta content="IE=edge" http-equiv="x-ua-compatible">
-    <meta content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="yes" name="apple-touch-fullscreen">
-    <!-- Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-    <!-- Icons -->
-    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" media="all" rel="stylesheet" type="text/css">
-    <!-- Styles -->
-    <link href="<?php echo base_url('assetsnew/css/keyframes.css')?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo base_url('assetsnew/css/materialize.min.css')?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo base_url('assetsnew/css/swiper.css')?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo base_url('assetsnew/css/swipebox.min.css')?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo base_url('assetsnew/css/style.css')?>" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="<?= base_url('assetsnew/css/sweetalert-dev.js');?>"></script>
-    <link rel="stylesheet" href="<?= base_url('assetsnew/js/sweetalert.css');?>">
-    <script type="text/javascript" src="<?= base_url('assetsnew/js/preview.js') ?>"></script>
-
-    </script>
-   
-  </head>
 
 
-  <body>
-    <div class="m-scene" id="main"> <!-- Main Container -->
-    <!-- Right Sidebar -->
-     <ul id="slide-out-left" class="side-nav collapsible">
+      <!-- Sidebars -->
+      
+      <ul id="slide-out-left" class="side-nav collapsible">
         <li>
           <div class="sidenav-header primary-color">
               <?php foreach ($siswa as $s): ?> 

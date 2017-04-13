@@ -35,9 +35,9 @@ class Siswa extends MX_Controller {
 
         $data['files'] = array( 
 
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
             APPPATH.'modules/siswa/views/mobile/v-pengaturan-profile.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
 
         );
         $penggunaID = $this->session->userdata['id'];
@@ -220,9 +220,14 @@ class Siswa extends MX_Controller {
             $photo = $file_data['file_name'];
             $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
             $this->msiswa->update_photo($photo);
-            // echo "berhasil upload"; //for testing
-            // $data['img'] = base_url().'/images/'.$file_data['file_name'];
-            // $this->load->view('beranda/success_msg',$data);
+            $this->session->set_flashdata('updsiswa','<div class="alert alert-warning fade in">
+
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+                                    <span class="semibold">Note :</span>&nbsp;&nbsp;Photo profilmu telah berubah.
+
+                                </div>');
+            redirect('siswa/photosetting');
         }
     }
 
@@ -585,27 +590,54 @@ class Siswa extends MX_Controller {
 
             $data['files'] = array( 
 
-                APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+                APPPATH.'modules/templating/views/anggi/v-sidebar.php',
                 APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
-                APPPATH.'modules/templating/views/layouts/v-footer.php',
+                APPPATH.'modules/templating/views/anggi/v-footer.php',
             );
 
             $penggunaID = $this->session->userdata['id'];
             
             $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
             $data['sis'] = $this->msiswa->get_datsiswa();
-            $this->parser->parse( 'templating/layouts/index', $data );
-            // $this->load->view('templating/layouts/v-header');
-            // $this->load->view('templating/layouts/v-sidebar', $data);
-            // $this->load->view('mobile/vm-f-ubahphoto', $data);
-            // $this->load->view('templating/layouts/v-footer');
+            $this->parser->parse( 'templating/anggi/index', $data );
 
         } else {
             redirect('login');
         }
     }
 
+    public function coba()
+    {
+        if ($this->session->userdata('NAMASISWA')) {
+             $data = array(
 
+                'judul_halaman' => 'Neon - Pengaturan Akun',
+
+                'judul_header' =>'Pengaturan Akun',
+
+                'judul_header2' =>'Pengaturan Akun'
+
+
+
+            );
+
+            $data['files'] = array( 
+
+                APPPATH.'modules/templating/views/anggi/v-sidebar.php',
+                APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
+                APPPATH.'modules/templating/views/anggi/v-footer.php',
+            );
+
+            $penggunaID = $this->session->userdata['id'];
+            
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+            $data['sis'] = $this->msiswa->get_datsiswa();
+            $this->parser->parse( 'templating/anggi/index', $data );
+
+        } else {
+            redirect('login');
+        }
+    }
 }
 
 ?>
