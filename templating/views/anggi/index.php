@@ -53,4 +53,6 @@
     <script src="<?= base_url('assetsnew/js/chart.min.js') ?>"></script>
     <script src="<?= base_url('assetsnew/js/functions.js') ?>"></script>
     <script src="<?= base_url('assetsnew/js/sweetalert-dev.js');?>"></script>
+</body>
+</html>
    

@@ -62,23 +62,20 @@
           </div>
           <?php echo $this->session->flashdata('updsiswa'); ?>
             <form class="col s12" name="form-account" action="<?=base_url()?>index.php/siswa/upload/<?=$oldphoto; ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data" >
-            <div class="input-field">
-            ` <img id="preview" class="img-circle circle avatar" src="<?=$photo;?>" alt="" style="width: 150px; height: 150px;" />
-              <br><br>  
-            </div>  
-                  
-            <label for="file" class="btn">
-            File
-            </label>
-            
-            <input style="display:none;" type="file" id="file" name="photo" class="btn btn-default" required="true" onchange="ValidateSingleInput(this);" />
-            
-            <br><br>
-            <div>
-              <label class="btn-large primary-color width-100" onclick="restImg()">Reset</label>
-            </div> 
-            <div class="input-field">
-            <button type="submit" class="btn-large primary-color width-100">Simpan</button>
+             <div class="row">
+              <div class="col s12">
+                <img id="preview" class="img-circle circle avatar" src="<?=$photo;?>" alt="" style="width: 150px; height: 150px; margin-bottom: 30px;" />
+                <label for="file" class="btn" style="margin-bottom: 10px;">
+                 File
+                </label>
+                <input style="display:none;" type="file" id="file" name="photo" class="btn btn-default" required="true" onchange="ValidateSingleInput(this);" />
+              </div> 
+            </div>
+            <div class="row"> 
+              <div class="col s12">
+                <button type="reset" class="col s12 btn accent-color waves-effect waves-light right" style="margin-bottom: 10px;" onclick="restImg()">Reset</button>
+                <button type="submit" class="col s12 btn accent-color waves-effect waves-light right">Simpan</button>
+            </div>
             </div>
 
             </form>

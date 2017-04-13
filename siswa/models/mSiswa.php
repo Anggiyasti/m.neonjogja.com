@@ -18,14 +18,12 @@ class Msiswa extends CI_Model {
             'eMail' => $data['eMail'],
             );
         $this->session->set_userdata($sess_array);
-        redirect(site_url('siswa/profilesetting'));
     }
 
     public function update_katasandi($data) {
         $id = $this->session->userdata['id'];
         $this->db->where('id', $id);
         $this->db->update('tb_pengguna', $data);
-        redirect(site_url('siswa/profilesetting'));
     }
 
     public function update_photo($photo) {

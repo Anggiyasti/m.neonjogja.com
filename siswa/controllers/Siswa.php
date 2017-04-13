@@ -12,13 +12,17 @@ class Siswa extends MX_Controller {
          $this->load->model('cabang/mcabang');
         $this->load->helper('session');
         $this->load->library('parser');
-
-        // sessionkonfirm();
-        // get_session_siswa();
     }
 
-    //
+    public function index() {
+        $data['siswa'] = $this->msiswa->get_datsiswa();
+        $this->load->view('templating/t-header');
+        $this->load->view('templating/t-navbarUser');
+        $this->load->view('t-profile-siswa', $data);
+        $this->load->view('templating/t-footer');
+    }
 
+    // FUNGSI VIEW PROFILE SISWA
     public function profilesetting() {
         if ($this->session->userdata('NAMASISWA')) {
          $data = array(
@@ -28,9 +32,6 @@ class Siswa extends MX_Controller {
             'judul_header' =>'Pengaturan Akun',
 
             'judul_header2' =>'Pengaturan Akun'
-
-
-
         );
 
         $data['files'] = array( 
@@ -50,23 +51,7 @@ class Siswa extends MX_Controller {
         }
     }
 
-    public function index() {
-        $data['siswa'] = $this->msiswa->get_datsiswa();
-        $this->load->view('templating/t-header');
-        $this->load->view('templating/t-navbarUser');
-        $this->load->view('t-profile-siswa', $data);
-        $this->load->view('templating/t-footer');
-    }
-
-    //menampilkan halaman pengaturan profile
-    public function PengaturanProfile() {
-        $data['tb_siswa'] = $this->msiswa->get_datsiswa();
-        $this->load->view('templating/t-header');
-        $this->load->view('templating/t-navbarUser');
-        $this->load->view('vPengaturanProfile', $data);
-        $this->load->view('templating/t-footer');
-    }
-
+    // FUNGSI UNTUK UBAH PROFILE SISWA
     public function ubahprofilesiswa() {
         //load library n helper
         $this->load->helper(array('form', 'url'));
@@ -84,14 +69,7 @@ class Siswa extends MX_Controller {
         $this->form_validation->set_message('min_length', '*Nama Pengguna minimal 5 karakter!');
         $this->form_validation->set_message('required', '*tidak boleh kosong!');
 
-
-
         if ($this->form_validation->run() == FALSE) {
-            // $data['siswa'] = $this->msiswa->get_datsiswa();
-            // $this->load->view('templating/t-header');
-            // $this->load->view('templating/t-navbarUser');
-            // $this->load->view('vPengaturanProfile', $data);
-            // $this->load->view('templating/t-footer');
             $this->profilesetting();
         } else {
             $namaDepan = htmlspecialchars($this->input->post('namadepan'));
@@ -118,45 +96,170 @@ class Siswa extends MX_Controller {
         }
     }
 
-    public function ubahemailsiswa() {
+    // FUNGSI VIEW UBAH PHOTO
+    public function photosetting() {
+        if ($this->session->userdata('NAMASISWA')) {
+             $data = array(
 
-        //load library n helper
-        $this->load->helper(array('form', 'url'));
-        $this->load->library('form_validation');
+                'judul_halaman' => 'Neon - Pengaturan Akun',
 
+                'judul_header' =>'Pengaturan Akun',
 
-        //load library n helper
-        $this->load->helper(array('form', 'url'));
-        $this->load->library('form_validation');
-
-        //syarat pengisian form perubahan nama pengguna dan email
-
-        $this->form_validation->set_rules('email', 'email', 'required|is_unique[tb_pengguna.eMail]');
-
-        //pesan error atau pesan kesalahan pengisian form
-        $this->form_validation->set_message('is_unique', '*Email sudah terpakai');
-        $this->form_validation->set_message('required', '*tidak boleh kosong!');
+                'judul_header2' =>'Pengaturan Akun'
 
 
-        if ($this->form_validation->run() == FALSE) {
-             $this->profilesetting();
-        // sessionkonfirm();
-        // sessionsiswa();
 
-       
-        } else {
-            $email = htmlspecialchars($this->input->post('email'));
-
-            $data_post = array(
-                'eMail' => $email,
             );
-            $this->session->set_flashdata('updsiswa', 'Emailmu telah berhasil dirubah');
-            $this->msiswa->update_email($data_post);
 
+            $data['files'] = array( 
 
+                APPPATH.'modules/templating/views/anggi/v-sidebar.php',
+                APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
+                APPPATH.'modules/templating/views/anggi/v-footer.php',
+            );
+
+            $penggunaID = $this->session->userdata['id'];
+            
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+            $data['sis'] = $this->msiswa->get_datsiswa();
+            $this->parser->parse( 'templating/anggi/index', $data );
+
+        } else {
+            redirect('login');
         }
     }
 
+    // FUNGSI UNTUK UPLOAD PHOTO
+     public function upload($oldphoto) {
+        unlink(FCPATH . "./assetsnew/image/photo/siswa/" . $oldphoto);
+        $config['upload_path'] = './assetsnew/image/photo/siswa';
+        $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
+        $config['max_size'] = 580;
+        $config['max_width'] = 2500;
+        $config['max_height'] = 1500;
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('photo')) {
+
+            $data['error'] = array('error' => $this->upload->display_errors());
+
+        } else {
+            $file_data = $this->upload->data();
+            $photo = $file_data['file_name'];
+            $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
+            $this->msiswa->update_photo($photo);
+            $this->session->set_flashdata('updsiswa','<div class="alert alert-warning fade in">
+
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+                                    <span class="semibold">Note :</span>&nbsp;&nbsp;Photo profilmu telah berubah.
+
+                                </div>');
+            redirect('siswa/photosetting');
+        }
+    }
+
+    // VIEW UBAH EMAIL
+    public function emailsetting() {
+        if ($this->session->userdata('NAMASISWA')) {
+             $data = array(
+                'judul_halaman' => 'Neon - Pengaturan Akun',
+                'judul_header' =>'Pengaturan Akun',
+                'judul_header2' =>'Pengaturan Akun'
+            );
+
+            $data['files'] = array( 
+
+                APPPATH.'modules/templating/views/anggi/v-sidebar.php',
+                APPPATH.'modules/siswa/views/mobile/vm-f-ubahemail.php',
+                APPPATH.'modules/templating/views/anggi/v-footer.php',
+
+            );
+
+            $penggunaID = $this->session->userdata['id'];
+            
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+            $data['sis'] = $this->msiswa->get_datsiswa();
+            $this->parser->parse( 'templating/anggi/index', $data );
+        } else {
+            redirect('login');
+        }
+    }
+
+    // FUNGSI UNTUK UPDATE EMAIL
+    public function ubahemailsiswa() {
+        if ($this->session->userdata('NAMASISWA')) {
+            //load library n helper
+            $this->load->helper(array('form', 'url'));
+            $this->load->library('form_validation');
+
+
+            //load library n helper
+            $this->load->helper(array('form', 'url'));
+            $this->load->library('form_validation');
+
+            //syarat pengisian form perubahan nama pengguna dan email
+
+            $this->form_validation->set_rules('email', 'email', 'required|is_unique[tb_pengguna.eMail]');
+
+            //pesan error atau pesan kesalahan pengisian form
+            $this->form_validation->set_message('is_unique', '*Email sudah terpakai');
+            $this->form_validation->set_message('required', '*tidak boleh kosong!');
+
+
+            if ($this->form_validation->run() == FALSE) {
+                 $this->emailsetting();
+           
+            } else {
+                $email = htmlspecialchars($this->input->post('email'));
+
+                $data_post = array(
+                    'eMail' => $email,
+                );
+                $this->msiswa->update_email($data_post);
+                $this->session->set_flashdata('updsiswa','<div class="alert alert-warning fade in">
+
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+                                        <span class="semibold">Note :</span>&nbsp;&nbsp;Emailmu telah berubah.
+
+                                    </div>');
+                redirect('siswa/emailsetting');
+            }
+        } else {
+            redirect('login');
+        }
+    }
+
+    // VIEW UBAH PASSWORD
+    public function passwordsetting() {
+         $data = array(
+
+            'judul_halaman' => 'Neon - Pengaturan Akun',
+
+            'judul_header' =>'Pengaturan Akun',
+
+            'judul_header2' =>'Pengaturan Akun'
+
+
+
+        );
+
+        $data['files'] = array( 
+
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
+            APPPATH.'modules/siswa/views/mobile/vm-f-ubahpassword.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
+        );
+
+        $penggunaID = $this->session->userdata['id'];
+            
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+        $data['sis'] = $this->msiswa->get_datsiswa();
+        $this->parser->parse( 'templating/anggi/index', $data );
+    }
+
+    // fungsi update password
     public function ubahkatasandi() {
 
         //load library n helper
@@ -175,11 +278,7 @@ class Siswa extends MX_Controller {
 
 
         if ($this->form_validation->run() == FALSE) {
-            // $data['siswa'] = $this->msiswa->get_datsiswa();
-            // $this->load->view('templating/t-header');
-            // $this->load->view('templating/t-navbarUser');
-            // $this->load->view('vPengaturanProfile', $data);
-            // $this->load->view('templating/t-footer');
+
             $this->profilesetting();
         } else {
             $kataSandi = htmlspecialchars(md5($this->input->post('newpass')));
@@ -187,50 +286,24 @@ class Siswa extends MX_Controller {
             $data_post = array('kataSandi' => $kataSandi,);
             $data['pengguna'] = $this->msiswa->get_password()[0];
             $kataSandi = $data['pengguna']['kataSandi'];
-            // var_dump($kataSandi);
             if ($kataSandi == $inputSandi) {
-                $this->session->set_flashdata('updsiswa', 'Passwordmu telah berubah');
                 $this->msiswa->update_katasandi($data_post);
+                $this->session->set_flashdata('updsiswa','<div class="alert alert-warning fade in">
+
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+                                        <span class="semibold">Note :</span>&nbsp;&nbsp;Password telah berubah.
+
+                                    </div>');
+                redirect(site_url('siswa/passwordsetting'));
             } else {
-                // code...
-                // echo "salah"; //for testing
                 $this->session->set_flashdata('updsiswa', 'Password gagal  dirubah, password lama salah');
-                redirect(site_url('siswa/profilesetting'));
+                redirect(site_url('siswa/passwordsetting'));
             }
         }
     }
 
-    public function upload($oldphoto) {
-        // unlink(FCPATH . "./assetsnew/image/photo/siswa/" . $oldphoto);
-        $config['upload_path'] = './assetsnew/image/photo/siswa';
-        $config['allowed_types'] = 'jpeg|gif|jpg|png|mkv';
-        $config['max_size'] = 580;
-        $config['max_width'] = 2500;
-        $config['max_height'] = 1500;
-        $this->load->library('upload', $config);
-
-        if (!$this->upload->do_upload('photo')) {
-
-
-            $data['error'] = array('error' => $this->upload->display_errors());
-            // redirect('siswa/profilesetting');
-
-        } else {
-            $file_data = $this->upload->data();
-            $photo = $file_data['file_name'];
-            $this->session->set_flashdata('updsiswa', 'Foto profilmu telah berubah');
-            $this->msiswa->update_photo($photo);
-            $this->session->set_flashdata('updsiswa','<div class="alert alert-warning fade in">
-
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-
-                                    <span class="semibold">Note :</span>&nbsp;&nbsp;Photo profilmu telah berubah.
-
-                                </div>');
-            redirect('siswa/photosetting');
-        }
-    }
-
+   
     ##menampilkan daftar siswa ajax
 
     public function ajax_daftar_siswa() {
@@ -509,135 +582,8 @@ class Siswa extends MX_Controller {
         $this->parser->parse( 'templating/index', $data );
     }
 
-    public function emailsetting() {
-         $data = array(
-
-            'judul_halaman' => 'Neon - Pengaturan Akun',
-
-            'judul_header' =>'Pengaturan Akun',
-
-            'judul_header2' =>'Pengaturan Akun'
-
-
-
-        );
-
-        $data['files'] = array( 
-
-            // APPPATH.'modules/homepage/views/v-header-login.php',
-
-            // APPPATH.'modules/siswa/views/headersiswa.php',
-
-            // APPPATH.'modules/siswa/views/vPengaturanProfile.php',
-            // $this->load->view('vPengaturanProfile', $data);
-
-            // APPPATH.'modules/testimoni/views/v-footer.php',
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
-            APPPATH.'modules/siswa/views/mobile/vm-f-ubahemail.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
-
-        );
-
-        $data['siswa'] = $this->msiswa->get_datsiswa();
-        $this->parser->parse( 'templating/layouts/index', $data );
-    }
-
-    public function passwordsetting() {
-         $data = array(
-
-            'judul_halaman' => 'Neon - Pengaturan Akun',
-
-            'judul_header' =>'Pengaturan Akun',
-
-            'judul_header2' =>'Pengaturan Akun'
-
-
-
-        );
-
-        $data['files'] = array( 
-
-            // APPPATH.'modules/homepage/views/v-header-login.php',
-
-            // APPPATH.'modules/siswa/views/headersiswa.php',
-
-            // APPPATH.'modules/siswa/views/vPengaturanProfile.php',
-            // $this->load->view('vPengaturanProfile', $data);
-
-            // APPPATH.'modules/testimoni/views/v-footer.php',
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
-            APPPATH.'modules/siswa/views/mobile/vm-f-ubahpassword.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
-        );
-
-        $data['siswa'] = $this->msiswa->get_datsiswa();
-        $this->parser->parse( 'templating/layouts/index', $data );
-    }
-
-    public function photosetting() {
-        if ($this->session->userdata('NAMASISWA')) {
-             $data = array(
-
-                'judul_halaman' => 'Neon - Pengaturan Akun',
-
-                'judul_header' =>'Pengaturan Akun',
-
-                'judul_header2' =>'Pengaturan Akun'
-
-
-
-            );
-
-            $data['files'] = array( 
-
-                APPPATH.'modules/templating/views/anggi/v-sidebar.php',
-                APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
-                APPPATH.'modules/templating/views/anggi/v-footer.php',
-            );
-
-            $penggunaID = $this->session->userdata['id'];
-            
-            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
-            $data['sis'] = $this->msiswa->get_datsiswa();
-            $this->parser->parse( 'templating/anggi/index', $data );
-
-        } else {
-            redirect('login');
-        }
-    }
-
-    public function coba()
-    {
-        if ($this->session->userdata('NAMASISWA')) {
-             $data = array(
-
-                'judul_halaman' => 'Neon - Pengaturan Akun',
-
-                'judul_header' =>'Pengaturan Akun',
-
-                'judul_header2' =>'Pengaturan Akun'
-
-
-
-            );
-
-            $data['files'] = array( 
-
-                APPPATH.'modules/templating/views/anggi/v-sidebar.php',
-                APPPATH.'modules/siswa/views/mobile/vm-f-ubahphoto.php',
-                APPPATH.'modules/templating/views/anggi/v-footer.php',
-            );
-
-            $penggunaID = $this->session->userdata['id'];
-            
-            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
-            $data['sis'] = $this->msiswa->get_datsiswa();
-            $this->parser->parse( 'templating/anggi/index', $data );
-
-        } else {
-            redirect('login');
-        }
-    }
+    
+    
 }
 
 ?>

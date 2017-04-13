@@ -1,6 +1,6 @@
        <?php 
 
-        foreach ($siswa as $row) {
+        foreach ($sis as $row) {
 
             $namaDepan = $row['namaDepan'];
 
@@ -40,12 +40,12 @@
           </div>
             <div class="banner-title"><?=$namaDepan;?> <?=$namaBelakang;?></div>
           </div>
-         </div>
 
          <!-- Profile Content -->
         <div class=" delay-1">
           <div class="card  delay-2">
             <h5 class="uppercase">Password</h5>
+            <?php echo $this->session->flashdata('updsiswa'); ?>
             <form class="col s12" name="form-password" action="<?=base_url()?>index.php/siswa/ubahkatasandi" method="POST" accept-charset="utf-8" enctype="multipart/form-data" >
             <div class="row">
               <div class="input-field col s12">
@@ -81,9 +81,4 @@
                       
         </div>
         
-        </div> <!-- End of Main Contents -->
-      
-         
-      </div> <!-- End of Page Content -->
-
-    </div> <!-- End of Page Container -->
+        
