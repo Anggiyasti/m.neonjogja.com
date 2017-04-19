@@ -56,18 +56,35 @@
         </li>
          <li><a href="<?=base_url('index.php/welcome')?>" class="no-child"><i class="ion-ios-compose-outline"></i>Try Out</a></li>
         <li>
+
           <div class="collapsible-header">
             <i class="ion-ios-list-outline"></i> Latihan
           </div>
+
           <div class="collapsible-body">
             <ul class="collapsible">
+           
               <li>
-                <a href="material.html">SD</a>
-                <a href="left-sidebar.html">SMP</a>
-                <a href="right-sidebar.html">SMA</a>
+              <?php $no=[1,4,5] ;$namaFile=""?>
+
+                <?php $i=0; ?>
+
+
+                <?php foreach ($tingkat as $tingkatitem): ?>
+
+                <?php $namaFile = strtolower(str_replace(" ", "-", $tingkatitem['aliasTingkat'])) ?>
+
+                <?php $no[$i] ?>
+                <?php $id = $tingkatitem['id'] ?>
+                <a href="<?=base_url()?>tesonline/pilihmapel/<?=$id ?>"><?=$tingkatitem['aliasTingkat'] ?></a>
+                <?php $i = $i+1; ?>
+
+                <?php endforeach ?>
               </li>
+
             </ul>
           </div>  
+           
         </li>
          <li>
           <div class="collapsible-header">

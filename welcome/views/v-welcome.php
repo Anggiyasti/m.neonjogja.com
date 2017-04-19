@@ -2,6 +2,72 @@
 
       <!-- Sidebars -->
       <!-- Left Sidebar -->
+      <ul id="slide-out-left" class="side-nav collapsible">
+        <li>
+          <div class="sidenav-header primary-color">
+            <div class="nav-social">
+              <i class="ion-social-facebook"></i>
+              <i class="ion-social-twitter"></i>
+              <i class="ion-social-tumblr"></i>
+            </div>
+            <div class="nav-avatar">
+              <img class="circle avatar" src="img/user.jpg" alt="">
+              <div class="avatar-body">
+                <h3>Halo</h3>
+                <p style="font-size:15px"><?= $this->session->userdata['NAMASISWA']?></p>
+              </div>
+            </div>
+          </div>
+        </li>
+         <li><a href="<?=base_url('index.php/welcome')?>" class="no-child"><i class="ion-android-home"></i>Home</a></li>
+        <li>
+          <div class="collapsible-header">
+            <i class="ion-android-person"></i> Profile
+          </div>
+          <div class="collapsible-body">
+            <ul class="collapsible">
+              <li>
+                <a href="portfolio-filter.html">Profile</a>
+                <a href="portfolio-masonry.html">Photo</a>
+                <a href="portfolio-card.html">Email</a>
+                <a href="portfolio-card.html">Password</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a href="<?=base_url('index.php/welcome')?>" class="no-child"><i class="ion-ios-videocam"></i>Video Pembelajaran</a></li>
+         <li><a href="<?=base_url('index.php/welcome')?>" class="no-child"><i class="ion-ios-compose-outline"></i>Try Out</a></li>
+            
+        <li>
+          <div class="collapsible-header">
+            <i class="ion-ios-list-outline"></i> Latihan
+          </div>
+          <div class="collapsible-body">
+            <ul class="collapsible">
+              <li>
+                <a href="material.html">SD</a>
+                <a href="left-sidebar.html">SMP</a>
+                <a href="right-sidebar.html">SMA</a>
+              </li>
+            </ul>
+          </div>  
+        </li>
+         <li>
+          <div class="collapsible-header">
+            <i class="ion-android-folder-open"></i> Edu Drive
+          </div>
+          <div class="collapsible-body">
+            <ul class="collapsible">
+              <li>
+                <a href="material.html">SD</a>
+                <a href="left-sidebar.html">SMP</a>
+                <a href="right-sidebar.html">SMA</a>
+              </li>
+            </ul>
+          </div>  
+        </li>
+        <li><a href="contact.html" class="no-child"><i class="ion-chatbubbles"></i> Konsultasi</a></li>
+      </ul>
       <!-- End of Sidebars -->
 
       <!-- Page Content -->
@@ -24,13 +90,10 @@
 
           <!-- Project Author -->
           <div class="project-info">
-            <h2 class="uppercase">A single stroke </h2>
+            <h2 class="uppercase">A single stroke</h2>
             <span class="small">Drawing / Illustration / Painting</span>
             <p class="m-t-10 m-b-30">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-           
           </div>
-          
-          
           <div class="post-author m-20 animated fadeinright delay-2">
             <img src="img/user2.jpg" alt="" class="avatar circle">
             <span>Lora Bell</span>
@@ -119,7 +182,27 @@
           </div>
 
           <!-- Footer -->
-         
+          <footer class="page-footer primary-color">
+          <div class="container">
+            <div class="row">
+              <div class="col s12">
+                <p class="center-align grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                <div class="center-align">
+                  <i class="ion-social-facebook m-10 white-text"></i>
+                  <i class="ion-social-twitter m-10 white-text"></i>
+                  <i class="ion-social-pinterest m-10 white-text"></i>
+                  <i class="ion-social-dribbble m-10 white-text"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright red darken-1">
+            <div class="container">
+            2016 Codnauts
+            <a class="grey-text text-lighten-4 right" href="#!">Privacy Policy</a>
+            </div>
+          </div>
+        </footer>
         </div> <!-- End of Main Contents -->
       
          

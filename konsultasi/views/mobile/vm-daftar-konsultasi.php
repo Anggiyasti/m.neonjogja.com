@@ -73,8 +73,9 @@
             </p>
           </div>
           <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-accent btn-flat buat-btn">Buat</a>
-            <a href="#!" class=" modal-action modal-close waves-effect waves-accent btn-flat">Batal</a>
+            <button type="button" class="modal-action waves-effect waves-accent btn-flat buat-btn">Buat Pertanyaan</button>
+            <button type="button" class="modal-action modal-close waves-effect waves-accent btn-flat" data-dismiss="modal">Batal</button>
+        
           </div>
         </div>
 
@@ -142,7 +143,7 @@
 
           <!-- Floating Action Button -->
         <div class="floating-button page-fab animated bouncein delay-3">
-          <a class="btn-floating btn-large waves-effect waves-light accent-color btn z-depth-1 modal-trigger" href="#modal4">
+          <a href="#modal4" class="btn-floating btn-large waves-effect waves-light accent-color btn z-depth-1 modal-trigger" >
             <i class="ion-android-add"></i>
           </a>
         </div>
@@ -152,3 +153,36 @@
       </div> <!-- End of Page Content -->
 
     </div> <!-- End of Page Container -->
+
+
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+
+    <script type="text/javascript">
+  $(document).ready(function() {  
+
+    $('#search1').autocomplete({
+      source:  base_url +"konsultasi/search_all",
+      select: function (event, ui) {
+        window.location = ui.item.url;
+      }
+    });
+
+    $('#search2').autocomplete({
+      source: base_url +"konsultasi/search_tingkat",
+      select: function (event, ui) {
+        window.location = ui.item.url;
+      }
+    });
+
+    $('#search3').autocomplete({
+      source: base_url +"konsultasi/search_mine",
+      select: function (event, ui) {
+        window.location = ui.item.url;
+      }
+    });
+  });
+  function showmodal(){
+    $('#myModal').modal('show');
+  }
+</script>

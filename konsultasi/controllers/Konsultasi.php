@@ -37,6 +37,7 @@ class Konsultasi extends MX_Controller{
     // APPPATH.'modules/homepage/views/v-footer.php'
     APPPATH.'modules/templating/views/layouts/v-sidebar.php',
     APPPATH.'modules/konsultasi/views/mobile/vm-daftar-konsultasi.php',
+    APPPATH.'modules/konsultasi/views/mobile/vm-show-tingkat.php',
     APPPATH.'modules/templating/views/layouts/v-footer.php',
     );
 

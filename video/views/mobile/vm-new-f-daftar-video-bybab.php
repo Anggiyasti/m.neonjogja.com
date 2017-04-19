@@ -11,9 +11,9 @@
         <div>
           <div class="col s12">
             <ul class="tabs">
-            <li class="tab col s6 red lighten-1"><a class="active" href="#test1" style="color: white;"> <input type="radio" name="options"  autocomplete="off" checked="true" title="Tampilkan Semua Jenis Video">All</a></li>
-              <li class="tab col s6 red lighten-1"><a class="active" href="#test1" style="color: white;">Screen</a></li>
-              <li class="tab col s6 red lighten-1"><a href="#test2" style="color: white;">Room</a></li>
+            <li class="tab col s6 red lighten-1"><a class="active" href="javascript:void(0);" onclick="semua()" style="color: white;"> <input type="radio" name="options"  autocomplete="off" checked="true" title="Tampilkan Semua Jenis Video">All</a></li>
+              <li class="tab col s6 red lighten-1"><a class="active" href="javascript:void(0);" onclick="justscreen()" style="color: white;"><input type="radio" name="options" autocomplete="off"><input type="radio" name="options" autocomplete="off"> Screen</a></li>
+              <li class="tab col s6 red lighten-1"><a href="javascript:void(0);" onclick="justroom()" style="color: white;">Room</a></li>
             </ul>
           </div>
         
@@ -72,3 +72,42 @@
           </div>
           <!-- </div> -->
 
+          <script src="http://macyjs.com/assets/js/macy.min.js"></script>
+<script type="text/javascript">
+      function direct(){
+        var tingkat = $("input[name='tingkat']").val();
+        var aliasMapel = $("input[name='pelajaran']").val();
+        window.location = base_url+"video/daftarvideo/"+<?=$this->uri->segment(3) ?>;
+      }
+
+      function justroom(){
+        $('.screen').hide("slow");
+        $('.room').show("slow");
+      }
+
+      function justscreen(){
+        $('.screen').show("slow");
+        $('.room').hide("slow");
+      }
+
+      function semua(){
+        $('.screen').show("slow");
+        $('.room').show("slow");
+      }
+
+      $(document).ready(function(){
+        Macy.init({
+          container: '#macy-container',
+          trueOrder: false,
+          waitForImages: false,
+          margin: 24,
+          columns: 3,
+          breakAt: {
+            1200: 5,
+            940: 3,
+            520: 2,
+            400: 1
+          }
+        });
+      });
+    </script>

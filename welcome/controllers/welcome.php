@@ -98,7 +98,7 @@ class Welcome extends MX_Controller {
 
             // APPPATH.'modules/homepage/views/v-header-login.php',
             APPPATH.'modules/templating/views/layouts/v-sidebar.php',
-            APPPATH.'modules/welcome/views/v-welcome.php',
+            APPPATH.'modules/welcome/views/vm-welcome.php',
             APPPATH.'modules/templating/views/layouts/v-footer.php',
 
 

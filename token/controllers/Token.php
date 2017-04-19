@@ -473,7 +473,7 @@ class Token extends MX_Controller {
 
 
 	function settoken(){
-
+		if ($this->session->userdata('NAMASISWA')) {
 		$token = $this->session->userdata('token');
 
 		if ($token=='BelumAktif') {
@@ -524,6 +524,11 @@ class Token extends MX_Controller {
 		$penggunaID = $this->session->userdata['id'];
   		$data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
 		$this->parser->parse( 'templating/index', $data );
+
+		 }
+            else{
+                redirect('login');
+            }
 
 	}
 

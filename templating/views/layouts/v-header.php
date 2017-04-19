@@ -26,8 +26,12 @@
     <link href="<?= base_url('assetsnew/css/style.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assetsnew/css/stylenew.css') ?>" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
     <script type="text/javascript" src="<?= base_url('assetsnew/js/preview.js') ?>"></script>
     <!-- style -->
-    <link rel="stylesheet" href="<?= base_url('assetsnew/css/sweetalert.css');?>"> 
+    <link rel="stylesheet" href="<?= base_url('assetsnew/css/sweetalert.css');?>">
+    <script>
+     var base_url = "<?php echo base_url();?>" ;
+ </script> 
 </head>
 <body>

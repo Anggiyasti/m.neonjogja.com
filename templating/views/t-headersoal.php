@@ -9,26 +9,26 @@
         <title>Tes Online</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="<?= base_url('assets/plugins/magnific/css/magnific-popup.min.css'); ?>">
+        <link rel="stylesheet" href="<?= base_url('assetsnew/plugins/magnific/css/magnific-popup.min.css'); ?>">
 
-        <link rel="stylesheet" href="<?= base_url('assets/plugins/owl/css/owl.carousel.min.css'); ?>">
-
-
-
-        <link rel="shortcut icon" href="<?= base_url('assets/back/img/favicon.png') ?>">
-
-        <link rel="stylesheet" href="<?= base_url('assets/library/bootstrap/css/bootstrap.min.css'); ?>">
-
-        <link rel="stylesheet" href="<?= base_url('assets/stylesheet/layout.css'); ?>">
-
-        <link rel="stylesheet" href="<?= base_url('assets/stylesheet/uielement.css'); ?>">
+        <link rel="stylesheet" href="<?= base_url('assetsnew/plugins/owl/css/owl.carousel.min.css'); ?>">
 
 
 
-        <link rel="stylesheet" href="<?= base_url('assets/plugins/selectize/css/selectize.min.css'); ?>">
+        <link rel="shortcut icon" href="<?= base_url('assetsnew/back/img/favicon.png') ?>">
 
-        <script src="<?= base_url('assets/sal/sweetalert-dev.js');?>"></script>
-        <link rel="stylesheet" href="<?= base_url('assets/sal/sweetalert.css');?>">
+        <link rel="stylesheet" href="<?= base_url('assetsnew/library/bootstrap/css/bootstrap.min.css'); ?>">
+
+        <link rel="stylesheet" href="<?= base_url('assetsnew/stylesheet/layout.css'); ?>">
+
+        <link rel="stylesheet" href="<?= base_url('assetsnew/stylesheet/uielement.css'); ?>">
+
+
+
+        <link rel="stylesheet" href="<?= base_url('assetsnew/plugins/selectize/css/selectize.min.css'); ?>">
+
+        <script src="<?= base_url('assetsnew/sal/sweetalert-dev.js');?>"></script>
+        <link rel="stylesheet" href="<?= base_url('assetsnew/sal/sweetalert.css');?>">
         <!--<link rel="stylesheet" href="../plugins/datatables/css/jquery.datatables.min.css">-->
 
         <!--/ Plugins stylesheet -->
@@ -57,13 +57,13 @@
 
         <!-- START JAVASCRIPT SECTION - Load only modernizr script here -->
 
-        <script src="<?= base_url('assets/library/modernizr/js/modernizr.min.js'); ?>"></script>
+        <script src="<?= base_url('assetsnew/library/modernizr/js/modernizr.min.js'); ?>"></script>
 
-        <script type="text/javascript" src="<?= base_url('assets/library/jquery/js/jquery.min.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assetsnew/library/jquery/js/jquery.min.js') ?>"></script>
 
 
 
-        <link rel="stylesheet" href="<?= base_url('assets/plugins/layerslider/css/layerslider.min.css'); ?>">
+        <link rel="stylesheet" href="<?= base_url('assetsnew/plugins/layerslider/css/layerslider.min.css'); ?>">
 
     </head>
 
@@ -89,7 +89,7 @@
 
         <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
 
-        <link href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="<?php echo base_url(); ?>assetsnew/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'> -->
 
