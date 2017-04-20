@@ -25,6 +25,9 @@
 
     <!-- style -->
     <link rel="stylesheet" href="<?= base_url('assetsnew/css/sweetalert.css');?>"> 
+    <script>
+        var base_url = "<?php echo base_url();?>" ;
+    </script>
 </head>
 <body>
 

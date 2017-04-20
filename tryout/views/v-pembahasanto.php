@@ -115,11 +115,13 @@
                                             <li class="bjqs-slide" style="display: none;">
                                                 <div class="">
                                                     <div class="panel panel-default" style="">
-                                                        <div class="panel-heading">
-                                                            <!-- <h1>Selamat datang</h1> -->
+                                                        <div class="panel-body">
                                                             <div class="row">
-                                                                <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small></h4></div>
+                                                            <div class="col-md-6 center"></div>
+                                                                <div class="col-md-6 text-right" style="margin-top:0;"><a href="<?=base_url('tryout')?>" class="btn btn-info btn-block" >Pembahasan Selesai</a></div>
                                                             </div>
+
+                                                            
                                                         </div>
                                                         <div class="panel-collapse">
                                                             <div class="panel-body">
@@ -249,66 +251,14 @@
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
-                                <div style="margin-left:40">
-                                    <div class="col-md-6">
-                                        <button class="btn btn-info btn-block" id="btnPrev">Sebelumnya</button>
-                                        <!--<button type="button" class="btn btn-primary btn-block">Selanjutnya</button>-->
-                                    </div>
-                                    <div class="col-md-6"> 
-                                        <button class="btn btn-info btn-block" id="btnNext">Selanjutnya</button>
-                                        <!--<button type="button" class="btn btn-teal btn-block">Sebelumnya</button>-->
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--<div style="clear: both"></div>-->
-                            <div class="col-md-4">
-                                <div class="panel panel-default"  style="min-height:170px;">
-                                    <!--panel heading/header--> 
-                                    <div class="panel-heading">
-                                        <div class="row">
-                                            <!--<div class="text-center"><h4>Lembar Jawaban</h4></div>-->
-                                            <!-- <div class="text-center"> <h4><span id="timer"></span></h4></div> -->  
-                                            <div class="text-center"> <h4><span>Nomor Soal</span></h4></div>
+                                <div class="row">
+                                    <div class="col-md-6 center"></div>
+                                    <div class="col-md-2"></div>
+                                        <div class="col-md-8 text-right"> 
+                                            <button class="btn btn-info" style="background-color: #2196F3;" id="btnPrev"><<</button>
+                                            <button class="btn btn-info" style="background-color: #2196F3;" id="btnNext">>></button>
                                         </div>
                                     </div>
-                                    <!--/ panel heading/header--> 
-                                    <!--panel body with collapse capabale--> 
-                                    <div class="panel-collapse">
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-md-10 col-md-offset-1">
-                                                    <!--<li class="pageNumbers"></li>-->
-                                                    <div class="ljk" style="">
-                                                        <?php
-                                                        $nojwb = 1;
-                                                        foreach ($soal as $jwb) {
-                                                            ?>
-                                                            <div id="flex-item" >
-                                                                <a id ="nom_sisS" class ="go_slide btn" style ="border:1px solid #63d3e9" alt="<?= $nojwb ?>"><?= $nojwb ?></a>
-                                                            </div>
-                                                            <?php
-                                                            $nojwb++;
-                                                        }
-                                                        ?>
-                                                    </div>
-
-                                                </div>
-                                                <!--</ul>-->  
-
-                                                <div class="clear" style="clear:both"></div>
-
-                                                <div class="col-md-12" style="">
-                                                    <hr> 
-                                                    <a href="<?=base_url('tryout')?>" class="btn btn-info btn-block" >Pembahasan Selesai</a>
-                                                </div>
-
-                                            </div>
-                                        </div> 
-                                        <!--/ panel body with collapse capabale--> 
-                                    </div>
-                                    <!--/ END panel--> 
-                                </div>
                             </div>
                         </form>
                     </div>

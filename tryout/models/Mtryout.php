@@ -259,7 +259,7 @@ public function datatopaket($id) {
 public function dataPaketRandom($id) {
     $this->db->select('random');
     $this->db->from('tb_paket');
-    $this->db->where('id', $id);
+    $this->db->where('id_paket', $id);
     $query = $this->db->get();
     return $query->result();
 }

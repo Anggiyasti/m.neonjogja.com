@@ -62,12 +62,25 @@ label:hover{ /* HIDE RADIO */
     background-color: #63d3e9;
 }
 
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(https://www.thebuddhistchef.com/wp-content/themes/culinier-theme/images/loader.gif) center no-repeat #fff;
+}
+
 </style>
 <!-- START Body -->
 
 <body class="bgcolor-white">
+<div class="se-pre-con"></div>
     <!-- START Template Main -->
-    <script src="<?= base_url('assets/js/bjqs-1.10.js') ?>"></script>
+    <script src="<?= base_url('assetsnew/js/bjqs-1.10.js') ?>"></script>
     <script type="text/javascript">
     jQuery(document).ready(function ($) {
         $('#my-slideshow').bjqs({
@@ -93,6 +106,13 @@ label:hover{ /* HIDE RADIO */
                     <?php endforeach ?>
                 </div>
             </div>
+            <div class="panel-heading">
+                            <div class="row">
+                                <!--<div class="text-center"><h4>Lembar Jawaban</h4></div>-->
+                                <div class="text-center"> <h4><span id="timer"></span></h4></div>
+                                <input type="text" hidden="true" id="durasi" value="" name="durasi" />
+                            </div>
+                        </div>
         </div>
     </section>
 
@@ -115,14 +135,6 @@ label:hover{ /* HIDE RADIO */
                                     <li class="bjqs-slide" style="display: none;">
                                         <div class="">
                                             <div class="panel panel-default" style="">
-                                                <div class="panel-heading">
-                                                    <!-- <h1>Selamat datang</h1> -->
-                                                    <div class="row">
-                                                        <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small></h4></div>
-                                                        <div class="col-md-2"></div>
-                                                        <div class="col-md-4 text-right" style="margin-top:5"><a class="btn btn-sm btn-success" onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>',<?= $key['soalid']?>)">Batal Jawab</a>&nbsp&nbsp&nbsp<a class="btn btn-sm btn-warning" onclick="raguColor(<?= $i ?>)">Ragu Ragu</a></div>
-                                                    </div>
-                                                </div>
                                                 <div class="panel-collapse">
                                                     <div class="panel-body">
                                                         <div class="row">
@@ -176,74 +188,83 @@ label:hover{ /* HIDE RADIO */
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="panel panel-default" style="">
+                                                    <div class="panel-body">                                                    
+                                                        <div class="row">
+                                                           <!-- <div class="col-md-6 center"></div> -->
+                                                           <div class="col-sm-12">
+                                                           <div class="form-group">
+                                                                <a href="javascript:toggleDiv('myContent');"  align="center" class="btn btn-info btn-block" style="background-color: #2196F3;" id="jawaban">
+                                                                Jawaban</a>
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <a class="btn btn-info btn-block" style="background-color: #2196F3;" align="center"  onclick="bataljawab('pil[<?= $key['soalid']?>]','<?=$i?>',<?= $key['soalid']?>)">
+                                                                Batal Jawab</a>
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <a href="#" class="btn btn-info btn-block" style="background-color: #2196F3;" align="center" onclick="raguColor(<?= $i ?>)">Ragu Ragu</a>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                 </li>
                                 <?php
                                 $i++;
                                 $nosoal++;
                                 ?>
                             <?php endforeach; ?>
-                        </ul>
-                    </div>
-                    <div style="margin-left:40">
-                        <div class="col-md-6">
-                            <button class="btn btn-info btn-block" id="btnPrev">Sebelumnya</button>
-                            <!--<button type="button" class="btn btn-primary btn-block">Selanjutnya</button>-->
-                        </div>
-                        <div class="col-md-6"> 
-                            <button class="btn btn-info btn-block" id="btnNext">Selanjutnya</button>
-                            <!--<button type="button" class="btn btn-teal btn-block">Sebelumnya</button>-->
-                        </div>
-                    </div>
-                </div>
+                            <div class="panel panel-default"  style="min-height:170px;" id="myContent" hidden="true">
+                                     
+                                    <!--panel body with collapse capabale--> 
+                                    <div class="panel-collapse">
+                                        <div class="panel-body">
+                                    
+                                                    <div class="col-md-10 col-md-offset-1">
+                                                        <!--<li class="pageNumbers"></li>-->
+                                                        <div class="ljk" style="margin-top:-20">
+                                                        <?php
+                                                        $nojwb = 1;
+                                                        foreach ($soal as $jwb) {
+                                                            ?>
+                                                            <div id ="flex-item" >
+                                                                <div id ="jwb_sisJ" class ="jwb<?= $nojwb ?>"></div>
+                                                                <a href ="#" id ="nom_sisS" class ="go_slide btn" style ="border:1px solid #63d3e9" alt="<?= $nojwb ?>"><?= $nojwb ?></a>
+                                                            </div>
+                                                            <?php
+                                                            $nojwb++;
+                                                        }
+                                                        ?>
+                                                        </div>
 
-                <!--<div style="clear: both"></div>-->
-                <div class="col-md-4">
-                    <div class="panel panel-default"  style="min-height:170px;">
-                        <!--panel heading/header--> 
-                        <div class="panel-heading">
-                            <div class="row">
-                                <!--<div class="text-center"><h4>Lembar Jawaban</h4></div>-->
-                                <div class="text-center"> <h4><span id="timer"></span></h4></div>
-                                <input type="text" hidden="true" id="durasi" value="" name="durasi" />
-                            </div>
-                        </div>
-                        <!--/ panel heading/header--> 
-                        <!--panel body with collapse capabale--> 
-                        <div class="panel-collapse">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-10 col-md-offset-1">
-                                        <!--<li class="pageNumbers"></li>-->
-                                        <div class="ljk" style="margin-top:-20">
-                                            <?php
-                                            $nojwb = 1;
-                                            foreach ($soal as $jwb) {
-                                                ?>
-                                                <div id="flex-item" >
-                                                    <div id ="jwb_sisJ" class ="jwb<?= $nojwb ?>"></div>
-                                                    <a href ="#" id ="nom_sisS" class ="go_slide btn" style ="border:1px solid #63d3e9" alt="<?= $nojwb ?>"><?= $nojwb ?></a>
+                                                    </div>
+                                                    <!--</ul>-->  
+
+                                                <div class="clear" style="clear:both"></div>
+
+                                                <div class="col-md-12" style="">
+                                                    <hr> 
+                                                    <button type="button" class="btn btn-info btn-block" style="background-color: #2196F3;" onclick="kirimHasil();deleteAllCookies('seconds', 'minutes', 'hours');">Kumpulkan Jawaban</button>
                                                 </div>
-                                                <?php
-                                                $nojwb++;
-                                            }
-                                            ?>
                                         </div>
-
+                                        <div></div> 
+                                        <!--/ panel body with collapse capabale--> 
                                     </div>
-                                    <!--</ul>-->  
-
-                                    <div class="clear" style="clear:both"></div>
-
-                                    <div class="col-md-12" style="">
-                                        <hr> 
-                                        <button type="button" class="btn btn-info btn-block" onclick="kirimHasil();">Kumpulkan Jawaban</button>
-                                    </div>
-
+                                    <!--/ END panel--> 
                                 </div>
-                            </div> 
-                            <!--/ panel body with collapse capabale--> 
-                        </div>
-                        <!--/ END panel--> 
+                                <div class="row">
+                                    <div class="col-md-6 center"></div>
+                                    <div class="col-md-2"></div>
+                                        <div class="col-md-8 text-right"> 
+                                            <button class="btn btn-info" style="background-color: #2196F3;" id="btnPrev"><<</button>
+                                            <button class="btn btn-info" style="background-color: #2196F3;" id="btnNext">>></button>
+                                        </div>
+                                    </div>
+                        </ul>
+
                     </div>
                 </div>
             </form>
@@ -299,4 +320,13 @@ function changeColor(pilid,groupname){
     var d = document.getElementById(pilid);
     d.className = "terpilih";
 }
+function toggleDiv(divId) {
+   $("#"+divId).toggle();
+}
+
+// loading screen on load
+    $(window).load(function() {
+        $(".se-pre-con").fadeOut("slow");;
+    });
+// loading screen on load
 </script>

@@ -9,7 +9,7 @@ class Tryout extends MX_Controller {
         $this->load->model('Mtryout');
         $this->load->model('siswa/msiswa');
 
-        $this->load->model('tesonline/Mtesonline');
+        // $this->load->model('tesonline/Mtesonline');
         parent::__construct();
         $this->load->library('sessionchecker');
         $this->sessionchecker->cek_token();
@@ -29,114 +29,121 @@ class Tryout extends MX_Controller {
         ##
     }
 
-    public function ajax_get_paket($id_tryout) {
-        $data = $this->Mtryout->get_paket_by_id_to($id_tryout);
-
-        $output = array('data' => $data);
-        echo json_encode($output);
-    }
 
     //# fungsi indeks, mampilin to yang dikasih hak akses.
     public function index() {
-        // echo "Today is " . date("Y/m/d h:m:s") . "<br>";
-        // echo date_default_timezone_get() . ' => ' . date('e') . ' => ' . date('T');
-        $this->session->unset_userdata('id_tryout');
-        // echo "Today is " . date("Y/m/d h:m:s") . "<br>";
-        $data = array(
-            'judul_halaman' => 'Neon - Tryout',
-            'judul_header' => 'Daftar Tryout',
-            'judul_tingkat' => '',
-            );
+        if ($this->session->userdata('NAMASISWA')) {
+            $this->session->unset_userdata('id_tryout');
+            // echo "Today is " . date("Y/m/d h:m:s") . "<br>";
+            $data = array(
+                'judul_halaman' => 'Neon - Tryout',
+                'judul_header' => 'Daftar Tryout',
+                'judul_tingkat' => '',
+                );
 
-        $konten = 'modules/tryout/views/v-daftar-to.php';
+            $konten = 'modules/tryout/views/mobile/vm-daftar-to.php';
 
-        $data['files'] = array(
-            // APPPATH . 'modules/homepage/views/v-header-login.php',
-            APPPATH . 'modules/templating/views/t-f-pagetitle.php',
-            APPPATH . $konten,
-//            APPPATH . 'modules/homepage/views/v-footer.php',
-            // APPPATH . 'modules/testimoni/views/v-footer.php',
-            
-            );
+            $data['files'] = array(
+                APPPATH . 'modules/templating/views/anggi/v-sidebar.php',
+                APPPATH.$konten,
+                APPPATH . 'modules/templating/views/anggi/v-footer.php',
 
-        $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
-        $data['tryout'] = $this->Mtryout->get_tryout_akses($datas);
-        $this->parser->parse('templating/index', $data);
+                );
+            $penggunaID = $this->session->userdata['id'];
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+            $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
+            $data['tryout'] = $this->Mtryout->get_tryout_akses($datas);
+            $this->parser->parse('templating/anggi/index', $data);
+        } else {
+            redirect('login');
+        }
     }
 
+    // bikin session untuk id to
     public function create_seassoin_idto($id_to) {
         $this->session->set_userdata('id_tryout', $id_to);
         redirect("tryout/daftarpaket");
     }
 
+    // view daftar paket
     public function daftarpaket() {
-        $id_to = $this->session->userdata('id_tryout');
-        $datas['id_tryout'] = $id_to;
-        $datas['id_pengguna'] = $this->session->userdata('id');
-        $datas['id_siswa'] = $this->msiswa->get_siswaid();
+        if ($this->session->userdata('NAMASISWA')) {
+            $id_to = $this->session->userdata('id_tryout');
+            $datas['id_tryout'] = $id_to;
+            $datas['id_pengguna'] = $this->session->userdata('id');
+            $datas['id_siswa'] = $this->msiswa->get_siswaid();
 
-        $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
-        $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];
-        
-        $date = new DateTime(date("Y-m-d H:i:s"));
-        
-        // concat tanggal mlai dan tanggai akhir
-        $mulai = date("Y-m-d H:i:s ", strtotime($data_to['tgl_mulai']." ".$data_to['wkt_mulai']));
-        $akhir = date("Y-m-d H:i:s ", strtotime($data_to['tgl_berhenti']." ".$data_to['wkt_berakhir']));
+            $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
+            $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];
+            
+            $date = new DateTime(date("Y-m-d H:i:s"));
+            
+            // concat tanggal mlai dan tanggai akhir
+            $mulai = date("Y-m-d H:i:s ", strtotime($data_to['tgl_mulai']." ".$data_to['wkt_mulai']));
+            $akhir = date("Y-m-d H:i:s ", strtotime($data_to['tgl_berhenti']." ".$data_to['wkt_berakhir']));
 
-        //buat date
-        $date_mulai =  new DateTime($mulai);
-        $date_berhenti =  new DateTime($akhir);
+            //buat date
+            $date_mulai =  new DateTime($mulai);
+            $date_berhenti =  new DateTime($akhir);
 
 
-        // kalo tanggal mulainya lebih dari hari ini dan kurang dari sama dengan tanggal berhenti
-        if (($date>= $date_mulai) && ($date <= $date_berhenti)) {
-            //TO BISA DI AKSES
-            $status_to = 'doing';
-        }else{
-            //TO TIDAK BISA DI AKSES
-            if ($date>=$date_berhenti) {
-                // SELESAI
-                $status_to = 'done';             
+            // kalo tanggal mulainya lebih dari hari ini dan kurang dari sama dengan tanggal berhenti
+            if (($date>= $date_mulai) && ($date <= $date_berhenti)) {
+                //TO BISA DI AKSES
+                $status_to = 'doing';
             }else{
-                // BELUM DIMULAI
-                $status_to = 'yet';             
+                //TO TIDAK BISA DI AKSES
+                if ($date>=$date_berhenti) {
+                    // SELESAI
+                    $status_to = 'done';             
+                }else{
+                    // BELUM DIMULAI
+                    $status_to = 'yet';             
+                }
             }
-        }
 
-        if (isset($id_to)) {
-            $data = array(
-                'judul_halaman' => 'Neon - Daftar Paket',
-                'judul_header' => 'Tryout : ' . $data['nama_to'],
-                'judul_tingkat' => '',
-                'nama_to' => $data_to['nm_tryout'],
-                );
+            if (isset($id_to)) {
+                $data = array(
+                    'judul_halaman' => 'Neon - Daftar Paket',
+                    'judul_header' => 'Tryout : ' . $data['nama_to'],
+                    'judul_tingkat' => '',
+                    'nama_to' => $data_to['nm_tryout'],
+                    );
 
-            // FILES
-            $konten = 'modules/tryout/views/v-daftar-paket.php';
-            $data['files'] = array(
-                APPPATH . 'modules/homepage/views/v-header-login.php',
-                APPPATH . 'modules/templating/views/t-f-pagetitle.php',
-                APPPATH . $konten,
-                // APPPATH . 'modules/homepage/views/v-footer.php',
-                APPPATH . 'modules/testimoni/views/v-footer.php',
-                );
-            // DAFTAR PAKET
-            $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
-            $data['paket'] = $this->Mtryout->get_paket_undo($datas);
-            $data['status_to'] = $status_to;
+                // FILES
+                $konten = 'modules/tryout/views/mobile/vm-daftar-paket.php';
+                $data['files'] = array(
+                    APPPATH . 'modules/templating/views/anggi/v-sidebar.php',
+                    APPPATH . $konten,
+                    APPPATH . 'modules/templating/views/anggi/v-footer.php',
+                    );
+                // DAFTAR PAKET
+                $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
+                $data['paket'] = $this->Mtryout->get_paket_undo($datas);
+                $data['status_to'] = $status_to;
 
-
-            $this->parser->parse('templating/index', $data);
-            //unset session
-            $this->session->unset_userdata('id_paketpembahasan');
-            $this->session->unset_userdata('id_tryoutpembahasan');
-            $this->session->unset_userdata('id_mm-tryoutpaketpembahasan');
+                $penggunaID = $this->session->userdata['id'];
+                $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+                $data['id_siswa'] = $this->Mtryout->get_id_siswa();
+                $this->parser->parse('templating/anggi/index', $data);
+                //unset session
+                $this->session->unset_userdata('id_paketpembahasan');
+                $this->session->unset_userdata('id_tryoutpembahasan');
+                $this->session->unset_userdata('id_mm-tryoutpaketpembahasan');
+            } else {
+                //kalo gak ada session
+                redirect('tryout');
+            }
         } else {
-            //kalo gak ada session
-            redirect('tryout');
+            redirect('login');
         }
-        // var_dump($data['paket_dikerjakan']);*/
+    }
+
+     public function ajax_get_paket($id_tryout) {
+        $data = $this->Mtryout->get_paket_by_id_to($id_tryout);
+
+        $output = array('data' => $data);
+        echo json_encode($output);
     }
 
 //# fungsi indeks
@@ -164,13 +171,6 @@ class Tryout extends MX_Controller {
         $this->session->set_userdata('id_mm-tryoutpaketpembahasan', $data['id_mm-tryoutpaket']);
     }
 
-    //# fungsi indeks
-
-    function test2() {
-        var_dump($this->session->userdata());
-    }
-
-//# fungsi indeks
 //fungsi ilham
     public function mulaitest() {
         if (!empty($this->session->userdata['id_mm-tryoutpaket'])) {
@@ -195,6 +195,7 @@ class Tryout extends MX_Controller {
 
 ////        var_dump($data);
             $this->load->view('vHalamanTo.php', $data);
+            // $this->load->view('mobile/v-halaman-to', $data);
             $this->load->view('templating/t-footerto', $data);
         } else {
             $this->errorTest();
@@ -205,18 +206,13 @@ class Tryout extends MX_Controller {
         if (!empty($this->session->userdata['id_mm-tryoutpaketpembahasan'])) {
             $id = $this->session->userdata['id_mm-tryoutpaketpembahasan'];
             $data['topaket'] = $this->Mtryout->datatopaket($id);
-//        echo $id;
             $id_paket = $this->Mtryout->datapaket($id)[0]->id_paket;
-
-//        echo $id_paket; 
-            // $data['paket'] = $this->Mtryout->durasipaket($id_paket);
-//        var_dump($data);
 
             $this->load->view('templating/t-headerto');
             $query = $this->load->Mtryout->get_pembahasan($id_paket);
+        
             $data['soal'] = $query['soal'];
             $data['pil'] = $query['pil'];
-////        var_dump($data);
             $this->load->view('v-pembahasanto.php', $data);
             $this->load->view('footerpembahasan', $data);
         } else {
@@ -299,6 +295,82 @@ class Tryout extends MX_Controller {
             $this->load->view('footerpembahasan.php');
         } else {
             $this->errorTest();
+        }
+    }
+
+    public function cekmobile()
+    {
+        $this->load->library('user_agent');
+$this->load->helper('url');
+
+if ($this->agent->is_mobile())
+{
+    // redirect ke mobile
+    redirect("http://m.neonjogja.com", 'refresh');
+
+}
+else
+{
+    redirect('http://www.neonjogja.com', 'refresh'); // go to 'desktop' controller, 'index()' function
+}
+    }
+
+    public function score()
+    {
+        if ($this->session->userdata('NAMASISWA')) {
+            $id_to = $this->session->userdata('id_tryout');
+            $datas['id_tryout'] = $id_to;
+            $datas['id_pengguna'] = $this->session->userdata('id');
+            $datas['id_siswa'] = $this->msiswa->get_siswaid();
+
+            $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
+            $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];
+            
+            $date = new DateTime(date("Y-m-d H:i:s"));
+            
+            // concat tanggal mlai dan tanggai akhir
+            $mulai = date("Y-m-d H:i:s ", strtotime($data_to['tgl_mulai']." ".$data_to['wkt_mulai']));
+            $akhir = date("Y-m-d H:i:s ", strtotime($data_to['tgl_berhenti']." ".$data_to['wkt_berakhir']));
+
+            //buat date
+            $date_mulai =  new DateTime($mulai);
+            $date_berhenti =  new DateTime($akhir);
+
+
+            if (isset($id_to)) {
+                $data = array(
+                    'judul_halaman' => 'Neon - Score Tryout',
+                    'judul_header' => 'Tryout : ' . $data['nama_to'],
+                    'judul_tingkat' => '',
+                    'nama_to' => $data_to['nm_tryout'],
+                    );
+
+                // FILES
+                $konten = 'modules/tryout/views/mobile/v-score.php';
+                $data['files'] = array(
+                    APPPATH . 'modules/templating/views/anggi/v-sidebar.php',
+                    APPPATH . $konten,
+                    APPPATH . 'modules/templating/views/anggi/v-footer.php',
+                    );
+                // DAFTAR PAKET
+                $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
+                $data['paket'] = $this->Mtryout->get_paket_undo($datas);
+
+                $penggunaID = $this->session->userdata['id'];
+                $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+                $data['id_siswa'] = $this->Mtryout->get_id_siswa();
+
+                $this->parser->parse('templating/anggi/index', $data);
+                //unset session
+                $this->session->unset_userdata('id_paketpembahasan');
+                $this->session->unset_userdata('id_tryoutpembahasan');
+                $this->session->unset_userdata('id_mm-tryoutpaketpembahasan');
+            } else {
+                //kalo gak ada session
+                redirect('tryout');
+            }
+        } else {
+            redirect('login');
         }
     }
 }
