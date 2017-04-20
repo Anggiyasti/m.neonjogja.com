@@ -14,7 +14,7 @@
 
     <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" media="all" rel="stylesheet" type="text/css">
     <!-- Styles -->
-        <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css') ?>"/>
+    <link rel="stylesheet" href="<?= base_url('assetsnew/css/bootstrap.min.css') ?>"/>
     <link href="<?= base_url('assetsnew/css/keyframes.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assetsnew/css/materialize.min.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assetsnew/css/swiper.css') ?>" rel="stylesheet" type="text/css">

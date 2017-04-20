@@ -20,9 +20,12 @@ class Mtesonline extends CI_Model {
     }
 
     public function get_soal($id_latihan) {
-        $this->db->select('id_latihan as idlat, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar, soal.jawaban as jaw,, soal.pembahasan, soal.gambar_pembahasan, soal.video_pembahasan, soal.status_pembahasan, soal.link');
+        $this->db->select('id_latihan as idlat, soal as soal, soal.id_soal as soalid, soal.judul_soal as judul, soal.gambar_soal as gambar, soal.jawaban as jaw, soal.pembahasan, soal.gambar_pembahasan, soal.video_pembahasan, soal.status_pembahasan, soal.link, tp.tingkatID');
         $this->db->from('tb_mm_sol_lat as sollat');
         $this->db->join('tb_banksoal as soal', 'sollat.id_soal = soal.id_soal');
+        $this->db->join('tb_subbab sb ',' sb.id = soal.id_subbab');
+        $this->db->join('tb_bab bab ',' bab.id = sb.babID');
+        $this->db->join('tb_tingkat-pelajaran tp ',' tp.id = bab.tingkatPelajaranID');
         $this->db->where('sollat.id_latihan', $id_latihan);
         $query = $this->db->get();
         $soal = $query->result_array();

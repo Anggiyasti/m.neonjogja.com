@@ -136,6 +136,34 @@ class Mlatihan extends CI_Model
 
 	}
 
+	public function get_report_tingkat($createdby,$idtingkat){
+		$query = "SELECT * 
+					FROM `tb_latihan` `latihan` 
+					JOIN `tb_report-latihan` `report` ON `latihan`.`id_latihan`=`report`.`id_latihan` 
+					JOIN `tb_mm_sol_lat` `solat` ON `solat`.`id_latihan` = `latihan`.`id_latihan`
+					JOIN `tb_banksoal` `bs` ON `bs`.`id_soal` = `solat`.`id_soal`
+					JOIN `tb_subbab` `sb`ON `sb`.`id` = `bs`.`id_subbab`
+					JOIN `tb_bab` `bab` ON `bab`.`id` = `sb`.`babID`
+					JOIN `tb_tingkat-pelajaran` `tp` ON `tp`.`id` = `bab`.`tingkatPelajaranID`
+					WHERE `latihan`.`create_by` = '$createdby' AND `tp`.`tingkatID`= '$idtingkat' 
+					GROUP BY `latihan`.`id_latihan`
+					ORDER BY `tgl_pengerjaan` ASC";
+		$query = $this->db->query($query);
+		return $query->result_array();
+
+	}
+
+	public function get_report_detail($createdby,$id_latihan){
+		$query = "SELECT * 
+					FROM `tb_latihan` `latihan` 
+					JOIN `tb_report-latihan` `report` ON `latihan`.`id_latihan`=`report`.`id_latihan` 
+					WHERE `latihan`.`create_by` = '$createdby' AND `latihan`.`id_latihan`= '$id_latihan' 
+					ORDER BY `tgl_pengerjaan` ASC";
+		$query = $this->db->query($query);
+		return $query->result_array();
+
+	}
+
 
 
 	public function get_latihan($createdby){

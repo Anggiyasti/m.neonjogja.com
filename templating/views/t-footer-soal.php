@@ -37,9 +37,9 @@
 
 <!-- ini footer -->
 
-<script src="<?php echo base_url(); ?>assets/js/paginga.jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assetsnew/js/paginga.jquery.min.js"></script>
 
-<script src="<?php echo base_url(); ?>assets/js/soal_to.js"></script>
+<script src="<?php echo base_url(); ?>assetsnew/js/soal_to.js"></script>
 
 <script type="text/javascript">
 
@@ -51,6 +51,11 @@
 
 <script>
 var base_url = "<?php echo base_url();?>" ;
+// loading screen on load
+            $(window).load(function() {
+                $(".se-pre-con").fadeOut("slow");;
+            });
+        // loading screen on load
 
 
     function disableF5(e) {
@@ -249,6 +254,11 @@ var base_url = "<?php echo base_url();?>" ;
     }
 
     function kirimHasil(){
+        if (!$("input[type=radio]:checked").length > 0) {
+            // tidak ada jawaban yg di kirim
+            swal("Dibatalkan", "Maaf, anda tidak dapat mengirimkan lembar jawaban kosong!", "error");
+          }else{
+
         window.onbeforeunload = null;
         swal({
           title: "Yakin selesai mengerjakan?",
@@ -272,11 +282,12 @@ var base_url = "<?php echo base_url();?>" ;
           }
         });
        
-       
+       }
     }
 
     function a(){
-$.ajax({
+    var tingkatid = $('input[name=tingkatid]').val();
+    $.ajax({
                   type: "POST",
                   dataType: "TEXT",
                   url: base_url+"tesonline/cekJawaban",
@@ -285,7 +296,7 @@ $.ajax({
                   success: function(){
                     deleteAllCookies('seconds', 'minutes');
                     window.localStorage.clear();
-                    window.location.href = base_url+"welcome";
+                    window.location.href = base_url+"tesonline/daftarreport/"+tingkatid;
                   },error:function(){
                     swal('Gagal menghubungkan ke server')
                   }
@@ -314,7 +325,7 @@ $.ajax({
     }); 
 </script> 
 <script type="text/javascript" async 
-        src="<?= base_url('assetsnew/adminre/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>">
+        src="<?= base_url('assetsnew/plugins/MathJax-master/MathJax.js?config=TeX-MML-AM_HTMLorMML') ?>">
 </script> 
 <!-- end Math jax -->
 </body>

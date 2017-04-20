@@ -36,6 +36,67 @@ public function index() {
     $this->parser->parse('templating/index', $data);
 }
 
+
+    #memilih matapelajaran yang akan dilakukan tesonline.
+public function daftarreport($idtingkat) {
+    
+    $data = array(
+        'judul_halaman' => 'Neon - Pilih Mata Pelajaran',
+        'judul_header' => 'Latihan Online'
+        );
+    if ($this->session->userdata('NAMASISWA')) {
+    $data['files'] = array(
+        APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+        APPPATH .'modules/tesonline/views/mobile/vm-daftar-report.php',
+        APPPATH.'modules/templating/views/layouts/v-footer.php',
+        );
+     }
+            else{
+                redirect('login');
+            }
+
+    $data['report'] = $this->load->mlatihan->get_report_tingkat($this->session->userdata['USERNAME'],$idtingkat);
+    $penggunaID = $this->session->userdata['id'];
+    $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+    $data['tingkat'] = $this->load->MTingkat->gettingkat();
+   
+    // $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
+
+    
+
+    $this->parser->parse('templating/index', $data);
+
+}
+
+
+   #memilih matapelajaran yang akan dilakukan tesonline.
+public function detailreport($id_latihan) {
+    $data['report'] = $this->load->mlatihan->get_report_detail($this->session->userdata['USERNAME'],$id_latihan);
+    $penggunaID = $this->session->userdata['id'];
+    $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+    $data['tingkat'] = $this->load->MTingkat->gettingkat();
+    
+    
+    if ($this->session->userdata('NAMASISWA')) {
+
+    $this->load->view('templating/layouts/v-sidebar',$data);
+    $this->load->view('templating/layouts/v-header');
+    $this->load->view('mobile/vm-detail-report',$data);
+    $this->load->view('templating/layouts/v-footer');
+     }
+    else{
+        redirect('login');
+    }
+
+    
+   
+    // $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
+
+    
+
+
+}
+
     #memilih matapelajaran yang akan dilakukan tesonline.
 public function pilihmapel($idtingkat) {
     
@@ -164,6 +225,9 @@ public function daftarlatihan() {
     $this->session->unset_userdata('id_pembahasan');
     $this->parser->parse('templating/index', $data);
 }
+
+
+
 
 public function test() {
 

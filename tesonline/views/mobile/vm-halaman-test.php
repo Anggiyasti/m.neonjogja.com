@@ -75,8 +75,24 @@
         background-color: #63d3e9;
     }
 </style>
+<!-- LOADING -->
+    <style>
+      .no-js #loader { display: none;  }
+      .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+      .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url(http://www.thebuddhistchef.com/wp-content/themes/culinier-theme/images/loader.gif) center no-repeat #fff;
+    }
+</style>
+<!-- LOADING -->
 </head>
 <body class="bod">
+<div class="se-pre-con"></div>
     <!-- START Template Main -->
     <script src="<?= base_url('assetsnew/js/bjqs-1.10.js') ?>"></script>
     <script type="text/javascript">
@@ -96,7 +112,7 @@
     <div class="spinner"></div>
 </div>
 
-<form action="<?= base_url('index.php/workout1/cekjawaban') ?>" method="post" id="hasil">    
+<form method="post" id="hasil">    
     <div>
         <div class="text-center"> 
             <h4><span class="color-red-dark" id="timer"></span></h4>
@@ -124,14 +140,7 @@
                             </div>
                             <div class="col-md-8" style="margin-bottom:0">
                                 <row>
-                                <div class="row">
-                                    <div class="col-md-6 center"></div>
-                                    <div class="col-md-2"></div>
-                                        <div class="col-md-8 text-right"> 
-                                            <button class="btn btn-info" style="background-color: #2196F3;" id="btnPrev"><<</button>
-                                            <button class="btn btn-info" style="background-color: #2196F3;" id="btnNext">>></button>
-                                        </div>
-                                    </div>
+                                
                                 <?php
                                     $i = 1;
                                     $nosoal = 1;
@@ -139,6 +148,7 @@
                                 <div id="my-slideshow" style="">
                                      <ul class="bjqs" style="display: block;list-style: none">
                                         <?php foreach ($soal as $key): ?>
+                                            <input type="text" value="<?= $key['tingkatID'] ?>" name="tingkatid" hidden="true" />
                                         <li class="bjqs-slide" style="display: none;">
 
                                             <div class="">
@@ -272,6 +282,14 @@
                                     </div>
                                     <!--/ END panel--> 
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6 center"></div>
+                                    <div class="col-md-2"></div>
+                                        <div class="col-md-8 text-right"> 
+                                            <button class="btn btn-info" style="background-color: #2196F3;" id="btnPrev"><<</button>
+                                            <button class="btn btn-info" style="background-color: #2196F3;" id="btnNext">>></button>
+                                        </div>
+                                    </div>
 
                                     
                             </row>  
@@ -279,8 +297,7 @@
 </div>
                             
                     </div>
-                </div>
-            </div>
+               
         </section>
 
         <!--/ END Register Content -->

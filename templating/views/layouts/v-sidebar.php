@@ -76,7 +76,7 @@
 
                 <?php $no[$i] ?>
                 <?php $id = $tingkatitem['id'] ?>
-                <a href="<?=base_url()?>tesonline/pilihmapel/<?=$id ?>"><?=$tingkatitem['aliasTingkat'] ?></a>
+                <a href="<?=base_url()?>tesonline/daftarreport/<?=$id ?>"><?=$tingkatitem['aliasTingkat'] ?></a>
                 <?php $i = $i+1; ?>
 
                 <?php endforeach ?>
