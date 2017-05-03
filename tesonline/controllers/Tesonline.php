@@ -46,9 +46,9 @@ public function daftarreport($idtingkat) {
         );
     if ($this->session->userdata('NAMASISWA')) {
     $data['files'] = array(
-        APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+        APPPATH.'modules/templating/views/anggi/v-sidebar.php',
         APPPATH .'modules/tesonline/views/mobile/vm-daftar-report.php',
-        APPPATH.'modules/templating/views/layouts/v-footer.php',
+        APPPATH.'modules/templating/views/anggi/v-footer.php',
         );
      }
             else{
@@ -64,36 +64,39 @@ public function daftarreport($idtingkat) {
 
     
 
-    $this->parser->parse('templating/index', $data);
+    $this->parser->parse('templating/anggi/index', $data);
 
 }
 
 
    #memilih matapelajaran yang akan dilakukan tesonline.
 public function detailreport($id_latihan) {
+    
+    $data = array(
+        'judul_halaman' => 'Neon - Pilih Mata Pelajaran',
+        'judul_header' => 'Latihan Online'
+        );
+    if ($this->session->userdata('NAMASISWA')) {
+    $data['files'] = array(
+        APPPATH.'modules/templating/views/anggi/v-sidebar.php',
+        APPPATH .'modules/tesonline/views/mobile/vm-detail-report.php',
+        APPPATH.'modules/templating/views/anggi/v-footer.php',
+        );
+     }
+            else{
+                redirect('login');
+            }
+
     $data['report'] = $this->load->mlatihan->get_report_detail($this->session->userdata['USERNAME'],$id_latihan);
     $penggunaID = $this->session->userdata['id'];
     $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
     $data['tingkat'] = $this->load->MTingkat->gettingkat();
-    
-    
-    if ($this->session->userdata('NAMASISWA')) {
-
-    $this->load->view('templating/layouts/v-sidebar',$data);
-    $this->load->view('templating/layouts/v-header');
-    $this->load->view('mobile/vm-detail-report',$data);
-    $this->load->view('templating/layouts/v-footer');
-     }
-    else{
-        redirect('login');
-    }
-
-    
    
     // $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
 
     
 
+    $this->parser->parse('templating/anggi/index', $data);
 
 }
 
@@ -106,9 +109,9 @@ public function pilihmapel($idtingkat) {
         );
     if ($this->session->userdata('NAMASISWA')) {
     $data['files'] = array(
-        APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+        APPPATH.'modules/templating/views/anggi/v-sidebar.php',
         APPPATH . 'modules/tesonline/views/mobile/vm-test-show-mapel.php',
-         APPPATH.'modules/templating/views/layouts/v-footer.php',
+        APPPATH.'modules/templating/views/anggi/v-footer.php',
         );
      }
             else{
@@ -128,7 +131,7 @@ public function pilihmapel($idtingkat) {
 
     
 
-    $this->parser->parse('templating/index', $data);
+    $this->parser->parse('templating/anggi/index', $data);
 
 }
 
@@ -145,7 +148,7 @@ public function next($idtingkatpel) {
         APPPATH.'modules/templating/views/layouts/v-sidebar.php',
         APPPATH.'modules/templating/views/layouts/v-header.php',
         APPPATH . 'modules/tesonline/views/mobile/vm-test-show-bab.php',
-         APPPATH.'modules/templating/views/layouts/v-footer.php',
+        APPPATH.'modules/templating/views/anggi/v-footer.php',
         );
      }
             else{
@@ -326,14 +329,14 @@ public function cekJawaban() {
 public function pembahasanlatihan() {
     if (!empty($this->session->userdata['id_pembahasan'])) {
         $id = $this->session->userdata['id_pembahasan'];
-        $this->load->view('templating/t-headersoal');
+        $this->load->view('templating/t-header-soal');
 
         $query = $this->load->mtesonline->get_soal($id);
         $data['soal'] = $query['soal'];
         $data['pil'] = $query['pil'];
 
-        $this->load->view('vPembahasan.php', $data);
-        $this->load->view('footerpembahasan.php');
+        $this->load->view('mobile/vm-pembahasan.php', $data);
+        $this->load->view('v-footer-pembahasan');
     } else {
         $this->errorTest();
     }

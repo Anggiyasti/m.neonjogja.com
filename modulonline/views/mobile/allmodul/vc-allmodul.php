@@ -127,7 +127,7 @@ function searchFilter(page_num) {
 
 
 <!-- Page Content -->
-  <div id="content" style="min-height: 480px;">
+  <div id="content" style="min-height: 425px;">
     <!-- Toolbar -->
     <div id="toolbar" class="halo-nav box-shad-none">
       <div class="open-left" id="open-left" data-activates="slide-out-left">

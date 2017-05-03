@@ -34,7 +34,7 @@
                 <ul class="course-feature" style="margin-top: 0;">
                   <li>Nama Latihan&nbsp&nbsp&nbsp:&nbsp<?= $reportitem['nm_latihan'] ?></li>
                   
-                  <li>Score&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?= $reportitem['skore'] ?></li>
+                  <li>Score&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?= $reportitem['skore'] ?></li>
                 </ul>
               </div>
                     <?php endforeach ?>
@@ -48,11 +48,10 @@
       
          
       </div> <!-- End of Page Content -->
-      <script src="<?= base_url('assetsnew/js/canvasjs.min.js') ?>"></script>
+     <script src="<?= base_url('assetsnew/plugins/canvasjs.min.js') ?>"></script>
 <script type="text/javascript">
-
-    window.onload = function() {
-                    var data      = <?php echo json_encode($reportitem,JSON_NUMERIC_CHECK);?>;
+    window.onload = function($) {
+        var data      = <?php echo json_encode($reportitem,JSON_NUMERIC_CHECK);?>;
                     var report = {
                         durasi: 0,
                         level: 0,
@@ -96,23 +95,11 @@
 
                     chart.render();
 
-                }
-
+    }(jQuery);
 </script>
 
 
 
     
-    <script src="<?= base_url('assetsnew/js/jquery-2.1.0.min.js') ?>"></script>
-    <script src="<?= base_url('assetsnew/js/jquery.swipebox.min.js') ?>"></script>   
-    <script src="<?= base_url('assetsnew/js/materialize.min.js') ?>"></script> 
-    <script src="<?= base_url('assetsnew/js/swiper.min.js') ?>"></script>  
-    <script src="<?= base_url('assetsnew/js/jquery.mixitup.min.js') ?>"></script>
-    <script src="<?= base_url('assetsnew/js/jquery.smoothState.min.js') ?>"></script>
-    <script src="<?= base_url('assetsnew/js/masonry.min.js') ?>"></script>
-    <script src="<?= base_url('assetsnew/js/chart.min.js') ?>"></script>
-    <script src="<?= base_url('assetsnew/js/functions.js') ?>"></script>
-  </body>
-</html>
 
 

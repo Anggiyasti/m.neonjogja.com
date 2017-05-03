@@ -42,7 +42,7 @@
                             <li>Level&nbsp&nbsp&nbsp:&nbspSulit</li>
                         <?php } ?>
                         <li>Score&nbsp&nbsp: <?= $reportitem['skore'] ?></li>
-                        <li> <a href="<?=base_url()?>index.php/tesonline/detailreport/<?=$reportitem['id_latihan'] ?>" class="waves-effect waves-light btn primary-color"></i>Detail</a> <a href="<?=base_url()?>index.php/workout1/create_session_id_pembahasan/<?=$reportitem['id_latihan'] ?>" class="waves-effect waves-light btn primary-color">Pembahasan</a></li>
+                        <li> <a href="<?=base_url()?>index.php/tesonline/detailreport/<?=$reportitem['id_latihan'] ?>" class="waves-effect waves-light btn primary-color"></i>Detail</a> <a href="<?=base_url()?>index.php/latihan/create_session_id_pembahasan/<?=$reportitem['id_latihan'] ?>" class="waves-effect waves-light btn primary-color">Pembahasan</a></li>
                     </ul>
 
 
@@ -69,3 +69,4 @@
       
          
       </div> <!-- End of Page Content -->
+       </div>

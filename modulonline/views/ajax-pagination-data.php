@@ -24,7 +24,7 @@
       <div class="coba">
         <span class="single-news-channeli "><?= $post['deskripsi'] ?></span> 
         
-        <a href="<?= base_url("assetsnew/modul/".$post['url_file'])?>" class="secondary-content col s4" target="_blank" onclick="Approved('<?=$post['id']?>')"><i class="ion-ios-download-outline" ></i></a>
+        <a href="http://neonjogja.com/assetsnew/modul/<?=$post['url_file']?>" class="secondary-content col s4" target="_blank" onclick="Approved('<?=$post['id']?>')"><i class="ion-ios-download-outline" ></i></a>
       </div>                
     </div>
   </div>

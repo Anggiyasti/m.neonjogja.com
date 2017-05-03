@@ -67,7 +67,7 @@ class Video extends MX_Controller {
                 APPPATH . 'modules/homepage/views/v-header.php',         
                 APPPATH . 'modules/templating/views/t-f-pagetitle.php',
                 APPPATH . 'modules/video/views/v-container-all-videos.php',
-                APPPATH . 'modules/templating/views/footer.php'
+                APPPATH.'modules/templating/views/anggi/v-footer.php',
             );
             $this->parser->parse('templating/index', $data);
         }else{
@@ -101,7 +101,7 @@ $this->sessionchecker->cek_token();
             APPPATH . 'modules/homepage/views/v-header-login.php',
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             APPPATH . 'modules/video/views/f-daftar-video.php',
-            APPPATH . 'modules/testimoni/views/v-footer.php'
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
         );
         // print_r($data);
         $this->parser->parse('templating/index', $data);
@@ -141,7 +141,7 @@ $this->sessionchecker->cek_token();
             // APPPATH.'modules/video/views/mobile/vm-f-daftar-video-bybab.php',
             APPPATH.'modules/video/views/mobile/vm-new-f-daftar-video-bybab.php',
            
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
             
         );
 
@@ -206,11 +206,11 @@ $this->sessionchecker->cek_token();
                 // APPPATH.'modules/templating/views/t-f-pagetitle.php',
                 // APPPATH . 'modules/video/views/f-single-video.php',
                 // APPPATH . 'modules/testimoni/views/v-footer.php',
-                APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+                APPPATH.'modules/templating/views/anggi/v-sidebar.php',
                 APPPATH . 'modules/video/views/mobile/vm-f-single-video.php',
-                APPPATH.'modules/templating/views/layouts/v-footer.php',
+                APPPATH.'modules/templating/views/anggi/v-footer.php',
             );
-            $this->parser->parse('templating/layouts/index', $data);
+            $this->parser->parse('templating/anggi/index', $data);
         }else{
             redirect('login');
         }
@@ -354,9 +354,9 @@ $this->sessionchecker->cek_token();
             // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             // APPPATH . 'modules/video/views/f-daftar-video-bybab.php',
             // APPPATH . 'modules/testimoni/views/v-footer.php'
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
             APPPATH.'modules/video/views/mobile/vm-daftar-matpel-sd.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
             
         );
 
@@ -373,7 +373,7 @@ $this->sessionchecker->cek_token();
 
 
 
-        $this->parser->parse('templating/layouts/index', $data);
+        $this->parser->parse('templating/anggi/index', $data);
     }else{
         redirect('login');
     }
@@ -387,9 +387,9 @@ $this->sessionchecker->cek_token();
             // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             // APPPATH . 'modules/video/views/f-daftar-video-bybab.php',
             // APPPATH . 'modules/testimoni/views/v-footer.php'
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
             APPPATH.'modules/video/views/mobile/vm-daftar-matpel-smp.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
             
         );
 
@@ -403,7 +403,7 @@ $this->sessionchecker->cek_token();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
         $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
-        $this->parser->parse('templating/layouts/index', $data);
+        $this->parser->parse('templating/anggi/index', $data);
     }else{
         redirect('login');
     }
@@ -417,9 +417,9 @@ $this->sessionchecker->cek_token();
             // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             // APPPATH . 'modules/video/views/f-daftar-video-bybab.php',
             // APPPATH . 'modules/testimoni/views/v-footer.php'
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
             APPPATH.'modules/video/views/mobile/vm-daftar-matpel-sma.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
             
         );
 
@@ -433,7 +433,7 @@ $this->sessionchecker->cek_token();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
         $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
-        $this->parser->parse('templating/layouts/index', $data);
+        $this->parser->parse('templating/anggi/index', $data);
     }else{
         redirect('login');
     }
@@ -447,9 +447,9 @@ $this->sessionchecker->cek_token();
             // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             // APPPATH . 'modules/video/views/f-daftar-video-bybab.php',
             // APPPATH . 'modules/testimoni/views/v-footer.php'
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
             APPPATH.'modules/video/views/mobile/vm-daftar-matpel-sma-ipa.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
             
         );
 
@@ -463,7 +463,7 @@ $this->sessionchecker->cek_token();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
         $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
-        $this->parser->parse('templating/layouts/index', $data);
+        $this->parser->parse('templating/anggi/index', $data);
     }else{
         redirect('login');
     }
@@ -477,9 +477,9 @@ $this->sessionchecker->cek_token();
             // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             // APPPATH . 'modules/video/views/f-daftar-video-bybab.php',
             // APPPATH . 'modules/testimoni/views/v-footer.php'
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
             APPPATH.'modules/video/views/mobile/vm-daftar-matpel-sma-ips.php',
-            APPPATH.'modules/templating/views/layouts/v-footer.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
             
         );
 
@@ -493,7 +493,7 @@ $this->sessionchecker->cek_token();
         $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
         $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
-        $this->parser->parse('templating/layouts/index', $data);
+        $this->parser->parse('templating/anggi/index', $data);
     }else{
         redirect('login');
     }
