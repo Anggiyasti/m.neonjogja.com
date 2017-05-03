@@ -60,7 +60,7 @@
           </div>
           <div class="floating-button page-fab animated bouncein delay-3" style="padding-bottom: 510px;">
           
-          <a href="<?=base_url()?>tesonline/pilihmapel/<?=$id?>" class="btn-floating btn-large accent-color btn z-depth-1 " style="position: relative;">
+          <a href="<?=base_url()?>tesonline/pilihmapel/<?=$ti?>" class="btn-floating btn-large accent-color btn z-depth-1 " style="position: relative;">
             <i class="ion-android-add"></i>
           </a>
         </div>

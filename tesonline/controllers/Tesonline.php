@@ -42,7 +42,7 @@ public function daftarreport($idtingkat) {
     
     $data = array(
         'judul_halaman' => 'Neon - Pilih Mata Pelajaran',
-        'judul_header' => 'Latihan Online'
+        'judul_header' => 'Latihan Online',
         );
     if ($this->session->userdata('NAMASISWA')) {
     $data['files'] = array(
@@ -54,7 +54,7 @@ public function daftarreport($idtingkat) {
             else{
                 redirect('login');
             }
-
+    $data['ti'] = $idtingkat;
     $data['report'] = $this->load->mlatihan->get_report_tingkat($this->session->userdata['USERNAME'],$idtingkat);
     $penggunaID = $this->session->userdata['id'];
     $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
