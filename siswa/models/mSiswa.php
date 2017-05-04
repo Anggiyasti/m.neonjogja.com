@@ -104,6 +104,47 @@ class Msiswa extends CI_Model {
     ##query get siswa belum to.
     #query get semua siswa
 
+    public function persentasi_limit($data){
+        $id = $this->session->userdata('id');
+        $query = "SELECT topikID AS top,babID,`namaTopik` , 
+        COUNT(`stepID`) AS stepDone, 
+        (SELECT COUNT(id) FROM `tb_line_step` ls
+        WHERE ls.topikID = top) AS jumlah_step  FROM(
+        SELECT * FROM tb_line_log l WHERE l.`penggunaID` = $id) hasil
+        JOIN `tb_line_step` s ON s.`id` = hasil.stepID
+        JOIN `tb_line_topik` t ON t.`id` = s.`topikID`
+        GROUP BY topikID
+        ORDER BY topikID
+        limit $data
+        ";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
+
+    public function get_limit_persentase_latihan($data){
+        $id = $this->session->userdata('id');  
+        $query = "SELECT  bab.`judulBab` ,
+        SUM(latihan.jmlh_benar + latihan.jmlh_salah + latihan.jmlh_kosong) AS total_soal,
+        SUM(latihan.jmlh_benar) AS total_benar,
+        SUM(latihan.jmlh_salah) AS total_salah,
+        SUM(latihan.jmlh_kosong) AS total_kosong
+
+        FROM (SELECT * FROM `tb_report-latihan` repo
+        WHERE id_pengguna = $id) AS latihan
+        JOIN `tb_mm_sol_lat` mmsol ON mmsol.`id_latihan` = latihan.id_latihan
+        JOIN `tb_latihan` l ON l.`id_latihan` = latihan.id_latihan
+        JOIN `tb_banksoal` bank ON bank.`id_soal` = mmsol.`id_soal`
+        JOIN `tb_subbab` sub ON bank.`id_subbab` = sub.`id`
+        JOIN tb_bab bab ON bab.`id` = sub.`babID`
+        GROUP BY bab.`id`
+        ORDER BY total_soal DESC
+
+        limit $data
+        ";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
+
     function get_all_siswa() {
         $this->db->select('*,siswa.id as idsiswa');
         $this->db->from('tb_siswa siswa');

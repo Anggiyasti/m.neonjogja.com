@@ -44,6 +44,24 @@ return $result->result_array();
 }
     //##
 
+ // ambil tryout yang sudah pernah dikerjakan oleh siswa tertentu
+public function get_tryout_by_pengguna(){
+    $id = $this->session->userdata('id');
+
+    $username = $this->db->escape_str($this->session->userdata('USERNAME'));
+    $query = " SELECT mmto.`id_tryout`,t.`nm_tryout` FROM 
+    (SELECT * FROM `tb_report-paket` rp
+    WHERE `id_pengguna` = $id) hasil
+    JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
+    JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  
+    JOIN `tb_tryout` t ON t.id_tryout = mmto.`id_tryout`
+    GROUP BY mmto.id_tryout
+    ";
+    $result = $this->db->query($query);
+    return $result->result_array(); 
+}
+
+
     #get data paket yang sudah dikerjakan
 function get_paket_reported($datas){
     $id = $datas['id_tryout'];
@@ -262,6 +280,28 @@ public function dataPaketRandom($id) {
     $this->db->where('id_paket', $id);
     $query = $this->db->get();
     return $query->result();
+}
+
+
+public function get_laporan_to(){
+    $id = $this->session->userdata('id');
+
+    $query = "SELECT t.`nm_tryout` 
+    
+    ,SUM(report_paket.jmlh_benar) AS jumlah_benar
+    ,SUM(report_paket.jmlh_salah) AS jumlah_salah
+    ,SUM(report_paket.jmlh_kosong) AS jumlah_kosong
+    ,SUM(jmlh_benar+jmlh_salah+jmlh_kosong) AS jumlah_soal
+    ,SUM(jmlh_benar / jumlah_soal * 100) AS nilai
+    FROM (SELECT * FROM `tb_report-paket`
+    WHERE id_pengguna = $id) report_paket
+    JOIN `tb_mm-tryoutpaket` mmto ON mmto.`id` = report_paket.`id_mm-tryout-paket`
+    JOIN `tb_tryout` t ON t.`id_tryout` = mmto.`id_tryout`
+    JOIN `tb_paket` p ON p.`id_paket` = mmto.`id_paket`
+    GROUP BY t.`id_tryout`";
+
+    $result = $this->db->query($query);
+    return $result->result_array(); 
 }
 }
 ?>

@@ -5,6 +5,16 @@
  */
 class Siswa extends MX_Controller {
 
+     function get_status_login(){
+        $log_in = $this->session->userdata('loggedin');
+        return $log_in;        
+    }
+
+    function get_hak_akses(){
+        $hak_akses = $this->session->userdata('HAKAKSES');        
+        return $hak_akses;        
+    }
+
     public function __construct() {
         parent::__construct();
         $this->load->model('msiswa');
@@ -12,6 +22,7 @@ class Siswa extends MX_Controller {
          $this->load->model('cabang/mcabang');
         $this->load->helper('session');
         $this->load->library('parser');
+        $this->load->model('tryout/mtryout');
     }
 
     public function index() {
@@ -581,6 +592,17 @@ class Siswa extends MX_Controller {
         var_dump($data['token']);
         $this->parser->parse( 'templating/index', $data );
     }
+
+
+    function get_tryout_for_select(){
+   if ($this->get_status_login()){
+    $datas = $this->mtryout->get_tryout_by_pengguna();
+    echo json_encode($datas);
+    }else{
+    redirect('login');
+}
+
+}
 
     
     

@@ -10,46 +10,15 @@ class Welcome extends MX_Controller {
 
 
 
-    /**
-
-     * Index Page for this controller.
-
-     *
-
-     * Maps to the following URL
-
-     *   http://example.com/index.php/welcome
-
-     *  - or -
-
-     *   http://example.com/index.php/welcome/index
-
-     *  - or -
-
-     * Since this controller is set as the default controller in
-
-     * config/routes.php, it's displayed at http://example.com/
-
-     *
-
-     * So any other public methods not prefixed with an underscore will
-
-     * map to /index.php/welcome/<method_name>
-
-     *
-
-     * @see https://codeigniter.com/user_guide/general/urls.html
-
-     */
-
     public function __construct() {
 
         parent::__construct();
 
         $this->load->model( 'matapelajaran/mmatapelajaran' );
-
+        $this->load->model( 'video/mvideos' );
         $this->load->model( 'tingkat/MTingkat' );
         $this->load->model( 'siswa/msiswa' );
+        $this->load->library('sessionchecker');
 
 
 
@@ -122,11 +91,14 @@ class Welcome extends MX_Controller {
         // print_r($data['tingkat']);
         $penggunaID = $this->session->userdata['id'];
         $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
-        $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
-        $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
-        $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
-        $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
-        $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
+        $data['topik'] = $this->msiswa->persentasi_limit(3);
+        $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);
+        $data['video'] = $this->mvideos->get_video_limit();
+        // $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
+        // $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
+        // $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
+        // $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
+        // $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
        
 
         $this->parser->parse( 'templating/index', $data );
@@ -164,6 +136,78 @@ class Welcome extends MX_Controller {
         );
         $this->parser->parse( 'templating/index', $data );
     }
+
+
+    ## get data latihan persentase buat di datatable.
+public function get_data_latihan(){
+    $list = $this->msiswa->get_limit_persentase_latihan(10);
+    $data = array();
+    $n=1;
+        //mengambil nilai list
+    $baseurl = base_url();
+    foreach ( $list as $item ) {
+        $row = array();
+
+        $row[] = $n;
+        $row[] = $item['judulBab'];
+        $row[] = $item['total_soal'];
+        $row[] = $item['total_benar'];
+        $row[] = $item['total_salah'];
+        $row[] = $item['total_kosong'];
+        $row[] = (int)$item['total_benar'] / (int)$item['total_soal'] * 100;
+        $persentasi = (int)$item['total_benar'] / (int)$item['total_soal'] * 100;   
+        $row[] = "<span class='skill-bar' title=".$persentasi."> <span class='bar'><span class='bg-color-4 skill-bar-progress' processed='true' style='width: ".$persentasi."%;'></span></span></span>";
+        $persentasi;
+
+
+
+
+
+        $data[] = $row;
+        $n++;
+
+    }
+
+    $output = array(
+        "data"=>$data,
+        );
+    echo json_encode( $output );
+
+}
+## learning line persentase datatable.
+public function get_data_learning_line(){
+    $list = $this->msiswa->persentasi_limit(10);
+    $data = array();
+    $n=1;
+        //mengambil nilai list
+    $baseurl = base_url();
+    foreach ( $list as $item ) {
+        $row = array();
+
+        $row[] = $n;
+        $row[] = $item['namaTopik'];
+        $row[] = $item['stepDone'];
+        $row[] = $item['jumlah_step'];
+        $persentasi = (int)$item['stepDone'] / (int)$item['jumlah_step'] * 100;   
+        $row[] = (int)$persentasi;
+        $title = (int)$persentasi."%"; 
+        $row[] = "<span class='skill-bar' title=".$title."> <span class='bar'><span class='bg-color-4 skill-bar-progress' processed='true' style='width: ".$persentasi."%;'></span></span></span>";
+
+
+        $data[] = $row;
+        $n++;
+
+    }
+
+    $output = array(
+        "data"=>$data,
+        );
+    echo json_encode( $output );
+
+
+
+
+}
 
 
 
