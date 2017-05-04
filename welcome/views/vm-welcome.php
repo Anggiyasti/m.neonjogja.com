@@ -141,58 +141,30 @@
     <h3 style="margin:0; text-align: center;" >Recent Video</h3><p style="margin:0; text-align: center;">
     Nah, dibawah ini terdapat video terbaru loh, yuk coba tonton..
     <hr>  <br></p>
-
+    <div class="p-20 animated fadeinup">
     <div id="filter">
-            <!-- Swipeboox Contents -->
+      <!-- Swipeboox Contents -->
             <section id="image-filter">
-            <?php foreach ($video as $item): ?>
               <div class="wrap small-width">
                 <div data-pswp-uid="1" id="demo-gallery" class="demo-gallery">
-                
-                  <span></span>
-                <?php $url =  base_url()."video/seevideo/".$item['videoid']?>
-                <a href="<?=$url ?>" class="swipebox mix category-1 no-smoothState"></a>
-              </div>
-              
-                <?php if (!empty($item['link'])): ?>
-                  <iframe  width="250" src="<?=$item['link'] ?>"></iframe>
-                <?php endif ?>
-              
+                  <?php foreach ($video as $item): ?>
+                    <?php $url =  base_url()."video/seevideo/".$item['videoid']?>
+                    <?php if (!empty($item['link'])): ?>
+                      <iframe  width="250" src="<?=$item['link'] ?>" allowfullscreen></iframe>
+                    <?php endif ?>
+                    <!-- <a href="img/1.jpg" class="swipebox mix category-1 no-smoothState" title="This is dummy caption.">
+                      <img src="img/1.jpg" alt="image">
+                    </a> -->
+                  <?php endforeach ?>
                   
                 </div>
               </div>
-              <?php endforeach ?>
 
             </section> <!-- End of Swipebox Contents -->
             
-          </div>
-
-    <div class="grid-col-row clear-fix" >
-      <?php foreach ($video as $item): ?>
-        <div class="grid-col grid-col-3" >
-          <div class=" portfolio-item" >
-            <div class="picture">
-              <div class="hover-effect"></div>
-              <div class="link-cont">
-                <span></span>
-                <?php $url =  base_url()."video/seevideo/".$item['videoid']?>
-                <a href="<?=$url ?>" class="cws-right fa fa-play"></a>
-              </div>
-              <center>
-                <?php if (!empty($item['link'])): ?>
-                  <iframe  width="250" src="<?=$item['link'] ?>"></iframe>
-                <?php endif ?>
-              </center>
-
-            </div>
-            <h3><?=$item['judulVideo'] ?></h3>
-            <p><?=$item['deskripsi'] ?></p>
-          </div>
-        </div>
-      <?php endforeach ?>
-
-
     </div>
+    </div>
+    
     <hr class="divider-color">  
 
   </div>
