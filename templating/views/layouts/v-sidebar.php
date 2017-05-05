@@ -54,7 +54,7 @@
             </ul>
           </div>
         </li>
-         <li><a href="<?=base_url('index.php/welcome')?>" class="no-child"><i class="ion-ios-compose-outline"></i>Try Out</a></li>
+         <li><a href="<?=base_url('index.php/tryout')?>" class="no-child"><i class="ion-ios-compose-outline"></i>Try Out</a></li>
         <li>
 
           <div class="collapsible-header">

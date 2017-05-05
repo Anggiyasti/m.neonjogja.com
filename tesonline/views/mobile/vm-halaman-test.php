@@ -1,79 +1,81 @@
 <!-- START Body -->
 <style>
-    .bod {
-        background-color:white;
-    }
-    .pager li > a, .pager li > span{
-        display: inline-block;
-        padding: 5px 14px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 0px;
-        margin: 5px;
-    }
+#jwb_sisJ {
+  border-radius: 12px;
+  /*background: #fff;*/
+  padding: 2px 4px 2px 4px; 
+  width: 20px;
+  height: 20px;
+  color : #06C;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid #63d3e9; 
+  margin-left: 27px;
+  margin-top: 4px;
+}
 
-    #jwb_sisJ {
-        border-radius: 12px;
-        /*background: #fff;*/
-        padding: 2px 4px 2px 4px; 
-        width: 20px;
-        height: 20px;
-        color : #06C;
-        font-size: 12px;
-        text-align: center;
-        text-decoration: none;
-        border: 1px solid #63d3e9; 
-        margin-left: 27px;
-        margin-top: 4px;
-    }
+#flex-item {
+  float:left;
+  width: 48px;
+  height: 48px;
+  /*margin: 1px;*/
+  padding: 2px;
+  margin-top: 12px; 
 
-    #flex-item {
-        float:left;
-        width: 48px;
-        height: 48px;
-        /*margin: 1px;*/
-        padding: 2px;
-        margin-top: 12px; 
-
-    }
+}
 
 
-    #lihatStatus{
-        /*position: fixed;*/
-        /*top: 0;*/
-        /*left: 10px;*/
-        /*z-index: 99;*/
-        /*border-bottom: 1px solid #ddd;*/
-        min-width: 10%;
-        /*padding: 9px;*/
-        /*background-color: #fff;*/
-        /*border: 1px solid #555;*/
-    }
-    #lihat{
-        margin: 5px;
-    }
-    #kotak{
-        width: 30px;
-        height: 30px;
-        border: 1px solid aqua;
-        margin: 5px;
-        float: left;
-        padding: 5px;
-        /*position: absolute;*/
-    }
+#lihatStatus{
+  /*position: fixed;*/
+  /*top: 0;*/
+  /*left: 10px;*/
+  /*z-index: 99;*/
+  /*border-bottom: 1px solid #ddd;*/
+  min-width: 10%;
+  /*padding: 9px;*/
+  /*background-color: #fff;*/
+  /*border: 1px solid #555;*/
+}
+#lihat{
+  margin: 5px;
+}
+#kotak{
+  width: 30px;
+  height: 30px;
+  border: 1px solid aqua;
+  margin: 5px;
+  float: left;
+  padding: 5px;
+  /*position: absolute;*/
+}
 
-    label > input{ /* HIDE RADIO */
-      visibility: hidden;  
-      position: absolute; /* Remove input from document flow */
-    }
+label > input{ /* HIDE RADIO */
+  visibility: hidden;  
+  position: absolute; /* Remove input from document flow */
+}
 
-    label:hover{ /* HIDE RADIO */
-      background-color: #63d3e9;
-    }
+label:hover{ /* HIDE RADIO */
+  background-color: #63d3e9;
+}
 
-    .terpilih{
-        background-color: #63d3e9;
-    }
+.terpilih{
+  background-color: #63d3e9;
+}
+
+.modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+  height: auto;
+  height: 100%;
+  min-height: 100%;
+  border-radius: 0;
+}
 </style>
 <!-- LOADING -->
     <style>
@@ -104,8 +106,16 @@
             });
         });
     </script>
-<section id="main" role="main">
+<section class="page-header page-header-block nm" style="">
 <!-- page-transitions -->
+
+<div class="container pt15 pb15">
+  <div class="">
+   <div class="page-header-section text-center">
+    <img src="http://neonjogja.com/assets/back/img/logo.png" width="70px"  alt>
+    <p class="title font-alt">Latihan Online
+  </div>
+  </div>
 <div id="page-transitions">
     
 <div class="page-preloader page-preloader-dark">
@@ -121,6 +131,7 @@
         <!-- <input type="text" id="bab" value="<?=$bab?>" name="id_bab" /> -->
 
     </div>
+    </div>
     
 
 
@@ -128,6 +139,7 @@
         <section class="section bgcolor-white">
             <!-- container-fluid -->
             <div class="container-fluid">
+
                 <!-- row -->
                 <div class="row">
                     <!-- col-md-10 col-md-offset-1 -->
