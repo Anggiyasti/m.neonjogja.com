@@ -19,7 +19,31 @@ class Video extends MX_Controller {
     }
 
     //########## FRONT END  ####################
+    public function index() {
 
+         if ($this->session->userdata('NAMASISWA')) {
+        $data['files'] = array(
+            // APPPATH . 'modules/homepage/views/v-header-login.php',
+            // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
+            // APPPATH . 'modules/video/views/f-daftar-video-bybab.php',
+            // APPPATH . 'modules/testimoni/views/v-footer.php'
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
+            APPPATH.'modules/video/views/mobile/vm-soon-video.php',
+            APPPATH.'modules/templating/views/anggi/v-footer.php',
+            
+        );
+
+        $data['tingkat'] = $this->load->MTingkat->gettingkat();
+
+        // print_r($data['tingkat']);
+        $penggunaID = $this->session->userdata['id'];
+        $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+
+        $this->parser->parse('templating/anggi/index', $data);
+    }else{
+        redirect('login');
+    }
+    }
 
     //halaman tampilkan sub bab dan see
     public function videosub($id_sub_bab) {

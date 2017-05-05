@@ -1,6 +1,9 @@
 <script src="http://code.jquery.com/jquery-3.1.0.slim.min.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url('assetsnew/stylesheet/style.css')?>"> 
+
+
+
        <!-- Page Content -->
       <div id="content" class="page">
 
@@ -45,18 +48,23 @@
 
         <?php if ($p == 0) { ?>
 
-          <div class="progress" style="height: 20px; background-color: #ffffff ;">
+          <div class="progress" style="height: 20px; background-color: #ffffff ; width: 95%;">
               <div class="lead">
                   <a href="<?=base_url("linetopik/learningline/".$item['babID']) ?>"><?=$item['namaTopik'] ?></a></div>
-              <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: <?=$p?>%;  visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft; height: 20px; background-color: #f5f5f5 ;" data-progress="0" class="progress-bar wow fadeInLeft animated"></div><span>0%</span>
+              <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: <?=$p?>%;  visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft; height: 20px; background-color: #800000 ; position: absolute; top: 0; left: 0; bottom: 0; right: 0;background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, 
+                transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, 
+                transparent);z-index: 1;background-size: 50px 50px;animation: move 2s linear infinite;
+              border-top-right-radius: 8px;border-bottom-right-radius: 8px;border-top-left-radius: 20px;border-bottom-left-radius: 20px; overflow: hidden;" data-progress="0" class="progress-bar wow fadeInLeft animated"></div><span>0%</span>
           </div>
                 
         <?php } else {?>
-          <div class="progress" style="height: 20px; background-color: #ffffff ;">
+          <div class="progress" style="height: 20px; background-color: #ffffff ; width: 95%;">
           <div class="lead">
             <a href="<?=base_url("linetopik/learningline/".$item['babID']) ?>"><?=$item['namaTopik'] ?></a>
           </div>
-          <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: <?=$p?>%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft; height: 20px; background-color: #19305B;" data-progress="<?=$p?>" class="progress-bar wow fadeInLeft animated"></div><span><?=$p?>%</span> 
+          <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: <?=$p?>%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft; height: 20px; background-color: #800000; position: absolute;top: 0; left: 0; bottom: 0; right: 0;background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, 
+                transparent);z-index: 1;background-size: 50px 50px;animation: move 2s linear infinite;
+              border-top-right-radius: 8px;border-bottom-right-radius: 8px;border-top-left-radius: 20px;border-bottom-left-radius: 20px; overflow: hidden;" data-progress="<?=$p?>" class="progress-bar wow fadeInLeft animated"></div><span><?=$p?>%</span> 
           </div>
                 <?php } 
                 }?>
@@ -90,18 +98,29 @@
 
         <?php if ($p == 0) { ?>
 
-          <div class="progress" style="height: 20px; background-color: #ffffff ;">
-              <div class="lead">
-                  <a href="<?=base_url("linetopik/learningline/".$item['judulBab']) ?>"><?=$item['judulBab'] ?></a></div>
-              <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: <?=$p?>%;  visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft; height: 20px; background-color: #f5f5f5 ;" data-progress="0" class="progress-bar wow fadeInLeft animated"></div><span>0%</span>
+          <div class="progress" style="height: 20px; background-color: #ffffff ; width: 95%;">
+              <div class="lead" >
+                  <a href="<?=base_url("linetopik/learningline/".$item['judulBab']) ?>"><?=$item['judulBab'] ?></a>
+                                    </div>
+                  
+              <br><br><div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: <?=$p?>%;  visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft; height: 20px; background-color: #800000 ;position: absolute; top: 0; left: 0; bottom: 0; right: 0;background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, 
+                transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, 
+                transparent);z-index: 1;background-size: 50px 50px;animation: move 2s linear infinite;
+              border-top-right-radius: 8px;border-bottom-right-radius: 8px;border-top-left-radius: 20px;border-bottom-left-radius: 20px; overflow: hidden;" data-progress="0" class="progress-bar wow fadeInLeft animated"></div><span>0%</span>
           </div>
                 
         <?php } else {?>
-          <div class="progress" style="height: 20px; background-color: #ffffff ;">
+          <div class="progress" style="height: 20px; background-color: #ffffff ; width: 95%;">
           <div class="lead">
-            <a href="<?=base_url("linetopik/learningline/".$item['judulBab']) ?>"><?=$item['judulBab'] ?></a>
+            <a href="<?=base_url("linetopik/learningline/".$item['judulBab']) ?>" ><?=$item['judulBab'] ?></a> 
+          
           </div>
-          <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: <?=$p?>%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft; height: 20px; background-color: #19305B;" data-progress="<?=$p?>" class="progress-bar wow fadeInLeft animated"></div><span><?=$p?>%</span> 
+          
+          
+          <br><br><div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: <?=$p?>%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft; height: 20px; background-color: #800000;position: absolute; top: 0; left: 0; bottom: 0; right: 0;background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, 
+                transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, 
+                transparent);z-index: 1;background-size: 50px 50px;animation: move 2s linear infinite;
+              border-top-right-radius: 8px;border-bottom-right-radius: 8px;border-top-left-radius: 20px;border-bottom-left-radius: 20px; overflow: hidden;" data-progress="<?=$p?>" class="progress-bar wow fadeInLeft animated"></div><span><?=$p?>%</span> 
           </div>
                 <?php } 
                 }?>
@@ -146,11 +165,16 @@
       <!-- Swipeboox Contents -->
             <section id="image-filter">
               <div class="wrap small-width">
-                <div data-pswp-uid="1" id="demo-gallery" class="demo-gallery">
+                <div data-pswp-uid="1" id="demo-gallery" class="demo-gallery" style="text-align: center;">
                   <?php foreach ($video as $item): ?>
                     <?php $url =  base_url()."video/seevideo/".$item['videoid']?>
                     <?php if (!empty($item['link'])): ?>
-                      <iframe  width="250" src="<?=$item['link'] ?>" allowfullscreen></iframe>
+                      <iframe  width="250" src="<?=$item['link'] ?>" allowfullscreen> </iframe>
+                      <div><h3><?=$item['judulVideo'] ?></h3>
+                      <p><?=$item['deskripsi'] ?></p></div>
+
+                    
+
                     <?php endif ?>
                     <!-- <a href="img/1.jpg" class="swipebox mix category-1 no-smoothState" title="This is dummy caption.">
                       <img src="img/1.jpg" alt="image">
@@ -158,6 +182,7 @@
                   <?php endforeach ?>
                   
                 </div>
+
               </div>
 
             </section> <!-- End of Swipebox Contents -->
