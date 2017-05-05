@@ -1,5 +1,12 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/config.js') ?>"></script>
+
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assetsnew/css/pagination.css') ?>">
+<style type="text/css">
+
+</style>
        <!-- Page Content -->
       <div id="content" class="page">
 
@@ -55,178 +62,292 @@
     </div>
   </div>
 
-        <div class="animated fadeinup white">
-         <div class="activities">
-            <div class="activity animated fadeinright delay-1">
-              <a href="#" class="title-konsultasi">{judul_header}</a><br>
-              <span class="label label-danger"><a href="#">{sub}</a></span>
-              <div>
-                
-                <div class="isi-posting">
-                  <?=$isi ?>
-                  <input type="hidden" name="single" value="<?=$isi ?>">
-                </div>
-                <div style="border-top: 1px solid #ddd; color: black; min-height: 50px; padding: 5px; margin-bottom: 4px;">
-                  <div class="left" >
-                    <div class="row">
-                      <div class="col s12">
-                        <div class="col s4">
-                          <img src="http://placehold.it/60x60" alt="" class="circle img-konsultasi">
-                        </div>
-                        <div class="col s8">
-                          <span>{author}</span> <br> <span style="color: #B2B2B4;">{akses}</span>
-                            <input type="hidden" value="{id_pertanyaan}" name="idpertanyaan">
-                            <input type="hidden" value="{id_pengguna}" name="idpengguna">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="right">
-                    <span>{tanggal} {bulan}</span><br>
-                    <a onclick="quote('single')" data-quote="single" rel="tag" style="color: #07C;" class="quote">Quotes</a> | <a onclick="quote(0)" data-quote="0" rel="tag" style="color: #07C;" class="quote" >Balas</a>
-                  </div>
-                </div>
+  <!-- Hero Header -->
+  <div class="h-banner animated fadeindown red lighten-1">
+    <div class="parallax bg-profile">
+    </div>
+    <div class="banner-title">{judul_header}</div>
+  </div>
+    
+    <div class=" delay-1">
+      <div class="card  delay-2">
+        <!-- START Row -->
+        <div class="row">
+        <div class="comments">
+          <!-- blog-post -->
+          <div class="blog-post">
+          <article>
+            <div class="post-info">
+              <div class="date-post"><div class="day">{tanggal}</div><div class="month">{bulan}</div></div>
+              <div class="post-info-main">
+                <input type="hidden" value="{id_pertanyaan}" name="idpertanyaan">
+                <input type="hidden" value="{id_pengguna}" name="idpengguna">
+
+                <div class="author-post"><i class="ion-person"></i>by {author}</div>
               </div>
-              <div style="padding: 5px 5px; background-color: #ff8489; color: white;">{jumlah} comments</div>
-              <div>
-              <?php if ($data_postingan!=array()): ?>
-                <?php foreach ($data_postingan as $item_postingan): ?>
-                <div class="isi-posting"><?=$item_postingan['isiJawaban'] ?></div>
-                <div style="border-top: 1px solid #ddd; color: black; min-height: 60px; padding:0.5rem 0; border-bottom: 1px solid #ff8489;">
-                  <div class="left">
-                    <div class="row">
-                      <div class="col s12">
-                        <div class="col s4">
-                          <?php $gbr = base_url().'assets/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['avatar'] ?>
-                          <img src="<?= (!$item_postingan['avatar'])? base_url('assetsnew/img/profile/avatarmen.png') :  $gbr ; ?>" class="circle img-konsultasi">
-                        </div>
-                        <div class="col s8">
-                          <span><?=$item_postingan['namaPengguna'] ?></span><br>
-                          <span style="color: #B2B2B4;"><?=$item_postingan['hakAkses'] ?></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <?php if ($this->session->userdata('HAKAKSES')=="guru"): ?>
-                  <div class="right">
-                    <span><?= date("d-M-Y", strtotime($item_postingan['date_created'])) ?></span><br>
-                    <a href="#" data-quote="<?=$item_postingan['jawabID'] ?>" style="color: #07C;" class="quote">Quote</a>
-                  </div>
-                  <?php else :?>
-                    <?php if ($item_postingan['namaPengguna']==$this->session->userdata('USERNAME')): ?>
-                      <div class="right">
-                        <span><?= date("d-M-Y", strtotime($item_postingan['date_created'])) ?></span><br>
-                        <a href="#" data-quote="<?=$item_postingan['jawabID'] ?>" style="color: #07C;" class="quote">Quote</a>
-                      </div>
-                    <?php else :?>
-                      <div class="right">
-                        <span><?= date("d-M-Y", strtotime($item_postingan['date_created'])) ?></span><br>
-                        <a href="#" data-point="<?=$item_postingan['jawabID'] ?>" style="color: #07C;" class="point">Point</a> | <a href="#" data-quote="<?=$item_postingan['jawabID'] ?>" style="color: #07C;" class="quote">Quote</a>
-                      </div>
-                    <?php endif ?>
-                  <?php endif ?>
-                </div>
-                <?php endforeach ?>
-              <?php endif ?>
-              </div>
-              </div>
+              <div class="comments-post"><i class="ion-chatbubbles"></i> {jumlah}</div>
             </div>
-          </div> 
+
+           <div class="quotes clear-fix" >
+            <div class="quote-avatar-author clear-fix">
+              <img src="{photo}" data-at2x="{photo}" alt="{namaPengguna}" width="60px" class="avatar circle">
+              <div class="author-info">{author}<br><span>{akses}</span></div>
+            </div>
+
+            <div>
+              <h4 style="display:inline">{judul_header}</h4>
+              <div class="komen"><?=$isi ?>
+              </div>
+              <!-- <input type="hidden" name="" value="{isi}"> -->
+              <input type="hidden" name="single" value="<?=htmlspecialchars($isi) ?>">
+            </div>
+
+          </div> <br>
+
+          <div>
+            | <span rel="tag"><i class="ion-pricetag"></i> {bab}</span> |
+            <a onclick="quote('single')" rel="tag"><i class="ion-quote"></i> Quote</a> |
+            <a onclick="quote(0)" rel="tag"><i class="ion-chatbubbles"></i> Balas</a> |
+            <?php if ($username==$this->session->userdata('USERNAME')): ?>
+              <a onclick="edit()"><i class="ion-edit"></i> Edit</a> |
+            <?php endif ?>
+          </div>
+
+          </article>
+          </div>
+          </div>
+          <!-- end blog-post -->
+
+          <div class="comments">
+          <div class="blog-post">
+
+          <?php $number = 1; ?>
+      <?php if ($data_postingan!=array()): ?>
+        <?php foreach ($data_postingan as $item_postingan): ?>
+          <!-- <?php print_r($item_postingan) ?> -->
+          <?php $link = base_url('konsultasi/show_post/').$item_postingan['jawabID'] ?>
+          <?php $number++; ?>
+            <article>
+              <div class="row bg-color-2">
+                <div class="container"><?=$item_postingan['date_created'] ?> |
+                  <a title="view single post" href="<?=$link ?>">#<?=$number ?></a></div>
+                </div><br>
+
+                <div class="quotes clear-fix" >
+                  <div class="quote-avatar-author clear-fix">
+
+                    <?php 
+                    if ($item_postingan['hakAkses']=="siswa") {
+                      $gbr = base_url().'assetsnew/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['siswa_photo'];
+                    }else{
+                      $gbr = base_url().'assetsnew/image/photo'."/".$item_postingan['hakAkses']."/".$item_postingan['guru_photo'];
+                    }
+                    ?>
+                    <img src="<?=$gbr ?>" width="60px" class="avatar circle">
+                    <div class="author-info"><?=$item_postingan['namaPengguna'] ?><br><span><?=$item_postingan['hakAkses'] ?></span></div>
+                  </div>
+
+                  <div>
+                    <?php $value =htmlspecialchars($item_postingan['isiJawaban']). 
+                    "<span style='font-style:italic'><br>Post By:".ucfirst($item_postingan['namaPengguna']).
+                    "<a title='view single post' href='".$link."'><i class='fa fa-arrow-circle-o-right'> > </i></a>"?>
+                    <div class="komen"><?=$item_postingan['isiJawaban'] ?>
+                      <input type="hidden" name="<?=$item_postingan['jawabID'] ?>" 
+                      value="<?=$value ?>">
+                    </div>
+
+                  </div>
+
+                </div><br>
+
+                <?php if ($this->session->userdata('HAKAKSES')=="guru"): ?>
+                  <div class="text-right">
+                    <a onclick="quote(<?=$item_postingan['jawabID'] ?>)" >
+                      <i class="fa fa-quote-right ">
+                      </i> Quote  
+                    </a>
+                  </div>
+                <?php else :?>
+                  <?php if ($item_postingan['namaPengguna']==$this->session->userdata('USERNAME')): ?>
+                    <div class="text-right">
+                      <a onclick="quote(<?=$item_postingan['jawabID'] ?>)">
+                        <i class="ion-quote">
+                        </i> Quote  
+                      </a> |
+
+                      <a href="<?=base_url('konsultasi/editpost/'.$item_postingan['jawabID']) ?>">
+                        <i class="ion-edit smaller">
+                        </i> Edit 
+                      </a>
+                    </div>
+
+                  <?php else :?>
+                    <div class="text-right">
+                      <a onclick="point(<?=$item_postingan['jawabID'] ?>)">
+                        <i class="fa fa-heart">
+                        </i> Point
+                      </a> |
+
+                      <a onclick="quote(<?=$item_postingan['jawabID'] ?>)">
+                        <i class="ion-quote ">
+                        </i> Quote  
+                      </a>
+                    </div>
+                  <?php endif ?>
+
+                <?php endif ?>
+
+              </article>
+            
+          <?php endforeach ?>
+        <?php endif ?>
+          <div class="grid-col-row clear-fix">
+            <center>
+              <div class="page-pagination clear-fix margin-none" style="width: 100%;">
+                <?php echo $links; ?>
+              </div>
+            </center>
+          </div>
+        </div>
+        </div>
+        <!-- editor reply -->
+        <div class="container"> 
+          <hr>  
+          <div class="col-sm-12" id="jawaban">
+            <br>
+            <span>Isi Jawaban :</span>
+            <textarea  name="respon" class="form-control" id="isi" row=10 cols=80></textarea>
+            <br>
+            <form action="<?=base_url('konsultasi/do_upload') ?>" method="post" enctype="multipart/form-data" id="form-gambar">
+              <span>Upload gambar :</span> 
+              <input type="file" class="cws-button bt-color-3 alt smaller post" name="file" style="display: inline">
+
+              <a onclick="submit_upload()" style="border: 2px solid #18bb7c; padding: 2px;display: inline" title="Upload"><i class="fa fa-cloud-download"></i></a> 
+              <div id="output" style="display: inline">
+                <a style="border: 2px solid grey; padding: 2px;display: inline" title="Sisipkan" disabled><i class="fa fa-cloud-upload"></i></a> 
+              </div>
 
 
-        </div> <!-- End of Main Contents -->
-      
-         
-      </div> <!-- End of Page Content -->
+              <input type="submit" class="fa fa-cloud-upload submit-upload" style="margin-top: 3px;display: none" value="Upload">             
+            </a>
+          </form>
+          <!-- <br> -->
+          <!-- <a class="cws-button bt-color-3 alt smalls" onclick="preview()">Preview</a>  -->
+          <a onclick="simpan_jawaban()" class="col s12 btn accent-color waves-effect waves-light post">Post</a>
+          <br>
+          <br>
+          <hr>
+        </div>
 
-    </div> <!-- End of Page Container -->
+        </div>
+        <!-- END ROW -->
+      </div>
+    </div>
+
 <script type="text/javascript">
+      function insert(){
+        nama_file = $('.insert').data('nama');
+        url = base_url+"assets/image/konsultasi/"+nama_file;
+
+        CKEDITOR.instances.isi.insertHtml('<img src='+url+' ' + CKEDITOR.instances.isi.getSelection().getNative()+'>');
+      }
+
+      function submit_upload(){
+        $('.submit-upload').click();
+      }
+
+      jQuery(document).ready(function() { 
+        jQuery('#form-gambar').on('submit', function(e) {
+          e.preventDefault();
+          jQuery('#submit-button').attr('disabled', ''); 
+          jQuery("#output").html('<div style="padding:10px"><img src="<?php echo base_url('assets/image/loading/spinner11.gif'); ?>" alt="Please Wait"/> <span>Mengunggah...</span></div>');
+          jQuery(this).ajaxSubmit({
+            target: '#output',
+            success:  sukses 
+          });
+        });
+      }); 
+
+      function sukses(){ 
+        jQuery('#form-upload').resetForm();
+        jQuery('#submit-button').removeAttr('disabled');
+      }
+
+      var ckeditor;
+
+
+
+      $(document).ready(function(){
+        CKEDITOR.replace( 'respon', {
+          height: 260,
+          /* Default CKEditor styles are included as well to avoid copying default styles. */
+        } );
+
+        /*ckeditor = CKEDITOR.replace('respon');  */
+      });
+
       var ckeditor;
       var string;
       var txt = 1;
       function quote(data){
-        if (data==0) { 
-        console.log(data);
-          $('#modalJawab .modal-body .quotes p i').html("");
+        if (data==0) {            
+          // balas
+          $('html, body').animate({
+            scrollTop: $("#jawaban").offset().top
+          }, 2000);
+        }else{
+          //quote
+          $('html, body').animate({
+            scrollTop: $("#jawaban").offset().top
+          }, 2000);
 
-          $('#modalJawab .modal-header .modal-title').html("Balas Pertanyaan");
-          string = 0;
-          $('#modalJawab').modal('show');
-      // ckeditor.setData(data);
-    }else{
-      $('#modalJawab .modal-header .modal-title').html("Quote Jawaban");
-      string = $('input[name='+data+']').val();
-      $('#modalJawab .modal-body .quotes p i').html("<blockquote>"+string+"</blockquote>");
-      // ckeditor.setData(string);
-      $('#modalJawab').modal('show');
-    }
-      // ckeditor = CKEDITOR.replace( 'editor1' );
+          string = $('input[name='+data+']').val();
 
-    }
-    function simpan_jawaban(){
-      txt = $('#komenText').val();
-      console.log(txt);
-      console.log(string);
-    //kalo kosong
-    if (string==0) {
-      var desc = txt;/*ckeditor.getData();*/
-      var data = {
-        isiJawaban : desc,
-        penggunaID : $('input[name=idpengguna]').val(),
-        pertanyaanID : $('input[name=idpertanyaan]').val(),
+          CKEDITOR.instances.isi.setData("<blockquote>"+string+"</blockquote><br>");
+        }
+
       }
-      idpertanyaan= data.pertanyaanID;
-    }else{
-      quote = "<blockquote>"+string+"</blockquote>"+txt;
+      function simpan_jawaban(){
+        // get text from ck editor
+        txt = CKEDITOR.instances.isi.getData();
+        
+        var datas = {
+          isiJawaban : txt,
+          penggunaID : $('input[name=idpengguna]').val(),
+          pertanyaanID : $('input[name=idpertanyaan]').val(),
+        };
 
-
-      var data = {
-        isiJawaban : quote,
-        penggunaID : $('input[name=idpengguna]').val(),
-        pertanyaanID : $('input[name=idpertanyaan]').val(),
-      }
-      idpertanyaan= data.pertanyaanID;
-    }
-    if (data.isiJawaban == "") {
-      $('#info').show();
-    }else{
-      url = base_url+"konsultasi/ajax_add_jawaban/";
-      $.ajax({
-        url : url,
-        type: "POST",
-        data: data,
-        dataType: "TEXT",
-        success: function(data)
-        {
-        // alert('masd');
-                $('.post').text('Posting..'); //change button text
-                $('.post').attr('disabled',false); //set button enable
-                // alert('berhasil');
-                window.location = base_url+"konsultasi/singlekonsultasi/"+idpertanyaan;
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-              alert('Error adding / update data');
-            }
+        url = base_url+"konsultasi/ajax_add_jawaban/";
+        $.ajax({
+          url : url,
+          type: "POST",
+          data: datas,
+          dataType: "TEXT",
+          success: function(data){
+            window.location = base_url+"konsultasi/singlekonsultasi/"+datas.pertanyaanID;
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
+            alert('Error adding / update data');
+          }
         });
-    }
-  }
 
-  function point(data){
-    elemen = "<textarea class='form-control' name='komentar'></textarea>";
-    $('.modal-body').html(elemen);
-    $('.modal-header .modal-title').html("Berikan Komentar");
-    $('#myModal').modal('show');
-    button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
+      }
 
-    $('.modal-footer').html(button);
-    
+      function point(data){
+        elemen = "<textarea class='form-control' name='komentar'></textarea>";
+        $('.modal-body').html(elemen);
+        $('.modal-header .modal-title').html("Berikan Komentar");
+        $('#myModal').modal('show');
+        button = "<button type='button' class='cws-button bt-color-1 alt small' data-dismiss='modal'>Batal</button><button type='button' class='cws-button bt-color-2 alt small mulai-btn post'onclick='komen("+data+")'>Berikan</button>";
 
-  }
+        $('.modal-footer').html(button);
 
-  function komen(data){
-    var isikomentar = $('textarea[name=komentar]').val();
+
+      }
+
+      function komen(data){
+        var isikomentar = $('textarea[name=komentar]').val();
 
   // url = base_url+"konsultasi/ajax_add_point/"+data;
   url = base_url+"konsultasi/check_point/"+data;
@@ -278,3 +399,11 @@ function get_data(data, datas){
   }
 }
 </script>
+
+<!-- FUNGSI EDIT -->
+<script>
+  function edit(){
+
+  } 
+</script>
+<!-- FUNGSI EDIT -->

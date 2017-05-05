@@ -80,15 +80,15 @@
                 <form class="form-group">
                   <div>
                     <select class="col s12 browser-default" name="" id="" onchange="location = this.value";>
-                      <option selected value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
+                      <option value="<?=base_url('konsultasi/pertanyaan_ku') ?>"  class="center-text">Pertanyaan Saya</option>
                       <option value="<?=base_url('konsultasi/pertanyaan_all')?>">Semua Pertanyaan</option>
                       <option value="<?=base_url('konsultasi/pertanyaan_grade')?>">Pertanyaan Setingkat</option>
-                      <option value="<?=base_url('konsultasi/pertanyaan_mento')?>r">Pertanyaan Sementor</option>
+                      <option selected value="<?=base_url('konsultasi/pertanyaan_mentor')?>r">Pertanyaan Sementor</option>
                     </select>
                   </div>
                   <div class="baru">
                     <input type="text" placeholder="Cari pertanyaan lalu enter" name="cari" id="search1">
-                    <a class="col s12 btn accent-color-baru waves-effect waves-light" href="<?=base_url('konsultasi/pertanyaan_ku') ?>"><i class="fa fa-times"></i> Reset</a>
+                    <a class="col s12 btn accent-color-baru waves-effect waves-light" href="<?=base_url('konsultasi/pertanyaan_mentor') ?>"><i class="fa fa-times"></i> Reset</a>
                   </div>
                 </form>
               </div>
@@ -101,7 +101,7 @@
               <!-- START Row -->
               <div class="row">
                 <!-- Comments -->
-                <div class="page-content">
+                <div class="comments">
                   <ul class="comments-list">
                    <!-- semua -->
                   <?php if ($my_questions): ?>
@@ -138,11 +138,10 @@
                   <?php else: ?>
                     <h3>Tidak Ada Pertanyaan</h3>
                   <?php endif ?>
-                  
+                  <div>
                     <div class="page-pagination clear-fix" style="width:100%;">
                       <center><?php echo $links; ?></center>  
                     </div>
-                  <div>
                     <b>Jumlah Pertanyaan :<?=$jumlah_postingan ?></b>
                   </div>
 
@@ -161,29 +160,28 @@
   }
 
  </script>
-<!-- on keypres cari soal -->
+ <!-- on keypres cari soal -->
 <script type="text/javascript">
-$("#search1").on('keyup', function (e) {
+  $("#search1").on('keyup', function (e) {
     if (e.keyCode == 13) {
-       keyword = $('#search1').val().replace(/ /g,"-");   ;
-       document.location = base_url+"konsultasi/pertanyaan_ku_search/"+keyword;
+      keyword = $('#search1').val().replace(/ /g,"-");    ;
+      document.location = base_url+"konsultasi/pertanyaan_mentor_search/"+keyword;
     }
-});
+  });
 
-$('.cari-btn').click(function(){
-  console.log('masuk');
+    $('.cari-btn').click(function(){
     var mapel= $('#mapelSelect').find(":selected").text().replace(/ /g,"_");
     var bab= $('#babSelect').find(":selected").text().replace(/ /g,"_");
 
+    console.log(bab);
     if (mapel == 'Pilih_Mata_Pelajaran') {
       sweetAlert("Oops...", "Silahkan Pilih Pelajaran Atau Bab Terlebih Dahulu", "error");
     }else{
       if (bab=='Bab_Pelajaran') {
-        document.location = base_url+"konsultasi/filter_pertanyaanku/"+mapel+"/all";
+        document.location = base_url+"konsultasi/filter_mentor/"+mapel+"/all";
       }else if(bab!='Bab_Pelajaran'){
-        document.location = base_url+"konsultasi/filter_pertanyaanku/"+mapel+"/"+bab;
+        document.location = base_url+"konsultasi/filter_mentor/"+mapel+"/"+bab;
       }
     }
-
   });
 </script>

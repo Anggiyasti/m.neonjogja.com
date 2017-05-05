@@ -1,6 +1,9 @@
 <main class="container">
 	<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
+
+
+
 	<!-- modal preview -->
 	<div class="modal fade" id="preview" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
@@ -68,46 +71,18 @@
 
 			<div class="form-group">
 				<div class="container">
-					<div class="col-sm-12">		
-						<div class="alert alert-dismissable alert-danger" id="info" hidden="true" >
-							<button type="button" class="close" onclick="hideme()" >×</button>
-							<strong>Terjadi Kesalahan</strong> <br>Isi nama pertanyaan dan pertanyaan di editor yang sudah disediakan.
-						</div>
-					</div>
+					
 					<!-- Start Editor Soal -->
 					<div id="editor-soal">
-						<div class="col-sm-12" style="padding:0">
-
-							<div class="col-sm-8">
-
-								<label >Kepada Mentor ? :
-								<?php if (empty($mentornya)): ?> <span class="text-danger">Anda belum memiliki mentor</small><?php endif ?></label>
-								<select class="form-control" name="mentor">
-									<option value="NULL">- Tidak -</option>
-									<?php if (!empty($mentornya)): ?>
-										<option value="<?=$mentornya['guruID'] ?>"><?=$mentornya['namaDepan']." ".$mentornya['namaBelakang'] ?></option>
-									<?php endif ?>
-								</select>
-								<br>
-								Judul Pertanyaan
-								<input name="namaPertanyaan" type="text" value="" size="30" aria-required="true" class="col-sm-10"> 
-								<input type="hidden" name="idsub" value="{idsub}">
-							</div>
-							<div class="col-sm-4"><br><br><br><br>
-								<a onclick="show_image()" class="cws-button bt-color-3 alt smalls" style="margin-top: 10px">Lihat Gambar</a>
-							</div>
-						</div>
+						
 						<div class="col-sm-12">
-
-
-
 							<br>
 							Isi Pertanyaan :
 							<textarea  name="editor1" class="form-control" id="isi"></textarea>
 							<br>
 							<form action="<?=base_url('konsultasi/do_upload') ?>" method="post" enctype="multipart/form-data" id="form-gambar">
 								Upload Gambar : 
-								<input type="file" class="cws-button bt-color-3 alt smalls post" name="file" style="display: inline">
+								<input type="file" class="cws-button bt-color-3 alt smaller post" name="file" style="display: inline">
 
 								<a onclick="submit_upload()" style="border: 2px solid #18bb7c; padding: 2px;display: inline" title="Upload"><i class="fa fa-cloud-download"></i></a> 
 								<div id="output" style="display: inline">
@@ -118,9 +93,8 @@
 								<input type="submit" class="fa fa-cloud-upload submit-upload" style="margin-top: 3px;display: none" value="Upload">							
 							</a>
 						</form>
-						<br>
-						<a class="cws-button bt-color-3 alt smalls" onclick="preview()">Preview</a> 
-						<a onclick="save()" class="cws-button bt-color-3 alt smalls post">Post</a>
+						<!-- <a class="cws-button bt-color-3 alt smaller" onclick="preview()">Preview</a>  -->
+						<a onclick="save()" class="cws-button bt-color-3 alt smaller post">Post</a>
 						<br>
 						<br>
 						<hr>
@@ -133,7 +107,16 @@
 </div>
 </main>
 <!-- UPLOAD -->
+<input type="text" value="<?=(htmlspecialchars($edit['isiJawaban'])) ?>" name="isi_jawaban">
+
 <script type="text/javascript"> 
+	var ckeditor;
+	$(document).ready(function(){
+		ckeditor = CKEDITOR.replace( 'editor1' );
+		isiJawaban = $('input[name=isi_jawaban]').val();
+
+		CKEDITOR.instances.isi.setData(isiJawaban);
+	});
 
 	function submit_upload(){
 		$('.submit-upload').click();
@@ -197,15 +180,12 @@
 </script>
 <!-- UPLOAD -->
 <script>
-	var ckeditor = CKEDITOR.replace( 'editor1' );
-
 	function preview(){
 		var desc = ckeditor.getData();jqXHR
 		var data = {
 			namapertanyaan : $('input[name=namaPertanyaan]').val(),
 			isi : desc,
 		}
-		console.log(data);
 
 		$('.modal-body .judul').html("<h5>Judul</h5>");		
 		$('.modal-body .judul').append(data.namapertanyaan);
@@ -223,19 +203,18 @@
 
 	function save(){
 		var desc = ckeditor.getData();
+		console.log(desc);
 		var data = {
-			namapertanyaan : $('input[name=namaPertanyaan]').val(),
 			isi : desc+"<br>",
-			bab : $('input[name=babid]').val(),
-			mentorID:$('select[name=mentor]').val()
+			id:"<?=$edit['id'] ?>"
 		}
 
 		console.log(data);
 
-		if (data.namapertanyaan == "" || data.namapertanyaan == "") {
+		if (data.isi == "") {
 			$('#info').show();
 		}else{
-			url = base_url+"konsultasi/ajax_add_konsultasi/";
+			url = base_url+"konsultasi/ajax_update_jawaban/";
 			$.ajax({
 				url : url,
 				type: "POST",
@@ -243,13 +222,15 @@
 				dataType: "TEXT",
 				success: function(data)
 				{
-                $('.post').text('Posting..'); //change button text
-                $('.post').attr('disabled',false); //set button enable
-                window.location = base_url+"konsultasi/pertanyaan_all";
+					console.log(data);
+                $('.post').text('Posting..'); //change 
+                $('.post').attr('disabled',false); //set 
+                window.location = base_url+"konsultasi/singlekonsultasi/"+<?=$edit['pertanyaanID'] ?>;
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
             	swal('Error adding / update data');
+            	console.log(data);
             }
         });
 		}
