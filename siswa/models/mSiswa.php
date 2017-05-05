@@ -104,7 +104,7 @@ class Msiswa extends CI_Model {
     ##query get siswa belum to.
     #query get semua siswa
 
-    public function persentasi_limit($data){
+    public function persentasi_limit($datas){
         $id = $this->session->userdata('id');
         $query = "SELECT topikID AS top,babID,`namaTopik` , 
         COUNT(`stepID`) AS stepDone, 
@@ -115,11 +115,26 @@ class Msiswa extends CI_Model {
         JOIN `tb_line_topik` t ON t.`id` = s.`topikID`
         GROUP BY topikID
         ORDER BY topikID
-        limit $data
-        ";
+        limit  $datas";
         $result = $this->db->query($query);
         return $result->result_array();
     }
+
+    // public function persentasi_limit_number($datas){
+    //     $id = $this->session->userdata('id');
+    //     $query = "SELECT topikID AS top,babID,`namaTopik` , 
+    //     COUNT(`stepID`) AS stepDone, 
+    //     (SELECT COUNT(id) FROM `tb_line_step` ls
+    //     WHERE ls.topikID = top) AS jumlah_step  FROM(
+    //     SELECT * FROM tb_line_log l WHERE l.`penggunaID` = $id) hasil
+    //     JOIN `tb_line_step` s ON s.`id` = hasil.stepID
+    //     JOIN `tb_line_topik` t ON t.`id` = s.`topikID`
+    //     GROUP BY topikID
+    //     ORDER BY topikID
+    //     limit $datas";
+    //     $result = $this->db->query($query);
+    //     return $result->num_rows();
+    // }
 
     public function get_limit_persentase_latihan($data){
         $id = $this->session->userdata('id');  

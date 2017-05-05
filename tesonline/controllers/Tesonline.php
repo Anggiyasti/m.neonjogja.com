@@ -12,7 +12,9 @@ class Tesonline extends MX_Controller {
         $this->load->model( 'siswa/msiswa' );
         $this->load->model( 'tingkat/MTingkat' );
         $this->load->library('parser');
+        $this->load->library("pagination");
 
+        $config['permitted_uri_chars'] = 'a-z 0-9~%.:&_\-'; 
         parent::__construct();
         $this->load->library('sessionchecker');
         $this->sessionchecker->cek_token();
@@ -54,9 +56,29 @@ public function daftarreport($idtingkat) {
             else{
                 redirect('login');
             }
-    $data['ti'] = $idtingkat;
-    $data['report'] = $this->load->mlatihan->get_report_tingkat($this->session->userdata['USERNAME'],$idtingkat);
+            $data['ti'] = $idtingkat;
+
+            $config = array();
+            $config["base_url"] = base_url() . "tesonline/daftarreport/";
+            $config["uri_segment"] = 4;
+            $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+            $config["total_rows"] = $this->mlatihan->get_report_tingkat_number($this->session->userdata['USERNAME'],$idtingkat);
+            $config["per_page"] = 5;
+
+            # konfig link
+            $config['cur_tag_open'] = "<a style='background:#800000;color:white'>";
+            $config['cur_tag_close'] = '</a>';
+            $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+            $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+
+            # konfig link
+
+            $this->pagination->initialize($config);
+            ##KONFIGURASI UNTUUK PAGINATION
+    $data['jumlah_post'] = $config["total_rows"];
+    $data['report'] = $this->load->mlatihan->get_report_tingkat($this->session->userdata['USERNAME'],$idtingkat,$config["per_page"], $page);
     $penggunaID = $this->session->userdata['id'];
+    $data["links"] = $this->pagination->create_links();
     $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
     $data['tingkat'] = $this->load->MTingkat->gettingkat();
    

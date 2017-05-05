@@ -232,7 +232,7 @@ class Tryout extends MX_Controller {
             $data['paket'] = $this->Mtryout->durasipaket($id_paket);
 //        var_dump($data);
 
-            $this->load->view('templating/t-headerto');
+            $this->load->view('templating/t-header-soal');
             if ($random == 0) {
                 $query = $this->load->Mtryout->get_soalnorandom($id_paket);
             }else{
@@ -244,7 +244,7 @@ class Tryout extends MX_Controller {
 ////        var_dump($data);
             $this->load->view('v-to-baru.php', $data);
             // $this->load->view('mobile/v-halaman-to', $data);
-            $this->load->view('templating/t-footerto', $data);
+            $this->load->view('templating/t-footer-soal', $data);
         } else {
             $this->errorTest();
         }
@@ -430,6 +430,17 @@ else
         } else {
             redirect('login');
         }
+    }
+    public function report_to(){
+        $list = $this->Mtryout->get_laporan_to();
+        $array = [];
+        foreach ($list as $item ) {
+
+            $tempt = ['label'=>$item['nm_tryout'],'y'=> (int)number_format($item['nilai'],1)];
+            $array[] = $tempt;
+        }
+      echo json_encode($array);
+
     }
 }
 ?>

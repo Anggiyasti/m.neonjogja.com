@@ -1,3 +1,4 @@
+ <link rel="stylesheet" type="text/css" href="<?= base_url('assetsnew/css/pagination.css') ?>">
       <!-- Page Content -->
       <div id="content" class="page" style="min-height: 425px;">
 
@@ -53,6 +54,14 @@
             </div>
 
           </div>
+          <div class="grid-col-row clear-fix">
+            <center>
+              <div class="page-pagination clear-fix margin-none" style="width: 100%;">
+                <?php echo $links; ?>
+              </div>
+            </center>
+          </div>
+          <b><?=$jumlah_post;?></b>
           <div class="floating-button page-fab animated bouncein delay-3" style="padding-bottom: 510px;">
           
           <a href="<?=base_url()?>tesonline/pilihmapel/<?=$ti?>" class="btn-floating btn-large accent-color btn z-depth-1 " style="position: relative;">

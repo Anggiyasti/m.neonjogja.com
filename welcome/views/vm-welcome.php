@@ -1,6 +1,60 @@
 <script src="http://code.jquery.com/jquery-3.1.0.slim.min.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url('assetsnew/stylesheet/style.css')?>"> 
+ <link rel="stylesheet" type="text/css" href="<?= base_url('assetsnew/css/pagination.css') ?>">
+<!-- Modal Learning Line -->
+        <div id="modalL" class="modal modal-fixed-footer">
+          <div class="modal-content">
+            <h4>Progres Learning Line</h4>
+            <?php foreach ($learning as $row): ?>
+              <?php  $persentasi = (int)$row['stepDone'] / (int)$row['jumlah_step'] * 100;?>
+                 <div class="">
+                    <ul>
+                        <li>Nama Topik&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp<?= $row['namaTopik'] ?></li>
+                        <li>Step Dikerjakan&nbsp&nbsp&nbsp:&nbsp <?=$row['stepDone']?> </li>
+                        <li>Jumlah Step&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <?=$row['jumlah_step']?> </li>
+                        <li>Persentase &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <?=(int)$persentasi?>% </li>
+                    </ul>
+                </div> 
+                <hr>
+                <?php endforeach ?>
+                
+
+          </div>
+
+
+          <div class="modal-footer" style="background-color: #800000 ;">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat primary-color">Batal</a>
+          </div>
+        </div>
+        </div>
+
+        <!-- Modal Learning Line -->
+        <div id="modalLatihan" class="modal modal-fixed-footer">
+          <div class="modal-content">
+            <h4>Pengembangan Latihan</h4>
+            <?php foreach ($latihan as $row): ?>
+              <?php  $score = (int)$row['total_benar'] / (int)$row['total_soal'] * 100 ;?>
+                 <div class="">
+                    <ul>
+                        <li>Nama Bab &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp<?= $row['judulBab'] ?></li>
+                        <li>Jumlah Soal &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <?=$row['total_soal']?> </li>
+                        <li>Jumlah Benar &nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <?=$row['total_benar']?> </li>
+                        <li>Jumlah Salah &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <?=$row['total_salah']?> </li>
+                        <li>Jumlah Kosong &nbsp&nbsp:&nbsp <?=$row['total_kosong']?> </li>
+                        <li>Persentase &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp:&nbsp <?=$score?> </li>
+                    </ul>
+                </div> 
+                <hr>
+                <?php endforeach ?>
+
+          </div>
+
+          <div class="modal-footer" style="background-color: #800000 ;">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat primary-color">Batal</a>
+          </div>
+        </div>
+        </div>
 
 
 
@@ -21,16 +75,21 @@
           <div class="project-image z-depth-1 animated fadein delay-1">
            
           </div>
+          
 
        
 
           <!-- Video -->
           <!-- <h4 class="p-20">Video Belajar</h4> -->
 <section class="padding-section" style="padding-top: 0;margin-top: 0">
-  <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
+
+  
+
+
+  <div class="grid-row clear-fix " style="padding-bottom: 0;padding-bottom:0">
     <h3 style="text-align: center;">Topik yang baru saja dipelajari..</h3> <p style="text-align: center;">
     Hi, <?=$this->session->userdata('USERNAME') ?> ! Dibawah ini adalah progress learning line kamu, silahkan lanjutkan untuk bisa menyelesaikan topik-topik yang disediakan. Tetap semangat!<br><br></p>
-    <a onclick="show_modal_learning()" class="waves-effect waves-light btn primary-color">Selengkapnya</a> <br><br>  
+    <a href="#modalL"  class="waves-effect waves-light btn primary-color modal-trigger">Selengkapnya</a> <br><br>  
 
     <div class="skill-area">
                 
@@ -81,7 +140,7 @@
   <div class="grid-row clear-fix" style="padding-bottom: 0;padding-bottom:0">
     <h3 style="text-align: center;">Latihan</h3> <p style="text-align: center;">
     Dibawah ini adalah latihan yang sudah dihitung berdasarkan babnya, silahkan untuk di lihat agar mengetahui perkembangan anda<br><br></p>
-    <a onclick="show_modal_latihan()" class="waves-effect waves-light btn primary-color">Selengkapnya</a> <br><br>    
+    <a href="#modalLatihan" class="waves-effect waves-light btn primary-color modal-trigger">Selengkapnya</a> <br><br>    
     <div class="skill-area">
                 
         <?php if ($topik== array()): ?>

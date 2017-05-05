@@ -19,6 +19,8 @@ class Welcome extends MX_Controller {
         $this->load->model( 'tingkat/MTingkat' );
         $this->load->model( 'siswa/msiswa' );
         $this->load->library('sessionchecker');
+        $this->load->library("pagination");
+        $config['permitted_uri_chars'] = 'a-z 0-9~%.:&_\-'; 
 
 
 
@@ -82,25 +84,37 @@ class Welcome extends MX_Controller {
             else{
                 redirect('login');
             }
+            // $config = array();
+            // $config["base_url"] = base_url() . "welcome/index/";
+            // $config["uri_segment"] = 3;
+            // $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            // $config["total_rows"] = $this->msiswa->persentasi_limit_number(10);
+            // $config["per_page"] = 5;
+
+            // # konfig link
+            // $config['cur_tag_open'] = "<a style='background:#800000;color:white'>";
+            // $config['cur_tag_close'] = '</a>';
+            // $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+            // $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+
+            # konfig link
+
+            // $this->pagination->initialize($config);
+            ##KONFIGURASI UNTUUK PAGINATION
 
 
         $data['tingkat'] = $this->load->MTingkat->gettingkat();
-       
-        
-
         // print_r($data['tingkat']);
         $penggunaID = $this->session->userdata['id'];
         $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['topik'] = $this->msiswa->persentasi_limit(3);
         $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(3);
         $data['video'] = $this->mvideos->get_video_limit();
-        // $data['pelajaran_sma'] = $this->mmatapelajaran->daftarMapelSMA();
-        // $data['pelajaran_sma_ips'] = $this->mmatapelajaran->daftarMapelSMAIPS();
-        // $data['pelajaran_smp'] = $this->mmatapelajaran->daftarMapelSMP();
-        // $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
-        // $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
-       
+        $data['learning'] = $this->msiswa->persentasi_limit(10);
 
+        $data['latihan'] = $this->msiswa->get_limit_persentase_latihan(10);
+       
+        // var_dump($data['learning']);
         $this->parser->parse( 'templating/index', $data );
          // var_dump($data );
 
@@ -138,7 +152,7 @@ class Welcome extends MX_Controller {
     }
 
 
-    ## get data latihan persentase buat di datatable.
+## get data latihan persentase buat di datatable.
 public function get_data_latihan(){
     $list = $this->msiswa->get_limit_persentase_latihan(10);
     $data = array();

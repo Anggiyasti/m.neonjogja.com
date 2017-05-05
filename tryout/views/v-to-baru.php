@@ -1,3 +1,5 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <!-- LOADING -->
 <style>
   .no-js #loader { display: none;  }
@@ -100,7 +102,7 @@ label:hover{ /* HIDE RADIO */
     <!-- Mohon tunggu, sedang meload tryout... -->
   </div>
   <!-- START Template Main -->
-  <script src="<?= base_url('assets/js/bjqs-1.10.js') ?>"></script>
+  <script src="<?= base_url('assetsnew/js/bjqs-1.10.js') ?>"></script>
   <script type="text/javascript">
     jQuery(document).ready(function ($) {
      $('#my-slideshow').bjqs({

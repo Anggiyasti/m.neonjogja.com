@@ -1,6 +1,6 @@
 <!-- START Body -->
 <style>
-#jwb_sisJ {
+ #jwb_sisJ {
   border-radius: 12px;
   /*background: #fff;*/
   padding: 2px 4px 2px 4px; 
@@ -76,6 +76,7 @@ label:hover{ /* HIDE RADIO */
   min-height: 100%;
   border-radius: 0;
 }
+
 </style>
 <!-- LOADING -->
     <style>
@@ -106,21 +107,26 @@ label:hover{ /* HIDE RADIO */
             });
         });
     </script>
-<section class="page-header page-header-block nm" style="">
-<!-- page-transitions -->
-
+<section id="main" role="main">
 <div class="container pt15 pb15">
   <div class="">
    <div class="page-header-section text-center">
     <img src="http://neonjogja.com/assets/back/img/logo.png" width="70px"  alt>
-    <p class="title font-alt">Latihan Online
+    <p class="title font-alt">Latihan Online 
+    </p>
+    
+
   </div>
   </div>
+<!-- page-transitions -->
 <div id="page-transitions">
     
 <div class="page-preloader page-preloader-dark">
     <div class="spinner"></div>
 </div>
+   </div>
+
+
 
 <form method="post" id="hasil">    
     <div>
@@ -131,7 +137,8 @@ label:hover{ /* HIDE RADIO */
         <!-- <input type="text" id="bab" value="<?=$bab?>" name="id_bab" /> -->
 
     </div>
-    </div>
+  
+
     
 
 
@@ -139,18 +146,17 @@ label:hover{ /* HIDE RADIO */
         <section class="section bgcolor-white">
             <!-- container-fluid -->
             <div class="container-fluid">
-
                 <!-- row -->
                 <div class="row">
                     <!-- col-md-10 col-md-offset-1 -->
                     <div class="col-md-10 col-md-offset-1" style="">
                             <!-- col-md-8 -->
-                            <div class="col-md-8" style="margin-bottom:0">
+                            <div class="col-md-8" style="margin-bottom:30">
 
                                
                             </div>
                             </div>
-                            <div class="col-md-8" style="margin-bottom:0">
+                            <div class="col-md-8" style="margin-bottom:30">
                                 <row>
                                 
                                 <?php
@@ -165,10 +171,21 @@ label:hover{ /* HIDE RADIO */
 
                                             <div class="">
                                                  <div class="panel panel-default" style="">
+                                                 <div class="panel-heading">
+             <!-- <h1>Selamat datang</h1> -->
+             <div class="row">
+              <div class="col-md-6 center"><h4 class=""><h4 class="">ID Soal : <small> <?= $key['judul'] ?></small></h4></div>
+
+              <div class="col-md-2"></div>
+              <div class="col-md-6 text-right" style="margin-top:5">
+             </div>
+           </div>
+         </div>
                                                     <div class="panel-collapse">
                                                         <div class="panel-body">
                                                             <div class="row">
-                                                                <div class="col-md-1 text-center">
+                                                                <div class="col-md-1 text-right">
+                                                                <p><h4><?= $i ?>.</h4></p>
                                                                     <!-- <p><h4><?= $i ?>.<?=$key['id_bab']?></h4></p> -->
 
                                                                 </div>
@@ -193,7 +210,7 @@ label:hover{ /* HIDE RADIO */
                                                                     <?php foreach ($pil as $row): ?>
                                                                         <?php if ($row['pilid'] == $k) { ?>
                                                                             <div class="mb10">
-                                                                                 <label id="<?=$key['soalid'].$indexpil;?>" onclick="changeColor('<?=$key['soalid'].$indexpil;?>',<?=$key['soalid']?>)" alt="<?=$key['soalid'];?>" style="border:1px solid black; padding: 5px;width:100%;border-radius:15px;  ">
+                                                                                 <label id="<?=$key['soalid'].$indexpil;?>" onclick="changeColor('<?=$key['soalid'].$indexpil;?>',<?=$key['soalid']?>)" alt="<?=$key['soalid'];?>" style="border:1px solid #63d3e9; padding: 5px;width:100% ">
                                                                                         <input type="radio" id="<?= $i ?>" value="<?= $row['pilpil'] ?>" name="pil[<?= $row['pilid'] ?>]" onclick="updateColor(<?= $i ?>)">
                                                                                          <div class ="btn"><?=  $pilihan[$indexpil];?>.
                                                                                             </div>
@@ -308,6 +325,7 @@ label:hover{ /* HIDE RADIO */
                             </div>
 </div>
                             
+                    </div>
                     </div>
                
         </section>
