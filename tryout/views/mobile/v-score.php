@@ -13,7 +13,7 @@
          <!-- Profile Content -->
         <div class=" delay-1">
           <div class="card  delay-2">
-            <h3 class="uppercase">Score Tryout</h3>
+            <h3 class="uppercase">Score {nama_paket}</h3>
             <!-- START Row -->
            <div class="row">
             <?php foreach ($paket_dikerjakan as $reportitem): ?>
@@ -21,6 +21,9 @@
             <div class="chart">
               <div id="chartContainer" style="height: 200px;padding-top: 0px;">
               </div>
+            </div>
+            <div>
+                <h4>Nilai : <?=$nilai?></h4>
             </div>
           </div>
           </div>
@@ -63,7 +66,7 @@
                                 indexLabelLineColor: "darkgrey",
                                 toolTipContent: "Jumlah : {y} ",
                                 dataPoints: [
-                                    {y: data.jmlh_benar, indexLabel: "Poin {y}"},
+                                    {y: data.jmlh_benar, indexLabel: "Benar {y}"},
                                     {y: data.jmlh_salah, indexLabel: "Salah {y}"},
                                     {y: data.jmlh_kosong, indexLabel: "Kosong {y}"}
 

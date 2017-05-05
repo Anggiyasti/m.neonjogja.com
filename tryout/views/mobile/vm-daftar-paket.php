@@ -1,4 +1,5 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="<?= base_url('assetsnew/css/pagination.css') ?>">
 
 <!-- START Blog Content -->
 
@@ -16,7 +17,7 @@
         <div class="h-banner animated fadeindown red lighten-1">
           <div class="parallax bg-profile">
           </div>
-            <div class="banner-title">Tryout - Urutan</div>
+            <div class="banner-title">Tryout - <?=$nama_to?></div>
           </div>
           <div class=" delay-1">
             <div class="card  delay-2">
@@ -49,6 +50,13 @@
                     </ul>
                   <?php endforeach ?>
                 <?php endif ?>
+                <div class="grid-col-row clear-fix">
+                  <center>
+                    <div class="page-pagination clear-fix margin-none" style="width: 100%;">
+                      <?php echo $links; ?>
+                    </div>
+                  </center>
+                </div>
               </div>
               <!-- END ROW -->
             </div>
@@ -66,7 +74,7 @@
                     <ul>
                       <li>Nama Paket Soal : <?=$paketitem['nm_paket'] ?></li>
                       <li>
-                        <a href="<?=base_url('tryout/score') ?>"
+                        <a href="<?= base_url() ?>tryout/Score/<?=$paketitem['id_paket']?>"
                           class="btn btn-primary modal-on<?=$paketitem['id_paket']?>"
                           data-todo='<?=json_encode($paketitem)?>' title="Lihat Score"><i class="ion-android-list"></i></a>
                         <?php if ($status_to=="done"): ?>
@@ -78,6 +86,15 @@
                     </ul>
                   <?php endforeach ?>
                 <?php endif ?>
+
+                <div class="grid-col-row clear-fix">
+                  <center>
+                    <div class="page-pagination clear-fix margin-none" style="width: 100%;">
+                      <?php echo $links; ?>
+                    </div>
+                  </center>
+                </div>
+                
               </div>
               <!-- END ROW -->
             </div>

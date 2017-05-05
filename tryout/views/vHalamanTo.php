@@ -71,14 +71,16 @@ label:hover{ /* HIDE RADIO */
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url(https://www.thebuddhistchef.com/wp-content/themes/culinier-theme/images/loader.gif) center no-repeat #fff;
+    background: url(http://www.thebuddhistchef.com/wp-content/themes/culinier-theme/images/loader.gif) center no-repeat #fff;
 }
 
 </style>
 <!-- START Body -->
 
 <body class="bgcolor-white">
-<div class="se-pre-con"></div>
+<div class="se-pre-con">
+    <!-- Mohon tunggu, sedang meload tryout... -->
+  </div>
     <!-- START Template Main -->
     <script src="<?= base_url('assetsnew/js/bjqs-1.10.js') ?>"></script>
     <script type="text/javascript">
@@ -89,8 +91,35 @@ label:hover{ /* HIDE RADIO */
                 // 'responsive': false
             });
     });
+    $(window).load(function() {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut("slow");;
+  });
     </script>
     <section id="main" role="main">
+    <!-- Trigger the modal with a button -->
+  <!-- START modal-lg -->
+  <div class="modal fade" id="pesan_habis">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <div class="ico-clock mb15 mt15" style="font-size:36px;"></div>
+          <h3 class="semibold modal-title text-primary">Waktu Habis</h3>
+          <p class="text-danger">
+            Waktu Habis, silahkan kumpulkan jawaban.
+          </p>
+        </div>
+        <div class="modal-body">
+         <center><a onclick="kirim_hasil_habis()" class="btn btn-default">Kirim Jawaban</a></center>
+       </div>
+       <div class="modal-footer">
+         <!-- <a onclick="kirim_hasil_habis()" class="btn btn-default">Kirim Jawaban</a> -->
+       </div>
+     </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+ </div>
+ <!--/ END modal-lg -->
+
         <!-- START page header -->
         <section class="page-header page-header-block nm" style="">
             <!-- pattern -->

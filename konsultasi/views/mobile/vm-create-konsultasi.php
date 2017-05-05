@@ -1,6 +1,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/ckeditor.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/plugins/ckeditor/adapters/jquery.js') ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assetsnew/css/pagination.css') ?>">
 <!-- START Blog Content -->
 <style type="text/css">
   .baru {
@@ -134,7 +135,7 @@
                             <a class="col s12 btn accent-color waves-effect waves-light" onclick="preview()">Preview</a> 
                           </div> -->
                           <div class="baru">
-                            <a onclick="save()" class="col s12 btn accent-color waves-effect waves-light post">Post</a>
+                            <a onclick="save()" class="col s12 btn accent-color-baru waves-effect waves-light post">Post</a>
                           </div>
                         </div>
                       </div>

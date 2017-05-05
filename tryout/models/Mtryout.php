@@ -17,7 +17,7 @@ class Mtryout extends MX_Controller {
 
 
     #get paket yang belum dikerjakan.
-    public function get_paket_undo($datas) {
+    public function get_paket_undo_pag($datas,$perpage,$page) {
         $id = $datas['id_tryout'];
         $id_siswa = $datas['id_siswa'];
 //        backup query
@@ -36,31 +36,13 @@ class Mtryout extends MX_Controller {
             LEFT JOIN `tb_report-paket` rp ON rp.`id_mm-tryout-paket` = mmt.`id` 
             WHERE id_siswa =$id_siswa 
             AND t.`id_tryout`= $id AND rp.siswaID = $id_siswa)
+            limit $page, $perpage
 
 ";
-
 $result = $this->db->query($query);
 return $result->result_array();
 }
     //##
-
- // ambil tryout yang sudah pernah dikerjakan oleh siswa tertentu
-public function get_tryout_by_pengguna(){
-    $id = $this->session->userdata('id');
-
-    $username = $this->db->escape_str($this->session->userdata('USERNAME'));
-    $query = " SELECT mmto.`id_tryout`,t.`nm_tryout` FROM 
-    (SELECT * FROM `tb_report-paket` rp
-    WHERE `id_pengguna` = $id) hasil
-    JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
-    JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  
-    JOIN `tb_tryout` t ON t.id_tryout = mmto.`id_tryout`
-    GROUP BY mmto.id_tryout
-    ";
-    $result = $this->db->query($query);
-    return $result->result_array(); 
-}
-
 
     #get data paket yang sudah dikerjakan
 function get_paket_reported($datas){
@@ -117,10 +99,10 @@ public function get_id_siswa() {
 }
 
     //# fungsi get data tryout yang hakaksesnya true
-public function get_tryout_akses($data) {
+public function get_tryout_akses($perpage,$page,$data) {
     $id_siswa = $data['id_siswa'];
     $this->db->select('*');
-    $this->db->from('tb_tryout to');
+    // $this->db->from('tb_tryout to');
     $this->db->join('tb_hakakses-to hakAkses', 'to.id_tryout = hakAkses.id_tryout');
         //hakakses
     $this->db->where('hakAkses.id_siswa', $data['id_siswa']);
@@ -129,9 +111,10 @@ public function get_tryout_akses($data) {
         //rentang waktu
         // $this->db->where("BETWEEN to.tgl_mulai AND to.stgl_berhenti");
 
-    $query = $this->db->get();
+    $query = $this->db->get('tb_tryout to',$perpage,$page);
     return $query->result_array();
 }
+
 
     //# fungsi get data tryout yang hakaksesnya true
 
@@ -282,26 +265,118 @@ public function dataPaketRandom($id) {
     return $query->result();
 }
 
+function get_paket_reported_score($datas){
+    $id = $datas['id_tryout'];
+    $id_pengguna = $datas['id_pengguna'];
+    $id_siswa = $datas['id_siswa'];
+    $id_paket = $datas['id_paket'];
 
-public function get_laporan_to(){
-    $id = $this->session->userdata('id');
+    $query = "
+    SELECT *,p.id_paket,`nm_paket`,mmt.`id`,rp.`id_report` FROM `tb_hakakses-to` ha
+    JOIN tb_siswa s ON s.`id` = ha.`id_siswa`
+    JOIN tb_tryout t ON t.`id_tryout` = ha.`id_tryout`
+    JOIN `tb_mm-tryoutpaket` mmt ON mmt.`id_tryout` = t.`id_tryout`
+    JOIN `tb_paket` p ON p.`id_paket` = mmt.`id_paket` 
+    LEFT JOIN `tb_report-paket` rp ON rp.`id_mm-tryout-paket` = mmt.`id`
 
-    $query = "SELECT t.`nm_tryout` 
-    
-    ,SUM(report_paket.jmlh_benar) AS jumlah_benar
-    ,SUM(report_paket.jmlh_salah) AS jumlah_salah
-    ,SUM(report_paket.jmlh_kosong) AS jumlah_kosong
-    ,SUM(jmlh_benar+jmlh_salah+jmlh_kosong) AS jumlah_soal
-    ,SUM(jmlh_benar / jumlah_soal * 100) AS nilai
-    FROM (SELECT * FROM `tb_report-paket`
-    WHERE id_pengguna = $id) report_paket
-    JOIN `tb_mm-tryoutpaket` mmto ON mmto.`id` = report_paket.`id_mm-tryout-paket`
-    JOIN `tb_tryout` t ON t.`id_tryout` = mmto.`id_tryout`
-    JOIN `tb_paket` p ON p.`id_paket` = mmto.`id_paket`
-    GROUP BY t.`id_tryout`";
-
+    WHERE id_siswa =$id_siswa AND 
+    t.`id_tryout`= $id AND rp.siswaID = $id_siswa
+    AND p.id_paket=$id_paket
+    ";
     $result = $this->db->query($query);
-    return $result->result_array(); 
+    return $result->result_array();        
 }
+    //# fungsi get data tryout yang hakaksesnya true
+public function get_tryout_akses_number($data) {
+    $id_siswa = $data['id_siswa'];
+    $this->db->select('*');
+    $this->db->from('tb_tryout to');
+    $this->db->join('tb_hakakses-to hakAkses', 'to.id_tryout = hakAkses.id_tryout');
+        //hakakses
+    $this->db->where('hakAkses.id_siswa', $data['id_siswa']);
+        //published
+    $this->db->where('to.publish', 1);
+        //rentang waktu
+        // $this->db->where("BETWEEN to.tgl_mulai AND to.stgl_berhenti");
+
+    $query = $this->db->get();
+    return $query->num_rows();
+}
+
+#get paket yang belum dikerjakan.
+    public function get_paket_undo_number($datas) {
+        $id = $datas['id_tryout'];
+        $id_siswa = $datas['id_siswa'];
+//        backup query
+        $query = "SELECT *, mm.id as mmid FROM tb_paket p
+        JOIN `tb_mm-tryoutpaket` mm ON mm.`id_paket` = p.`id_paket` 
+        JOIN `tb_hakakses-to` ha ON ha.`id_tryout` = mm.`id_tryout`
+        JOIN `tb_tryout` t ON t.`id_tryout` = ha.`id_tryout`
+        WHERE ha.`id_siswa`=$id_siswa AND mm.`id_tryout`=$id
+        AND p.`id_paket` NOT IN 
+        (SELECT p.id_paket
+            FROM `tb_hakakses-to` ha JOIN tb_siswa s 
+            ON s.`id` = ha.`id_siswa` 
+            JOIN tb_tryout t ON t.`id_tryout` = ha.`id_tryout` 
+            JOIN `tb_mm-tryoutpaket` mmt ON mmt.`id_tryout` = t.`id_tryout` 
+            JOIN `tb_paket` p ON p.`id_paket` = mmt.`id_paket` 
+            LEFT JOIN `tb_report-paket` rp ON rp.`id_mm-tryout-paket` = mmt.`id` 
+            WHERE id_siswa =$id_siswa 
+            AND t.`id_tryout`= $id AND rp.siswaID = $id_siswa)
+
+";
+
+$result = $this->db->query($query);
+return $result->num_rows();
+}
+
+#get data paket yang sudah dikerjakan
+function get_paket_reported_number($datas){
+    $id = $datas['id_tryout'];
+    $id_pengguna = $datas['id_pengguna'];
+    $id_siswa = $datas['id_siswa'];
+
+    $query = "
+    SELECT *,p.id_paket,`nm_paket`,mmt.`id`,rp.`id_report` FROM `tb_hakakses-to` ha
+    JOIN tb_siswa s ON s.`id` = ha.`id_siswa`
+    JOIN tb_tryout t ON t.`id_tryout` = ha.`id_tryout`
+    JOIN `tb_mm-tryoutpaket` mmt ON mmt.`id_tryout` = t.`id_tryout`
+    JOIN `tb_paket` p ON p.`id_paket` = mmt.`id_paket` 
+    LEFT JOIN `tb_report-paket` rp ON rp.`id_mm-tryout-paket` = mmt.`id`
+
+    WHERE id_siswa =$id_siswa AND 
+    t.`id_tryout`= $id AND rp.siswaID = $id_siswa
+    ";
+    $result = $this->db->query($query);
+    return $result->num_rows();        
+}
+    ##
+
+#get paket yang belum dikerjakan.
+    public function get_paket_undo($datas) {
+        $id = $datas['id_tryout'];
+        $id_siswa = $datas['id_siswa'];
+//        backup query
+        $query = "SELECT *, mm.id as mmid FROM tb_paket p
+        JOIN `tb_mm-tryoutpaket` mm ON mm.`id_paket` = p.`id_paket` 
+        JOIN `tb_hakakses-to` ha ON ha.`id_tryout` = mm.`id_tryout`
+        JOIN `tb_tryout` t ON t.`id_tryout` = ha.`id_tryout`
+        WHERE ha.`id_siswa`=$id_siswa AND mm.`id_tryout`=$id
+        AND p.`id_paket` NOT IN 
+        (SELECT p.id_paket
+            FROM `tb_hakakses-to` ha JOIN tb_siswa s 
+            ON s.`id` = ha.`id_siswa` 
+            JOIN tb_tryout t ON t.`id_tryout` = ha.`id_tryout` 
+            JOIN `tb_mm-tryoutpaket` mmt ON mmt.`id_tryout` = t.`id_tryout` 
+            JOIN `tb_paket` p ON p.`id_paket` = mmt.`id_paket` 
+            LEFT JOIN `tb_report-paket` rp ON rp.`id_mm-tryout-paket` = mmt.`id` 
+            WHERE id_siswa =$id_siswa 
+            AND t.`id_tryout`= $id AND rp.siswaID = $id_siswa)
+
+";
+$result = $this->db->query($query);
+return $result->result_array();
+}
+    //##
 }
 ?>

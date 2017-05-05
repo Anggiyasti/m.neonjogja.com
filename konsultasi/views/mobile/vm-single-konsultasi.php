@@ -201,6 +201,8 @@
             
           <?php endforeach ?>
         <?php endif ?>
+          
+        </div>
           <div class="grid-col-row clear-fix">
             <center>
               <div class="page-pagination clear-fix margin-none" style="width: 100%;">
@@ -209,7 +211,11 @@
             </center>
           </div>
         </div>
+
         </div>
+        <!-- END ROW -->
+
+        <div class="activities">
         <!-- editor reply -->
         <div class="container"> 
           <hr>  
@@ -222,9 +228,9 @@
               <span>Upload gambar :</span> 
               <input type="file" class="cws-button bt-color-3 alt smaller post" name="file" style="display: inline">
 
-              <a onclick="submit_upload()" style="border: 2px solid #18bb7c; padding: 2px;display: inline" title="Upload"><i class="fa fa-cloud-download"></i></a> 
+              <a onclick="submit_upload()" style="border: 2px solid #18bb7c; padding: 2px;display: inline" title="Upload"><i class="ion-android-download"></i></a> 
               <div id="output" style="display: inline">
-                <a style="border: 2px solid grey; padding: 2px;display: inline" title="Sisipkan" disabled><i class="fa fa-cloud-upload"></i></a> 
+                <a style="border: 2px solid grey; padding: 2px;display: inline" title="Sisipkan" disabled><i class="ion-android-upload"></i></a> 
               </div>
 
 
@@ -238,9 +244,9 @@
           <br>
           <hr>
         </div>
-
         </div>
-        <!-- END ROW -->
+        </div>
+
       </div>
     </div>
 

@@ -1,3 +1,4 @@
+ <link rel="stylesheet" type="text/css" href="<?= base_url('assetsnew/css/pagination.css') ?>">
        <!-- Page Content -->
       <div id="content" class="page">
 
@@ -20,14 +21,15 @@
 
          <!-- Profile Content -->
         <div class=" delay-1">
-          <div class="card  delay-2">
+          <div class="card delay-2">
             <h3 class="uppercase">Daftar Tryout</h3>
             <!-- START Row -->
-            <div class="row">
+            <div class="activities">
               <?php foreach ($tryout as $tryout_item): ?>
                 <ul>
                   <li>Nama Tryout : <?=$tryout_item['nm_tryout'] ?></li>
-                  <li>Tanggal : <?=$tryout_item['tgl_mulai']." ".$tryout_item['wkt_mulai'] ?> - <?=$tryout_item['tgl_berhenti']." ".$tryout_item['wkt_berakhir']?></li>
+                  <li>Waktu Mulai : <?=$tryout_item['tgl_mulai']." ".$tryout_item['wkt_mulai'] ?></li>
+                  <li>Waktu Selesai : <?=$tryout_item['tgl_berhenti']." ".$tryout_item['wkt_berakhir']?></li>
                   <?php 
                       $date1 = new DateTime($tryout_item['tgl_mulai']);
                       $date2 = new DateTime($tryout_item['tgl_berhenti']);
@@ -59,7 +61,15 @@
               <?php endif ?></li>
                 </ul>
               <?php endforeach ?>
-            </div>
+            
+            <div class="grid-col-row clear-fix">
+            <center>
+              <div class="page-pagination clear-fix margin-none" style="width: 100%;">
+                <?php echo $links; ?>
+              </div>
+            </center>
+          </div>
+          </div>
           </div>                      
         </div>
 

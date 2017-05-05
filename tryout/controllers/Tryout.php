@@ -8,10 +8,14 @@ class Tryout extends MX_Controller {
         $this->load->library('parser');
         $this->load->model('Mtryout');
         $this->load->model('siswa/msiswa');
+        $this->load->library("pagination");
+
+        $config['permitted_uri_chars'] = 'a-z 0-9~%.:&_\-'; 
 
         // $this->load->model('tesonline/Mtesonline');
         parent::__construct();
         $this->load->library('sessionchecker');
+        $this->sessionchecker->checkloggedin();
         $this->sessionchecker->cek_token();
 
         # check session
@@ -34,7 +38,6 @@ class Tryout extends MX_Controller {
     public function index() {
         if ($this->session->userdata('NAMASISWA')) {
             $this->session->unset_userdata('id_tryout');
-            // echo "Today is " . date("Y/m/d h:m:s") . "<br>";
             $data = array(
                 'judul_halaman' => 'Neon - Tryout',
                 'judul_header' => 'Daftar Tryout',
@@ -49,10 +52,31 @@ class Tryout extends MX_Controller {
                 APPPATH . 'modules/templating/views/anggi/v-footer.php',
 
                 );
+            $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
+            ##KONFIGURASI UNTUUK PAGINATION
+            $config = array();
+            $config["base_url"] = base_url() . "tryout/index/";
+            $config["uri_segment"] = 3;
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $config["total_rows"] = $this->Mtryout->get_tryout_akses_number($datas);
+            $config["per_page"] = 5;
+
+            # konfig link
+            $config['cur_tag_open'] = "<a style='background:#800000;color:white'>";
+            $config['cur_tag_close'] = '</a>';
+            $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+            $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+
+            # konfig link
+
+            $this->pagination->initialize($config);
+            ##KONFIGURASI UNTUUK PAGINATION
+
+            $data['jumlah_postingan'] = $config['total_rows'];
+            $data['tryout'] = $this->Mtryout->get_tryout_akses($config["per_page"], $page, $datas);
+            $data["links"] = $this->pagination->create_links();
             $penggunaID = $this->session->userdata['id'];
             $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
-            $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
-            $data['tryout'] = $this->Mtryout->get_tryout_akses($datas);
             $this->parser->parse('templating/anggi/index', $data);
         } else {
             redirect('login');
@@ -117,10 +141,34 @@ class Tryout extends MX_Controller {
                     APPPATH . $konten,
                     APPPATH . 'modules/templating/views/anggi/v-footer.php',
                     );
+                
+                ##KONFIGURASI UNTUUK PAGINATION
+                $config = array();
+                $config["base_url"] = base_url() . "tryout/daftarpaket/";
+                $config["uri_segment"] = 3;
+                $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+                $config["total_rows"] = $this->Mtryout->get_paket_undo_number($datas);
+                $config["per_page"] = 3;
+
+                # konfig link
+                $config['cur_tag_open'] = "<a style='background:#800000;color:white'>";
+                $config['cur_tag_close'] = '</a>';
+                $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+                $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+
+                # konfig link
+
+                $this->pagination->initialize($config);
+                ##KONFIGURASI UNTUUK PAGINATION
+
+                $data['jumlah_postingan'] = $config['total_rows'];
+                $data["links"] = $this->pagination->create_links();
+
                 // DAFTAR PAKET
                 $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
-                $data['paket'] = $this->Mtryout->get_paket_undo($datas);
+                $data['paket'] = $this->Mtryout->get_paket_undo_pag($datas,$config["per_page"], $page);
                 $data['status_to'] = $status_to;
+
 
                 $penggunaID = $this->session->userdata['id'];
                 $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
@@ -194,7 +242,7 @@ class Tryout extends MX_Controller {
             $data['pil'] = $query['pil'];
 
 ////        var_dump($data);
-            $this->load->view('vHalamanTo.php', $data);
+            $this->load->view('v-to-baru.php', $data);
             // $this->load->view('mobile/v-halaman-to', $data);
             $this->load->view('templating/t-footerto', $data);
         } else {
@@ -315,13 +363,14 @@ else
 }
     }
 
-    public function score()
+    public function score($id_paket)
     {
         if ($this->session->userdata('NAMASISWA')) {
             $id_to = $this->session->userdata('id_tryout');
             $datas['id_tryout'] = $id_to;
             $datas['id_pengguna'] = $this->session->userdata('id');
             $datas['id_siswa'] = $this->msiswa->get_siswaid();
+            $datas['id_paket'] = $id_paket;
 
             $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
             $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];
@@ -336,6 +385,9 @@ else
             $date_mulai =  new DateTime($mulai);
             $date_berhenti =  new DateTime($akhir);
 
+            // nama paket
+            $nm_paket = $this->Mtryout->get_paket_reported_score($datas)[0]['nm_paket'];
+
 
             if (isset($id_to)) {
                 $data = array(
@@ -343,6 +395,7 @@ else
                     'judul_header' => 'Tryout : ' . $data['nama_to'],
                     'judul_tingkat' => '',
                     'nama_to' => $data_to['nm_tryout'],
+                    'nama_paket' => $nm_paket
                     );
 
                 // FILES
@@ -353,8 +406,13 @@ else
                     APPPATH . 'modules/templating/views/anggi/v-footer.php',
                     );
                 // DAFTAR PAKET
-                $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported($datas);
+                $data['paket_dikerjakan'] = $this->Mtryout->get_paket_reported_score($datas);
                 $data['paket'] = $this->Mtryout->get_paket_undo($datas);
+
+                // HITUNG NILAI
+                $jmlh_benar = $data['paket_dikerjakan'][0]['jmlh_benar'];
+                $jmlh_soal = $data['paket_dikerjakan'][0]['jumlah_soal'];
+                $data['nilai'] = round(($jmlh_benar/$jmlh_soal)*100,2);
 
                 $penggunaID = $this->session->userdata['id'];
                 $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
@@ -372,19 +430,6 @@ else
         } else {
             redirect('login');
         }
-    }
-
-
-    public function report_to(){
-        $list = $this->Mtryout->get_laporan_to();
-        $array = [];
-        foreach ($list as $item ) {
-
-            $tempt = ['label'=>$item['nm_tryout'],'y'=> (int)number_format($item['nilai'],1)];
-            $array[] = $tempt;
-        }
-      echo json_encode($array);
-
     }
 }
 ?>
