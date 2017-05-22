@@ -31,7 +31,9 @@
 
 </head>
 <body>
-
+    <!-- sound notification -->
+  <audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
+  <!-- /sound notification -->
 
     <?php
     if (!$files) {
@@ -114,5 +116,72 @@
      });
     });
 </script> 
+
+<script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+
+<script type="text/javascript">
+
+  jQuery(document).ready(function () {
+    var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+    var new_count_komen = 0;
+    var mapelID=8;
+    var obMapel ='';
+    var penggunaID = ('<?=$this->session->userdata['id']?>');
+    var url = "<?= base_url() ?>index.php/siswa/ajax_getsiswa";
+     // play sound notification
+                    // $('#notif_audio')[0].play();
+
+     // SOCKET CREATE PERTANYAAN
+      socket.on('pesan_baru', function(data){
+        console.log('masuk sockcet');
+
+        var id_ortu = data.id_ortu;
+        var jenis_lapor = data.jenis_lapor;
+        var isi = data.isi;
+        var namaPengguna = data.namaPengguna;
+
+        $.ajax({
+            url:url,
+            success:function(data){
+              // ubah type data  dari json ke objek
+              obj =JSON.parse(data);
+              console.log('obj', obj);
+              
+               idortu = obj[0].id_ortu;
+               // namaPengguna = obj[0].penggunaID;
+
+               for (i = 0; i < obj.length; i++) { 
+                // cek pengguna yang dituju bukan?
+                if (id_ortu == idortu ) {
+                  //jika true 
+                  var old_count_komen = parseInt($('[name=count_komen]').val());
+                  new_count_komen = old_count_komen + 1;
+                  $('[name=count_komen]').val(new_count_komen);
+                  $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
+                    // play sound notification
+                    $('#notif_audio')[0].play();
+                    //add komen baru ke data notif id message-tbody
+                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/pesan/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
+                } 
+              }
+
+
+
+             },              
+          });
+
+       
+        
+
+      });
+      // SOCKET CREATE PERTANYAAN
+
+    
+
+ 
+  });
+
+
+</script>
 
    

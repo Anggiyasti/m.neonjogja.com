@@ -604,6 +604,12 @@ class Siswa extends MX_Controller {
 
 }
 
+public function ajax_getsiswa()
+    {
+      $siswaID=$this->session->userdata['id'];
+      $arrSiswa=$this->msiswa->get_siswa_id($siswaID);
+      echo json_encode($arrSiswa);
+    }
     
     
 }

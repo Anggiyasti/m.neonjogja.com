@@ -1,5 +1,7 @@
-
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- sound notification -->
+  <audio id="notif_audio"><source src="<?php echo base_url('sounds/notify.ogg');?>" type="audio/ogg"><source src="<?php echo base_url('sounds/notify.mp3');?>" type="audio/mpeg"><source src="<?php echo base_url('sounds/notify.wav');?>" type="audio/wav"></audio>
+  <!-- /sound notification -->
       <!-- Sidebars -->
       
       <ul id="slide-out-left" class="side-nav collapsible">
@@ -117,7 +119,14 @@
         </li>
         <?php endif ?>
 
-        <li><a href="<?=base_url('ortuback')?>" class="no-child"><i class="ion-ios-compose-outline"></i>Pesan</a></li>
+        <li>
+          <a href="<?=base_url('ortuback')?>" class="no-child">
+            <input type="int" name="count_komen" value="" hidden="true">
+            <span class="icon" id="new_count_komen"></span>
+             <span class="badge badge-danger jumlah_notifikasi" style="background-color: #f27c66;"></span>
+          <i class="ion-ios-compose-outline"></i>Pesan
+          </a>
+        </li>
 
          <li>
          <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
@@ -153,3 +162,110 @@
 
       </ul>
       <!-- End of Sidebars -->
+
+                <script src="<?php echo base_url('node_modules/socket.io/node_modules/socket.io-client/socket.io.js');?>"></script>
+
+       <script type="text/javascript">
+
+  jQuery(document).ready(function () {
+    var socket = io.connect( 'http://'+window.location.hostname+':3000' );
+    var new_count_komen = 0;
+    var mapelID=8;
+    var obMapel ='';
+    var penggunaID = ('<?=$this->session->userdata['id']?>');
+    var url = "<?= base_url() ?>index.php/siswa/ajax_getsiswa";
+    var url_ortu = "<?= base_url() ?>index.php/ortuback/ajax_ortuID";
+
+     // SOCKET PESAN SISWA
+      socket.on('pesan_baru', function(data){
+        console.log('masuk sockcet');
+
+        var id_ortu = data.id_ortu;
+        var jenis_lapor = data.jenis_lapor;
+        var isi = data.isi;
+        var namaPengguna = data.namaPengguna;
+
+        $.ajax({
+            url:url,
+            success:function(data){
+              // ubah type data  dari json ke objek
+              obj =JSON.parse(data);
+              console.log('obj', obj);
+              
+               idortu = obj[0].id_ortu;
+               // namaPengguna = obj[0].penggunaID;
+
+               for (i = 0; i < obj.length; i++) { 
+                // cek pengguna yang dituju bukan?
+                if (id_ortu == idortu ) {
+                  //jika true 
+                  var old_count_komen = parseInt($('[name=count_komen]').val());
+                  new_count_komen = old_count_komen + 1;
+                  $('[name=count_komen]').val(new_count_komen);
+                  $( "#new_count_komen" ).html( new_count_komen+'<i class="ico-bell"></i>');  
+                    // play sound notification
+                    $('#notif_audio')[0].play();
+                    //add komen baru ke data notif id message-tbody
+                    $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/pesan/'+data.UUID+'" class="media border-dotted read"><span class="pull-left"><img src="'+namaPengguna+'" class="media-object img-circle" alt=""></span><span class="media-body"><span class="media-heading">'+namaPengguna+'</span><span class="media-text ellipsis nm">'+isi+'</span><!-- meta icon --><span class="media-meta pull-right">'+jenis_lapor+'</span><!--/ meta icon --></span></a>');
+                } 
+              }
+
+
+
+             },              
+          });
+
+       
+        
+
+      });
+      // SOCKET PESAN SISWA
+
+
+    // SOCKET PESAN ORTU
+    socket.on('pesan_baru', function(data){
+         $.getJSON( base_url+"ortuback/jumlah_pesan/"+penggunaID, function( datas ) {
+          $('.jumlah_notifikasi').text(datas);
+        });
+      var id_ortu = data.id_ortu;
+      var jenis_lapor = data.jenis_lapor;
+      var isi = data.isi;
+      // substring dulu isi nya dari 0 sampe 10
+      var isi_sub = isi.substring(0,10);
+      var namaPengguna = data.namaPengguna;
+
+      $.ajax({
+            url:url_ortu,
+            success:function(data){
+              // ubah type data  dari json ke objek
+              obj =JSON.parse(data);
+              
+              // ambil id ortu dari objek 
+              ortuID = obj[0].id;
+
+
+              for (i = 0; i < obj.length; i++) { 
+                // cek pengguna yang dituju bukan?
+                if (id_ortu == ortuID ) {
+                    // play sound notification
+                    $('#notif_audio')[0].play();
+                    //add laporan baru ke data notif id message-tbody
+                    $( "#message-tbody" ).prepend('<li> <a href="'+base_url+'ortuback/pesan/'+data.UUID+'" class="media border-dotted read">'+isi_sub+'</a></li>');
+                    // $( "#message-tbody" ).prepend(' <a href="'+base_url+'ortuback/see_message/'+data.UUID+'" class="media border-dotted read">'+isi+'</a>');
+                } 
+              }
+
+
+             },              
+          });
+
+      
+    });
+    // SOCKET SOCKET PESAN ORTU
+    
+
+ 
+  });
+
+
+</script>

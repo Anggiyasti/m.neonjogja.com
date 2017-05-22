@@ -301,6 +301,17 @@ class Msiswa extends CI_Model {
         $result = $this->db->query($query);
         return $result->result_array();
     }
+
+    public function get_siswa_id($pengguna='')
+    {
+        $this->db->select('o.id as id_ortu, s.penggunaID');
+        $this->db->from('tb_siswa s');
+        $this->db->join('tb_orang_tua o', 's.id=o.siswaID');
+        $this->db->where('s.penggunaID',$pengguna);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
     
 }
 
