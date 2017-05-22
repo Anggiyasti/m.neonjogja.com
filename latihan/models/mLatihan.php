@@ -124,7 +124,19 @@ class Mlatihan extends CI_Model
 
 	 //get daftar latihan by created by
 
-	public function get_report($createdby){
+	public function get_report($createdby,$perpage,$page){
+		$this->db->select('*');
+		$this->db->join('tb_report-latihan report',
+			'latihan.id_latihan=report.id_latihan');
+		$this->db->where('create_by', $createdby);
+		$this->db->order_by('tgl_pengerjaan', 'asc');
+		$query = $this->db->get('tb_latihan latihan',$perpage,$page);
+		return $query->result_array();
+
+	}
+	 //get daftar latihan by created by
+
+	public function get_report_number($createdby){
 		$this->db->select('*');
 		$this->db->from('tb_latihan latihan');
 		$this->db->join('tb_report-latihan report',
@@ -132,11 +144,11 @@ class Mlatihan extends CI_Model
 		$this->db->where('create_by', $createdby);
 		$this->db->order_by('tgl_pengerjaan', 'asc');
 		$query = $this->db->get();
-		return $query->result_array();
+		return $query->num_rows();
 
 	}
 
-	public function get_report_tingkat($createdby,$idtingkat,$perpage,$page=0){
+	public function get_report_tingkat($createdby,$idtingkat,$perpage,$page){
 		$query = "SELECT * 
 					FROM `tb_latihan` `latihan` 
 					JOIN `tb_report-latihan` `report` ON `latihan`.`id_latihan`=`report`.`id_latihan` 
@@ -148,13 +160,14 @@ class Mlatihan extends CI_Model
 					WHERE `latihan`.`create_by` = '$createdby' AND `tp`.`tingkatID`= '$idtingkat' 
 					GROUP BY `latihan`.`id_latihan`
 					ORDER BY `tgl_pengerjaan` ASC
-					limit $page,$perpage ";
+					limit $page, $perpage";
 		$query = $this->db->query($query);
 		return $query->result_array();
 
 	}
 
 	public function get_report_tingkat_number($createdby,$idtingkat){
+
 		$query = "SELECT * 
 					FROM `tb_latihan` `latihan` 
 					JOIN `tb_report-latihan` `report` ON `latihan`.`id_latihan`=`report`.`id_latihan` 

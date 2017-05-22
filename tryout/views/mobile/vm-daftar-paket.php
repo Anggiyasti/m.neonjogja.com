@@ -19,9 +19,13 @@
           </div>
             <div class="banner-title">Tryout - <?=$nama_to?></div>
           </div>
+           <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+                
+              <?php else: ?>
           <div class=" delay-1">
             <div class="card  delay-2">
               <!-- START Row -->
+             
               <div class="row">
                 <h4>Daftar Paket TO yang Belum Dikerjakan</h4>
                 <?php if ($paket==array()): ?>
@@ -58,9 +62,11 @@
                   </center>
                 </div>
               </div>
+              
               <!-- END ROW -->
             </div>
           </div>
+          <?php endif ?>
 
           <div class=" delay-1">
             <div class="card  delay-2">

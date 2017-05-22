@@ -16,7 +16,12 @@ class Tryout extends MX_Controller {
         parent::__construct();
         $this->load->library('sessionchecker');
         $this->sessionchecker->checkloggedin();
-        $this->sessionchecker->cek_token();
+         if ($this->session->userdata('HAKAKSES')=='ortu') {
+       
+    }else{
+         $this->sessionchecker->cek_token();
+
+    }
 
         # check session
         if ($this->session->userdata('loggedin') == true) {
@@ -24,7 +29,10 @@ class Tryout extends MX_Controller {
 
             } else if ($this->session->userdata('HAKAKSES') == 'guru') {
                 redirect('guru/dashboard');
-            } else {
+            }else if ($this->session->userdata('HAKAKSES') == 'ortu') {
+
+            } 
+            else {
                 redirect('login');
             }
         } else {
@@ -36,7 +44,6 @@ class Tryout extends MX_Controller {
 
     //# fungsi indeks, mampilin to yang dikasih hak akses.
     public function index() {
-        if ($this->session->userdata('NAMASISWA')) {
             $this->session->unset_userdata('id_tryout');
             $data = array(
                 'judul_halaman' => 'Neon - Tryout',
@@ -52,7 +59,12 @@ class Tryout extends MX_Controller {
                 APPPATH . 'modules/templating/views/anggi/v-footer.php',
 
                 );
+            if ($this->session->userdata('HAKAKSES')=='ortu') {
+                //untuk mengambil id siswa jika ortu yang login 
+            $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+            }else{
             $datas['id_siswa'] = $this->Mtryout->get_id_siswa();
+        }
             ##KONFIGURASI UNTUUK PAGINATION
             $config = array();
             $config["base_url"] = base_url() . "tryout/index/";
@@ -78,9 +90,7 @@ class Tryout extends MX_Controller {
             $penggunaID = $this->session->userdata['id'];
             $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
             $this->parser->parse('templating/anggi/index', $data);
-        } else {
-            redirect('login');
-        }
+        
     }
 
     // bikin session untuk id to
@@ -91,12 +101,16 @@ class Tryout extends MX_Controller {
 
     // view daftar paket
     public function daftarpaket() {
-        if ($this->session->userdata('NAMASISWA')) {
             $id_to = $this->session->userdata('id_tryout');
             $datas['id_tryout'] = $id_to;
             $datas['id_pengguna'] = $this->session->userdata('id');
-            $datas['id_siswa'] = $this->msiswa->get_siswaid();
 
+            if ($this->session->userdata('HAKAKSES')=='ortu') {
+            //untuk mengambil id siswa jika ortu yang login 
+            $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+            }else{
+            $datas['id_siswa'] = $this->msiswa->get_siswaid();
+        }
             $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
             $data_to = $this->Mtryout->get_tryout_by_id($id_to)[0];
             
@@ -172,7 +186,12 @@ class Tryout extends MX_Controller {
 
                 $penggunaID = $this->session->userdata['id'];
                 $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
-                $data['id_siswa'] = $this->Mtryout->get_id_siswa();
+                if ($this->session->userdata('HAKAKSES')=='ortu') {
+                //untuk mengambil id siswa jika ortu yang login 
+                $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+                }else{
+                $datas['id_siswa'] = $this->msiswa->get_siswaid();
+                }
                 $this->parser->parse('templating/anggi/index', $data);
                 //unset session
                 $this->session->unset_userdata('id_paketpembahasan');
@@ -182,9 +201,7 @@ class Tryout extends MX_Controller {
                 //kalo gak ada session
                 redirect('tryout');
             }
-        } else {
-            redirect('login');
-        }
+        
     }
 
      public function ajax_get_paket($id_tryout) {
@@ -365,11 +382,15 @@ else
 
     public function score($id_paket)
     {
-        if ($this->session->userdata('NAMASISWA')) {
             $id_to = $this->session->userdata('id_tryout');
             $datas['id_tryout'] = $id_to;
             $datas['id_pengguna'] = $this->session->userdata('id');
-            $datas['id_siswa'] = $this->msiswa->get_siswaid();
+            if ($this->session->userdata('HAKAKSES')=='ortu') {
+                //untuk mengambil id siswa jika ortu yang login 
+                $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+                }else{
+                $datas['id_siswa'] = $this->msiswa->get_siswaid();
+                }
             $datas['id_paket'] = $id_paket;
 
             $data['nama_to'] = $this->Mtryout->get_tryout_by_id($id_to)[0]['nm_tryout'];
@@ -416,7 +437,12 @@ else
 
                 $penggunaID = $this->session->userdata['id'];
                 $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
-                $data['id_siswa'] = $this->Mtryout->get_id_siswa();
+                if ($this->session->userdata('HAKAKSES')=='ortu') {
+                //untuk mengambil id siswa jika ortu yang login 
+                $datas['id_siswa'] = $this->Mtryout->get_id_siswa_by_ortu();
+                }else{
+                $datas['id_siswa'] = $this->msiswa->get_siswaid();
+                }
 
                 $this->parser->parse('templating/anggi/index', $data);
                 //unset session
@@ -427,9 +453,7 @@ else
                 //kalo gak ada session
                 redirect('tryout');
             }
-        } else {
-            redirect('login');
-        }
+        
     }
     public function report_to(){
         $list = $this->Mtryout->get_laporan_to();

@@ -4,6 +4,25 @@
       
       <ul id="slide-out-left" class="side-nav collapsible">
         <li>
+        <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+          <div class="sidenav-header primary-color">
+          
+            <div class="nav-social">
+              <i class="ion-social-facebook"></i>
+              <i class="ion-social-twitter"></i>
+              <i class="ion-social-tumblr"></i>
+            </div>
+            <div class="nav-avatar">
+
+              <img class="circle avatar" src="<?=base_url('assets/back/img/logo@2x2.png')?>" height="30px">
+              <div class="avatar-body">
+                <h3>Halo</h3>
+                <p style="font-size:15px"><?= $this->session->userdata['USERNAME']?></p>
+              </div>
+            </div>           
+          </div>
+          <?php else: ?>
+        
           <div class="sidenav-header primary-color">
               <?php foreach ($siswa as $s): ?> 
             <div class="nav-social">
@@ -22,9 +41,12 @@
             <?php endforeach ?>
            
           </div>
+          <?php endif ?>
         </li>
          <li><a href="<?=base_url('index.php/welcome')?>" class="no-child"><i class="ion-android-home"></i>Home</a></li>
         <li>
+        <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+        <?php else: ?>
           <div class="collapsible-header">
             <i class="ion-android-person"></i> Profile
           </div>
@@ -38,6 +60,7 @@
               </li>
             </ul>
           </div>
+           <?php endif ?>
         </li>
         <li>
           <div class="collapsible-header">
@@ -55,7 +78,12 @@
             </ul>
           </div>
         </li>
-         <li><a href="<?=base_url('index.php/welcome')?>" class="no-child"><i class="ion-ios-compose-outline"></i>Try Out</a></li>
+         <li><a href="<?=base_url('index.php/tryout')?>" class="no-child"><i class="ion-ios-compose-outline"></i>Try Out</a></li>
+
+         <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+           <li><a href="<?= base_url("tesonline/daftarlatihan")?>" class="no-child"><i class="ion-ios-list-outline"></i>Latihan</a></li>
+         <?php else: ?>
+         
         <li>
 
           <div class="collapsible-header">
@@ -64,7 +92,7 @@
 
           <div class="collapsible-body">
             <ul class="collapsible">
-           
+            
               <li>
               <?php $no=[1,4,5] ;$namaFile=""?>
 
@@ -87,7 +115,15 @@
           </div>  
            
         </li>
+        <?php endif ?>
+
+        <li><a href="<?=base_url('ortuback')?>" class="no-child"><i class="ion-ios-compose-outline"></i>Pesan</a></li>
+
          <li>
+         <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+         <?php else: ?>
+           
+        
           <div class="collapsible-header">
             <i class="ion-android-folder-open"></i> Edu Drive
           </div>
@@ -101,9 +137,18 @@
                 <a href="<?= base_url("modulonline/modulsmaips")?>">SMA - IPS</a>
               </li>
             </ul>
-          </div>  
+          </div> 
+           <?php endif ?> 
         </li>
-        <li><a href="<?= base_url("konsultasi")?>" class="no-child"><i class="ion-chatbubbles"></i> Konsultasi</a></li>
+        <li>
+        <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+        <?php else: ?>
+          
+       
+        <a href="<?= base_url("konsultasi")?>" class="no-child"><i class="ion-chatbubbles"></i> Konsultasi</a>
+         <?php endif ?>
+
+        </li>
         <li><a href="<?php echo base_url('index.php/logout')?>" class="no-child"><i class="ion-android-exit"></i> Logout</a></li>
 
       </ul>

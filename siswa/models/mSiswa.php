@@ -105,12 +105,15 @@ class Msiswa extends CI_Model {
     #query get semua siswa
 
     public function persentasi_limit($datas){
-        $id = $this->session->userdata('id');
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id = $this->session->userdata('NAMAORTU');  
+        }else{
+            $id = $this->session->userdata('USERNAME');  
+        } 
         $query = "SELECT topikID AS top,babID,`namaTopik` , 
         COUNT(`stepID`) AS stepDone, 
         (SELECT COUNT(id) FROM `tb_line_step` ls
-        WHERE ls.topikID = top) AS jumlah_step  FROM(
-        SELECT * FROM tb_line_log l WHERE l.`penggunaID` = $id) hasil
+        WHERE ls.topikID = top) AS jumlah_step  FROM(SELECT pp.`namaPengguna`, l.`stepID` FROM tb_line_log l JOIN tb_pengguna pp ON l.`penggunaID`=pp.`id` WHERE pp.`namaPengguna` = '$id') hasil
         JOIN `tb_line_step` s ON s.`id` = hasil.stepID
         JOIN `tb_line_topik` t ON t.`id` = s.`topikID`
         GROUP BY topikID
@@ -137,15 +140,19 @@ class Msiswa extends CI_Model {
     // }
 
     public function get_limit_persentase_latihan($data){
-        $id = $this->session->userdata('id');  
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id = $this->session->userdata('NAMAORTU');  
+        }else{
+            $id = $this->session->userdata('USERNAME');  
+        } 
         $query = "SELECT  bab.`judulBab` ,
         SUM(latihan.jmlh_benar + latihan.jmlh_salah + latihan.jmlh_kosong) AS total_soal,
         SUM(latihan.jmlh_benar) AS total_benar,
         SUM(latihan.jmlh_salah) AS total_salah,
         SUM(latihan.jmlh_kosong) AS total_kosong
 
-        FROM (SELECT * FROM `tb_report-latihan` repo
-        WHERE id_pengguna = $id) AS latihan
+        FROM (SELECT * FROM `tb_report-latihan` repo 
+            JOIN `tb_pengguna` `pengguna` ON `pengguna`.id = `repo`.`id_pengguna` WHERE `namaPengguna` = '$id') AS latihan
         JOIN `tb_mm_sol_lat` mmsol ON mmsol.`id_latihan` = latihan.id_latihan
         JOIN `tb_latihan` l ON l.`id_latihan` = latihan.id_latihan
         JOIN `tb_banksoal` bank ON bank.`id_soal` = mmsol.`id_soal`
@@ -273,6 +280,28 @@ class Msiswa extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function get_pesan() {
+        $limit = 3; 
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $penggunaID  = $this->session->userdata('NAMAORTU');  
+        }else{
+            $penggunaID  = $this->session->userdata('USERNAME');
+        } 
+        
+        $query = "SELECT l.isi, j.nama, j.id_ortu, l.jenis 
+                    FROM (SELECT s.id AS id_siswa, s.`namaBelakang` AS nama, o.id AS id_ortu 
+                    FROM tb_siswa s 
+                    JOIN `tb_orang_tua` o ON s.`id` = o.`siswaID` 
+                    JOIN `tb_pengguna` peng ON `peng`.`id` = `s`.`penggunaID`
+                    WHERE `peng`.`namaPengguna`='$penggunaID') AS j 
+                    JOIN `tb_laporan_ortu` l ON j.id_ortu = l.`id_ortu` WHERE l.`id_ortu` = j.id_ortu
+                    ORDER BY `l`.`id` DESC
+                    LIMIT $limit";
+        $result = $this->db->query($query);
+        return $result->result_array();
+    }
+    
 }
 
 ?>

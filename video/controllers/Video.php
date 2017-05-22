@@ -14,6 +14,13 @@ class Video extends MX_Controller {
         $this->load->model( 'matapelajaran/mmatapelajaran' );
         $this->load->model( 'tingkat/MTingkat' );
         $this->load->model( 'siswa/msiswa' );
+        $this->sessionchecker->checkloggedin();
+         if ($this->session->userdata('HAKAKSES')=='ortu') {
+       
+    }else{
+         $this->sessionchecker->cek_token();
+
+    }
 
     // 
     }
@@ -21,7 +28,7 @@ class Video extends MX_Controller {
     //########## FRONT END  ####################
     public function index() {
 
-         if ($this->session->userdata('NAMASISWA')) {
+        
         $data['files'] = array(
             // APPPATH . 'modules/homepage/views/v-header-login.php',
             // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -40,9 +47,7 @@ class Video extends MX_Controller {
         $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
 
         $this->parser->parse('templating/anggi/index', $data);
-    }else{
-        redirect('login');
-    }
+    
     }
 
     //halaman tampilkan sub bab dan see
@@ -86,7 +91,7 @@ class Video extends MX_Controller {
             $penggunaID = $this->session->userdata['id'];
             $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
             $data['semuavideo'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
-             if ($this->session->userdata('NAMASISWA')) {
+
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header.php',         
                 APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -94,9 +99,7 @@ class Video extends MX_Controller {
                 APPPATH.'modules/templating/views/anggi/v-footer.php',
             );
             $this->parser->parse('templating/index', $data);
-        }else{
-            redirect('login');
-        }
+       
         }
     }
 
@@ -120,7 +123,7 @@ $this->sessionchecker->cek_token();
         $penggunaID = $this->session->userdata['id'];
         $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['bab_video'] = $this->load->Mvideos->get_video_as_bab($tingpelID);
-         if ($this->session->userdata('NAMASISWA')) {
+
         $data['files'] = array(
             APPPATH . 'modules/homepage/views/v-header-login.php',
             APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -129,9 +132,7 @@ $this->sessionchecker->cek_token();
         );
         // print_r($data);
         $this->parser->parse('templating/index', $data);
-    }else{
-        redirect('login');
-    }
+   
 
     }
 
@@ -155,13 +156,12 @@ $this->sessionchecker->cek_token();
         $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
         $data['bab_video'] = $this->load->Mvideos->get_video_as_sub($tingpelID);
 
-         if ($this->session->userdata('NAMASISWA')) {
         $data['files'] = array(
             // APPPATH . 'modules/homepage/views/v-header-login.php',
             // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
             // APPPATH . 'modules/video/views/f-daftar-video-bybab.php',
             // APPPATH . 'modules/testimoni/views/v-footer.php'
-            APPPATH.'modules/templating/views/layouts/v-sidebar.php',
+            APPPATH.'modules/templating/views/anggi/v-sidebar.php',
             // APPPATH.'modules/video/views/mobile/vm-f-daftar-video-bybab.php',
             APPPATH.'modules/video/views/mobile/vm-new-f-daftar-video-bybab.php',
            
@@ -169,16 +169,19 @@ $this->sessionchecker->cek_token();
             
         );
 
-        $this->parser->parse('templating/layouts/index', $data);
+        $this->parser->parse('templating/anggi/index', $data);
 
-    }else{
-        redirect('login');
-    }
+   
 
     }
 
     public function seevideo($idvideo) {
-        $this->sessionchecker->cek_token();
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+       
+    }else{
+         $this->sessionchecker->cek_token();
+
+    }
         //data untuk templating
         $data['videosingle'] = $this->load->Mvideos->get_single_video($idvideo);
         $metaMapel = $this->Mvideos->get_meta_mapel($data['videosingle'][0]->subBabID);
@@ -194,14 +197,32 @@ $this->sessionchecker->cek_token();
             $namasub = $this->load->Mvideos->get_nama_sub_by_id_video($idvideo)['judulSubBab'];
             $data['videosingle'] = $this->load->Mvideos->get_single_video($idvideo);
             $onevideo = $data['videosingle'];
+            $penggunaID = $onevideo[0]->penggunaID;
+            $penulis = $this->load->mguru->get_penulis($penggunaID);
+            
+            if ($penulis != array()) {
+                $photo=base_url().'http://neonjogja.com/assets/image/photo/guru/'.$penulis[0]['photo'];
+
+            }else{
+                
+                // $photo= $this->generateavatar->generate_first_letter_avtar_url("Admin");
+                $penulis = ['namaDepan'=>"Super",'namaBelakang'=>"Admin",'biografi'=>'Admin masih malu malu menceritakan dirinya'];
+            }
+            
             if($onevideo[0]->namaFile==NULL){
                 $judul = $onevideo[0]->link;
             }else{
-                $link = "assets/video/".$onevideo[0]->namaFile;
-                $judul = base_url($link);
+                $judul = "http://neonjogja.com/assets/video/".$onevideo[0]->namaFile;
+                // $judul = base_url($link);
             }
-            $guruID = $onevideo[0]->guruID;
-            $penulis = $this->load->mguru->get_penulis($guruID)[0];
+            // if ($onevideo[0]->guruID!="") {
+            //     $guruID = $onevideo[0]->guruID;
+            //     $penulis = $this->load->mguru->get_penulis($guruID)[0];
+            // }else{
+            //     $penulis = ['namaDepan'=>"Super",'namaBelakang'=>"Admin",'biografi'=>'Admin masih malu malu menceritakan dirinya','photo'=>'default.png'];
+            // }
+
+        
             $data = array(
                 'judul_halaman' => 'Neon - Video : ' . $onevideo[0]->judulVideo,
                 'judul_header' => $judul_header,
@@ -210,20 +231,24 @@ $this->sessionchecker->cek_token();
                 'file' => $judul,
                 'nama_penulis' => $penulis['namaDepan'] . " " . $penulis['namaBelakang'],
                 'biografi' => $penulis['biografi'],
-                'photo' => $penulis['photo'],
+                // 'photo' => $photo,
                 'nama_sub' => $namasub,
                 'sub_id' => base_url()."video/timeline/".$onevideo[0]->subBabID,
+                'videoID'=>$onevideo[0]->id
             );
             $subid = $onevideo[0]->subBabID;
+
             //ambil list semua video yang memiliki sub id yang sama
             $data['videobysub'] = $this->load->Mvideos->get_video_by_sub($subid);
             $data['video_by_bab'] = $this->Mvideos->get_all_video_by_bab($idbab);
-
+            $data['tingkat'] = $this->load->MTingkat->gettingkat();
+            $pID= $this->session->userdata['id'];
+            $data['siswa'] = $this->load->msiswa->get_siswapoto($pID);
+            
+            //ambil komen
             $data['comments'] = $this->mkomen->get_komen_byvideo($idvideo);
-            $penggunaID = $this->session->userdata['id'];
-            $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
 
-            if ($this->session->userdata('NAMASISWA')) {
+          
 
             $data['files'] = array(
                 // APPPATH . 'modules/homepage/views/v-header-login.php',
@@ -235,9 +260,7 @@ $this->sessionchecker->cek_token();
                 APPPATH.'modules/templating/views/anggi/v-footer.php',
             );
             $this->parser->parse('templating/anggi/index', $data);
-        }else{
-            redirect('login');
-        }
+       
 
 
         }
@@ -338,7 +361,7 @@ $this->sessionchecker->cek_token();
             $penggunaID = $this->session->userdata['id'];
             $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
             $data['semuavideo'] = $this->load->Mvideos->get_video_by_sub($sub_bab_id);
-            if ($this->session->userdata('NAMASISWA')) {
+        
             $data['files'] = array(
                 APPPATH . 'modules/homepage/views/v-header.php',        
                 APPPATH . 'modules/video/views/v-f-timeline-video.php',
@@ -346,9 +369,7 @@ $this->sessionchecker->cek_token();
                 
             );
             $this->parser->parse('templating/index', $data);
-        }else{
-            redirect('login');
-        }
+        
         }
     }
     //----------# BACK END  #----------#
@@ -372,7 +393,7 @@ $this->sessionchecker->cek_token();
      */
     public function videosd() {
 
-         if ($this->session->userdata('NAMASISWA')) {
+         
         $data['files'] = array(
             // APPPATH . 'modules/homepage/views/v-header-login.php',
             // APPPATH . 'modules/templating/views/t-f-pagetitle.php',
@@ -398,13 +419,11 @@ $this->sessionchecker->cek_token();
 
 
         $this->parser->parse('templating/anggi/index', $data);
-    }else{
-        redirect('login');
-    }
+  
     }
 
     public function videosmp() {
-         if ($this->session->userdata('NAMASISWA')) {
+        
        
         $data['files'] = array(
             // APPPATH . 'modules/homepage/views/v-header-login.php',
@@ -428,13 +447,11 @@ $this->sessionchecker->cek_token();
         $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
         $this->parser->parse('templating/anggi/index', $data);
-    }else{
-        redirect('login');
-    }
+   
     }
 
     public function videosma() {
-        if ($this->session->userdata('NAMASISWA')) {
+        
         
         $data['files'] = array(
             // APPPATH . 'modules/homepage/views/v-header-login.php',
@@ -458,9 +475,7 @@ $this->sessionchecker->cek_token();
         $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
         $this->parser->parse('templating/anggi/index', $data);
-    }else{
-        redirect('login');
-    }
+  
     }
 
     public function videosmaipa() {
@@ -494,7 +509,7 @@ $this->sessionchecker->cek_token();
     }
 
     public function videosmaips() {
-        if ($this->session->userdata('NAMASISWA')) {
+        
        
         $data['files'] = array(
             // APPPATH . 'modules/homepage/views/v-header-login.php',
@@ -518,9 +533,7 @@ $this->sessionchecker->cek_token();
         $data['pelajaran_sd'] = $this->mmatapelajaran->daftarMapelSD();
         $data['pelajaran_sma_ipa'] = $this->mmatapelajaran->daftarMapelSMAIPA();
         $this->parser->parse('templating/anggi/index', $data);
-    }else{
-        redirect('login');
-    }
+ 
     }
 
 }

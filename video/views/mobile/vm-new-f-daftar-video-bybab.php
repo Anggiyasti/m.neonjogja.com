@@ -1,3 +1,5 @@
+<script src="http://macyjs.com/assets/js/macy.min.js"></script>
+
 <!-- Page Content -->
       <div id="content" class="page" style="min-height: 420px;">
 
@@ -16,6 +18,7 @@
               <li class="tab col s6 red lighten-1"><a href="javascript:void(0);" onclick="justroom()" style="color: white;">Room</a></li>
             </ul>
           </div>
+         
         
         <!-- Article Content -->
         <div class="row">
@@ -49,11 +52,11 @@
               <!-- Body Info -->
               <!-- <div class="collapsible-body"><p><?=$pel['judul_bab']?></p></div> -->
               <?php if ($bab_video_items->jenis_video == 1): ?>
-              <div class="collection collapsible-body">
+              <div class="collection collapsible-body room" >
               <a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" class=" collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(S)</a>
             </div>
               <?php else: ?>
-              <div class="collection collapsible-body">
+              <div class="collection collapsible-body screen">
               <a href="<?=base_url('video/videosub/')?><?=$bab_video_items->subbabID?>" class="collection-item collapsible-body" style="border-bottom: 1px solid #ddd"><?php echo $bab_video_items->judulVideo ;?>(R)</a>
               </div>
               
@@ -72,8 +75,8 @@
           </div>
           <!-- </div> -->
 
-          <script src="http://macyjs.com/assets/js/macy.min.js"></script>
-<script type="text/javascript">
+          
+    <script type="text/javascript">
       function direct(){
         var tingkat = $("input[name='tingkat']").val();
         var aliasMapel = $("input[name='pelajaran']").val();

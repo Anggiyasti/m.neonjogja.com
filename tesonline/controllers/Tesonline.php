@@ -17,7 +17,29 @@ class Tesonline extends MX_Controller {
         $config['permitted_uri_chars'] = 'a-z 0-9~%.:&_\-'; 
         parent::__construct();
         $this->load->library('sessionchecker');
-        $this->sessionchecker->cek_token();
+        $this->sessionchecker->checkloggedin();
+         if ($this->session->userdata('HAKAKSES')=='ortu') {
+       
+    }else{
+         $this->sessionchecker->cek_token();
+
+    }
+
+        # check session
+        if ($this->session->userdata('loggedin') == true) {
+            if ($this->session->userdata('HAKAKSES') == 'siswa') {
+
+            } else if ($this->session->userdata('HAKAKSES') == 'guru') {
+                redirect('guru/dashboard');
+            }else if ($this->session->userdata('HAKAKSES') == 'ortu') {
+
+            } 
+            else {
+                redirect('login');
+            }
+        } else {
+            redirect('login');
+        }
 
     }
 
@@ -59,28 +81,29 @@ public function daftarreport($idtingkat) {
             $data['ti'] = $idtingkat;
 
             $config = array();
-            $config["base_url"] = base_url() . "tesonline/daftarreport/";
+            $config["base_url"] = base_url() . "tesonline/daftarreport/$idtingkat/";
             $config["uri_segment"] = 4;
             $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
             $config["total_rows"] = $this->mlatihan->get_report_tingkat_number($this->session->userdata['USERNAME'],$idtingkat);
             $config["per_page"] = 5;
 
             # konfig link
-            $config['cur_tag_open'] = "<a style='background:#800000;color:white'>";
-            $config['cur_tag_close'] = '</a>';
-            $config['first_link'] = "<span title='Page Awal'> << </span>"; 
-            $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+                $config['cur_tag_open'] = "<a style='background:#800000;color:white'>";
+                $config['cur_tag_close'] = '</a>';
+                $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+                $config['last_link'] = "<span title='Page Akhir'> >> </span>";
 
-            # konfig link
+                # konfig link
 
-            $this->pagination->initialize($config);
-            ##KONFIGURASI UNTUUK PAGINATION
-    $data['jumlah_post'] = $config["total_rows"];
-    $data['report'] = $this->load->mlatihan->get_report_tingkat($this->session->userdata['USERNAME'],$idtingkat,$config["per_page"], $page);
-    $penggunaID = $this->session->userdata['id'];
-    $data["links"] = $this->pagination->create_links();
-    $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
-    $data['tingkat'] = $this->load->MTingkat->gettingkat();
+                $this->pagination->initialize($config);
+                ##KONFIGURASI UNTUUK PAGINATION
+
+                $data['jumlah_postingan'] = $config['total_rows'];
+                $data["links"] = $this->pagination->create_links();
+                $data['report'] = $this->load->mlatihan->get_report_tingkat($this->session->userdata['USERNAME'],$idtingkat,$config["per_page"], $page);
+                $penggunaID = $this->session->userdata['id'];
+                $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
+                $data['tingkat'] = $this->load->MTingkat->gettingkat();
    
     // $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
 
@@ -98,18 +121,20 @@ public function detailreport($id_latihan) {
         'judul_halaman' => 'Neon - Pilih Mata Pelajaran',
         'judul_header' => 'Latihan Online'
         );
-    if ($this->session->userdata('NAMASISWA')) {
+    
     $data['files'] = array(
         APPPATH.'modules/templating/views/anggi/v-sidebar.php',
         APPPATH .'modules/tesonline/views/mobile/vm-detail-report.php',
         APPPATH.'modules/templating/views/anggi/v-footer.php',
         );
-     }
-            else{
-                redirect('login');
-            }
 
-    $data['report'] = $this->load->mlatihan->get_report_detail($this->session->userdata['USERNAME'],$id_latihan);
+    if ($this->session->userdata('HAKAKSES')=='ortu') {
+        $data['report'] = $this->load->mlatihan->get_report_detail($this->session->userdata['NAMAORTU'],$id_latihan);
+    }else{
+        $data['report'] = $this->load->mlatihan->get_report_detail($this->session->userdata['USERNAME'],$id_latihan);
+
+    }
+    
     $penggunaID = $this->session->userdata['id'];
     $data['siswa'] = $this->load->msiswa->get_siswapoto($penggunaID);
     $data['tingkat'] = $this->load->MTingkat->gettingkat();
@@ -238,17 +263,40 @@ public function daftarlatihan() {
     $konten = 'modules/tesonline/views/v-mulai-test.php';
 
     $data['files'] = array(
-        APPPATH . 'modules/homepage/views/v-header-login.php',
-        APPPATH . 'modules/templating/views/t-f-pagetitle.php',
-        APPPATH . $konten,
-        // APPPATH . 'modules/homepage/views/v-footer.php',
-        APPPATH . 'modules/testimoni/views/v-footer.php',
+        APPPATH.'modules/templating/views/anggi/v-sidebar.php',
+        APPPATH .'modules/tesonline/views/mobile/vm-daftar-report.php',
+        APPPATH.'modules/templating/views/anggi/v-footer.php',
         );
-    $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['USERNAME']);
-    $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
+
+        
+        $getdata =$this->mlatihan->get_report_number($this->session->userdata['NAMAORTU']);
+        
+        $config = array();
+            $config["base_url"] = base_url() . "tesonline/daftarlatihan/";
+            $config["uri_segment"] = 3;
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+            $config["total_rows"] = $getdata;
+            $config["per_page"] =5;
+
+            # konfig link
+                $config['cur_tag_open'] = "<a style='background:#800000;color:white'>";
+                $config['cur_tag_close'] = '</a>';
+                $config['first_link'] = "<span title='Page Awal'> << </span>"; 
+                $config['last_link'] = "<span title='Page Akhir'> >> </span>";
+
+                # konfig link
+
+                $this->pagination->initialize($config);
+    //untuk mengambil report jika ortu yang login 
+        $data['report'] = $this->load->mlatihan->get_report($this->session->userdata['NAMAORTU'],$config["per_page"], $page);
+
+        $data['jumlah_postingan'] = $config['total_rows'];
+        $data["links"] = $this->pagination->create_links();
+        $data['latihan'] = $this->load->mlatihan->get_latihan($this->session->userdata['USERNAME']);
 
     $this->session->unset_userdata('id_pembahasan');
-    $this->parser->parse('templating/index', $data);
+    $this->parser->parse('templating/anggi/index', $data);
 }
 
 

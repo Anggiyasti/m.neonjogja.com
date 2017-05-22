@@ -88,15 +88,28 @@ public function get_paket_actioned_by_id_to($id_to) {
 }
 
 public function get_id_siswa() {
-    $this->db->select('siswa.id');
-    $this->db->from('tb_siswa siswa');
-    $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
+        $this->db->select('siswa.id');
+        $this->db->from('tb_siswa siswa');
+        $this->db->join('tb_pengguna pengguna', 'siswa.penggunaID = pengguna.id');
 
-    $this->db->where('pengguna.id', $this->session->userdata('id'));
+        $this->db->where('pengguna.id', $this->session->userdata('id'));
 
-    $query = $this->db->get();
-    return $query->result()[0]->id;
-}
+        $query = $this->db->get();
+        return $query->result()[0]->id;
+    }
+
+
+ public function get_id_siswa_by_ortu() {
+        $this->db->select('siswa.id');
+        $this->db->from('tb_siswa siswa');
+        $this->db->join('`tb_orang_tua` `ortu` ',' `siswa`.`id` = `ortu`.`siswaID`');
+        $this->db->join('`tb_pengguna` `pengguna` ',' `ortu`.`penggunaID` = `pengguna`.`id` ');
+        $this->db->where('pengguna.id', $this->session->userdata('id'));
+
+        $query = $this->db->get();
+        return $query->result()[0]->id;
+    }
+
 
     //# fungsi get data tryout yang hakaksesnya true
 public function get_tryout_akses($perpage,$page,$data) {
@@ -401,6 +414,52 @@ public function get_laporan_to(){
     $result = $this->db->query($query);
     return $result->result_array(); 
 }
+
+
+// ambil jumlah paket yang sudah di kerjakan oleh siswa tertentu.
+    public function get_report_paket(){
+
+        if ($this->session->userdata('HAKAKSES')=='ortu') {
+            $id = $this->session->userdata('NAMAORTU');  
+        }else{
+            $id = $this->session->userdata('USERNAME');  
+        } 
+
+         $query = "
+         SELECT mmto.`id_tryout`,t.`nm_tryout`,`hasil`.`id_mm-tryout-paket`,p.id_paket,
+         p.`nm_paket`, p.`jumlah_soal`, hasil.jmlh_benar, hasil.jmlh_benar, 
+         hasil.jmlh_salah, hasil.tgl_pengerjaan,hasil.jmlh_kosong FROM 
+         (SELECT * FROM `tb_report-paket` rp
+         JOIN `tb_pengguna` `pengguna` ON `rp`.`id_pengguna` = `pengguna`.`id`
+         WHERE `pengguna`.`namaPengguna` = '$id') hasil
+         JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
+         JOIN `tb_tryout` t ON t.`id_tryout` = mmto.`id_tryout`
+         JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  order by mmto.id_tryout
+         ";
+     
+
+
+     $result = $this->db->query($query);
+     return $result->result_array();     
+ }
+
+    // ambil tryout yang sudah pernah dikerjakan oleh siswa tertentu
+public function get_tryout_by_pengguna(){
+    $id = $this->session->userdata('id');
+
+    $username = $this->db->escape_str($this->session->userdata('USERNAME'));
+    $query = " SELECT mmto.`id_tryout`,t.`nm_tryout` FROM 
+    (SELECT * FROM `tb_report-paket` rp
+    WHERE `id_pengguna` = $id) hasil
+    JOIN `tb_mm-tryoutpaket` mmto ON `mmto`.`id` = `hasil`.`id_mm-tryout-paket`
+    JOIN `tb_paket` p ON mmto.`id_paket` = p.`id_paket`  
+    JOIN `tb_tryout` t ON t.id_tryout = mmto.`id_tryout`
+    GROUP BY mmto.id_tryout
+    ";
+    $result = $this->db->query($query);
+    return $result->result_array(); 
+}
+
 
 }
 ?>

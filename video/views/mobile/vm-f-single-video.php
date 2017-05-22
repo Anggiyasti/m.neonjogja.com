@@ -11,16 +11,24 @@
 
         <!-- Main Content -->
         <div class="p-20 animated fadeinup">
-          <h4 class="uppercase">{nama_sub}</h4>
-          <p>{nama_penulis}</p>
+          <h3 class="uppercase">{nama_sub}</h3>
           <div class="video-container m-b-20">
             <iframe width="760" height="430" src="{file}" frameborder="0" allowfullscreen></iframe>
           </div>
+          <span class="uppercase">Pembuat Video</span><br>
+          <div class="quote-avatar-author clear-fix">
+            
+          <img src=" {photo}" data-at2x="{photo}" alt width="100px"><div class="author-info">{nama_penulis}<br/></div></div>
+                    <p><b>{biografi}</b></p>
                 
         </div>
         <!-- End of Main Contents -->
 
         <!-- Comments -->
+        <?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+        <?php else: ?>
+          
+      
           <div class="comments">
             <h3 class="uppercase"><?=count($comments) ?> Komentar</h3>
             <ul class="comments-list">
@@ -28,7 +36,7 @@
               
 
               <li class="your-comment">
-                <form action ="" id="formkomen" method = "post">
+                <form id="formkomen" method = "post">
                 <div id="info">
                     <div class="sukses text-info text-center hide">
                         <span>Komen anda telah terkirim, tunggu moderisasi dari guru yang bersangkutan</span>
@@ -57,7 +65,9 @@
               </li>
               <?php endforeach ?>
             </ul>
+             <?php endif ?> 
             <hr>
+
             <div class="justify">
               <h5>{nama_sub} <i class="ion-ios-list-outline"></i></h5>
                 <!-- <ul > -->
@@ -69,7 +79,8 @@
                 <!-- </ul> -->
             </div>
             
-          </div>      
+          </div> 
+                
         
 
         
@@ -78,60 +89,3 @@
          
       </div> <!-- End of Page Content -->
 
-
-
-    <script src="http://macyjs.com/assets/js/macy.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        Macy.init({
-          container: '#macy-container',
-          trueOrder: false,
-          waitForImages: false,
-          margin: 24,
-          columns: 3,
-          breakAt: {
-            1200: 5,
-            940: 3,
-            520: 2,
-            400: 1
-        }
-    });
-
-        $("#formkomen").submit(function (e) {
-            e.preventDefault();
-            var isiKomen = $("#isiKomen").val();
-            var videoID = <?= $this->uri->segment(3) ?>;
-            if (isiKomen=="") {
-                $('#info .lengkapi').removeClass('hide');
-                $('#info .sukses').addClass('hide');
-                $('#info .gagal').addClass('hide');
-            }else{
-             $.ajax({
-                type: "POST",
-                url: '<?php echo base_url() ?>index.php/video/addkomen',
-                data: {isiKomen: isiKomen, videoID: videoID},
-                success: function (data)
-                {
-                    swal({   title: "Komen Berhasil ditambahkan",   
-                     type: "info",   
-                     showCancelButton: false,   
-                     confirmButtonColor: "#8BDCF7",   
-                     confirmButtonText: "Ok!",   
-                     closeOnConfirm: false }, 
-                     function(){   
-                        window.location = base_url+"video/seevideo/"+videoID;
-                        ; });
-                },
-                error: function ()
-                {
-                    $('#info .lengkapi').removeClass('hide');
-                    $('#info .sukses').addClass('hide');
-                    $('#info .gagal').removeClass('hide');
-                }
-            }); 
-         }
-
-     });
-    });
-</script>

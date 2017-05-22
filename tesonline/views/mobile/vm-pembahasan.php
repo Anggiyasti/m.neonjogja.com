@@ -129,7 +129,14 @@
                                                         <div class="panel-body">
                                                             <div class="row">
                                                             <div class="col-md-6 center"></div>
-                                                                <div class="col-md-6 text-right" style="margin-top:0;"><a href="<?= base_url() ?>index.php/tesonline/daftarreport/<?=$key['tingkatID']?>" class="btn btn-info btn-block" >Pembahasan Selesai</a></div>
+                                                                <div class="col-md-6 text-right" style="margin-top:0;"><?php if ($this->session->userdata('HAKAKSES')=='ortu'): ?>
+                                                                <a href="<?= base_url("tesonline/daftarlatihan")?>" class="btn btn-info btn-block" >Pembahasan Selesai</a>
+                                                            <?php else: ?>
+                                                                <a href="<?= base_url() ?>index.php/tesonline/daftarreport/<?=$key['tingkatID']?>" class="btn btn-info btn-block" >Pembahasan Selesai</a>
+                                                                    
+                                                                <?php endif ?>
+
+                                                                </div>
                                                             </div>
 
                                                             
